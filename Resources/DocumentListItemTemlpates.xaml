@@ -1,0 +1,103 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:controls="clr-namespace:MakePdf.Controls"
+                    xmlns:converters="clr-namespace:MakePdf.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <converters:StringLengthToVisibilityConverter x:Key="lengthToVisibility" />
+    <converters:BoolToVisibilityConverter x:Key="boolToVis" />
+    <converters:FromArrayConverter x:Key="fromArray" />
+    <converters:EnumDescriptionAttributeConverter x:Key="enumToDesc" />
+
+    <x:Array Type="sys:String" x:Key="DocumentStatusNames">
+        <sys:String>Новый</sys:String>
+        <sys:String>Грузится</sys:String>
+        <sys:String>Готовится PDF</sys:String>
+        <sys:String>Готов</sys:String>
+        <sys:String>Ошибка</sys:String>
+        <sys:String>Отменен</sys:String>
+    </x:Array>
+
+    <DataTemplate x:Key="GalleryDocumentViewModel">
+        <StackPanel>
+            <!--<StackPanel.Background>
+                <VisualBrush TileMode="None" AutoLayoutContent="True">
+                    <VisualBrush.Visual>
+                        <ProgressBar IsIndeterminate="True" Height="100" BorderThickness="0" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </StackPanel.Background>-->
+            <!--<StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <ProgressBar IsIndeterminate="True" Height="20" BorderThickness="0" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>-->
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                <TextBlock Visibility="{Binding SourceAddress, Converter={StaticResource lengthToVisibility}}" Text=" ">
+                    <Hyperlink NavigateUri="{Binding SourceAddress}">
+                        <i:Interaction.Behaviors>
+                            <controls:AutonavigateHyperlinkBehavior />
+                        </i:Interaction.Behaviors>
+                        <Run Text=">>>" ToolTip="{Binding SourceAddress}" />
+                    </Hyperlink>
+                </TextBlock>
+            </WrapPanel>
+            <TextBlock Margin="5,0,0,0" Text="{Binding Annotation}" Visibility="{Binding Annotation, Converter={StaticResource lengthToVisibility}}" TextWrapping="Wrap" />
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Margin="5,0,0,0" Text="{Binding Status, Converter={StaticResource fromArray}, ConverterParameter={StaticResource DocumentStatusNames}}" Foreground="LightGray" FontStyle="Italic" />
+                <ProgressBar Margin="10,0,0,0" Height="10" Width="100" Value="{Binding LoadedCount}" Visibility="{Binding IsLoading, Converter={StaticResource boolToVis}}" Minimum="0" Maximum="{Binding TotalCount}" />
+                <ItemsControl ItemsSource="{Binding Exceptions}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Path='Message'}" Foreground="LightPink" FontStyle="Italic" ToolTip="{Binding Path='StackTrace'}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!--<TextBlock Margin="5,0,0,0" Text="{Binding Path='Exception.Message'}" Foreground="LightPink" FontStyle="Italic" ToolTip="{Binding Path='Exception.StackTrace'}" />-->
+            </WrapPanel>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TextDocumentViewModel">
+        <StackPanel>
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                <TextBlock Visibility="{Binding SourceAddress, Converter={StaticResource lengthToVisibility}}" Text=" ">
+                    <Hyperlink NavigateUri="{Binding SourceAddress}">
+                        <i:Interaction.Behaviors>
+                            <controls:AutonavigateHyperlinkBehavior />
+                        </i:Interaction.Behaviors>
+                        <Run Text=">>" ToolTip="{Binding SourceAddress}" />
+                    </Hyperlink>
+                </TextBlock>
+            </WrapPanel>
+            <TextBlock Margin="5,0,0,0" Text="{Binding Annotation}" Visibility="{Binding Annotation, Converter={StaticResource lengthToVisibility}}" TextWrapping="Wrap" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5,0,0,0" Text="{Binding Status, Converter={StaticResource enumToDesc}}" Foreground="LightGray" FontStyle="Italic" />
+                <ItemsControl ItemsSource="{Binding Exceptions}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Path='Message'}" Foreground="LightPink" FontStyle="Italic" ToolTip="{Binding Path='StackTrace'}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

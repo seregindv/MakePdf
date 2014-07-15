@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:tmp="clr-namespace:MakePdf.Tmp">
+    <tmp:TestConverter x:Key="tc" />
+    <Style TargetType="tmp:DatePickerEx" x:Key="TooltipAndRedTextOnError">
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip x:Name="PART_ToolTip" Placement="Top"
+                         PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=tmp:DatePickerEx}, Converter={StaticResource tc}}"
+                         StaysOpen="True"
+                         Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=tmp:DatePickerEx}, Path=ErrorText}"
+                         Visibility="Collapsed"
+                         IsOpen="False" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsDateOutOfRange" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="ToolTip.IsOpen" Value="True" />
+                    <Setter Property="ToolTip.Visibility" Value="Visible" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger.Setters>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

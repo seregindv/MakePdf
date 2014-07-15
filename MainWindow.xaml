@@ -1,0 +1,196 @@
+﻿<Window x:Class="MakePdf.ViewModels.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PDF Maker" Height="573" Width="828"
+        WindowStartupLocation="CenterScreen"
+        xmlns:controls="clr-namespace:MakePdf.Controls"
+        Cursor="{Binding IsBusy, Converter={StaticResource busyToCursor}}"
+        xmlns:watermark="clr-namespace:MakePdf.Watermark"
+        xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:vm="clr-namespace:MakePdf.ViewModels"
+        xmlns:buttons="clr-namespace:MakePdf.Controls.Buttons"
+        xmlns:converters="clr-namespace:MakePdf.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/DocumentListItemTemlpates.xaml" />
+                <ResourceDictionary Source="Controls/Buttons/SplitButton.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <vm:GenericTemplateSelector x:Key="GenTplSel" />
+            <converters:DefaultToFontWeightConverter x:Key="defaultToFontWeight" />
+            <Style x:Key="menuStyle" TargetType="MenuItem">
+                <Setter Property="Header" Value="{Binding Title}" />
+                <Setter Property="Command" Value="{Binding Command}" />
+                <Setter Property="CommandParameter" Value="{Binding AddressType}" />
+                <Setter Property="FontWeight" Value="{Binding IsDefault, Converter={StaticResource defaultToFontWeight}}" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBox Height="23" Margin="3" Text="{Binding DisplayedDocument.Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold">
+                <watermark:WatermarkService.Watermark>
+                    <TextBlock Text="Title" />
+                </watermark:WatermarkService.Watermark>
+            </TextBox>
+            <TextBox Height="23" Margin="3" Text="{Binding DisplayedDocument.Annotation, UpdateSourceTrigger=PropertyChanged}" FontWeight="SemiBold">
+                <watermark:WatermarkService.Watermark>
+                    <TextBlock Text="Annotation" />
+                </watermark:WatermarkService.Watermark>
+            </TextBox>
+            <TextBox Height="23" Margin="3" Text="{Binding DisplayedDocument.SourceAddress, UpdateSourceTrigger=PropertyChanged}" Foreground="Blue">
+                <watermark:WatermarkService.Watermark>
+                    <TextBlock Text="Hyperlink" />
+                </watermark:WatermarkService.Watermark>
+                <interactivity:Interaction.Behaviors>
+                    <controls:TextBoxHyperlinkBehavior />
+                </interactivity:Interaction.Behaviors>
+            </TextBox>
+        </StackPanel>
+        <!--Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions-->
+        <controls:ManualPasteTextBox Grid.Row="1" Margin="3" Text="{Binding DisplayedDocument.Contents, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" PasteCommand="{Binding PasteCommand}" AllSelected="{Binding AllContentSelected, Mode=OneWayToSource}" VerticalScrollBarVisibility="Auto" AllowDrop="True" x:Name="Content">
+            <watermark:WatermarkService.Watermark>
+                <TextBlock Text="Content" />
+            </watermark:WatermarkService.Watermark>
+        </controls:ManualPasteTextBox>
+        <!--GridSplitter Grid.Row="1" VerticalAlignment="Top" Height="2" Background="LightGray" ResizeDirection="Rows" HorizontalAlignment="Stretch">
+                <i:Interaction.Behaviors>
+                    <controls:DoubleClickCollapseGridSplitterBehavior />
+                </i:Interaction.Behaviors>
+            </GridSplitter>
+            <TextBox Grid.Row="1" Margin="3,5,3,3" />
+        </Grid-->
+        <GridSplitter Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="2" Background="LightGray" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right" Width="2" Background="LightGray" ResizeBehavior="PreviousAndNext"/>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" Grid.RowSpan="3">
+            <buttons:SplitButton Margin="5" IsDefault="True" Content="_Add" Command="{Binding AddCommand}" ButtonMenuItemsSource="{Binding AddMenuItems}" MenuItemStyle="{StaticResource menuStyle}" />
+            <!--<buttons:SplitButton.ButtonMenuItemsSource>
+                    <MenuItem Header="Auto" Command="{Binding AddCommand}" FontWeight="Bold" />
+                    <MenuItem Header="As gallery" Command="{Binding AddCommand}" CommandParameter="{x:Static stuff:AddressType.TextGallery}"/>
+                    <MenuItem Header="As interview" Command="{Binding AddCommand}" CommandParameter="{x:Static stuff:AddressType.LentaInterview}"/>
+                </buttons:SplitButton.ButtonMenuItemsSource>
+            </buttons:SplitButton>-->
+            <Button Margin="5" Command="{Binding ChangeCommand}">_Change</Button>
+            <Button Margin="5" Command="{Binding RemoveCommand}">_Remove</Button>
+            <Button Margin="5" Command="{Binding RemoveAllCommand}">Remove all</Button>
+            <Line Stroke="Black" Fill="Black" StrokeThickness="5" Height="10"></Line>
+            <Border Visibility="Collapsed" IsEnabled="False" BorderThickness=".3" BorderBrush="LightGray" Margin="5" CornerRadius="2">
+                <CheckBox Margin="5" Width="90" IsChecked="{Binding SkipEmptyLines}">
+                    <CheckBox.Content>
+                        <Grid>
+                            <AccessText Text="_e" Width="0" Height="0" />
+                            <TextBlock TextWrapping="Wrap">
+                        Remove <Underline>e</Underline>mpty strings
+                            </TextBlock>
+                        </Grid>
+                    </CheckBox.Content>
+                </CheckBox>
+            </Border>
+            <Button Margin="5" Command="{Binding ReverseParagraphsCommand}">
+                <Grid>
+                    <AccessText Text="_v" Width="0" Height="0" />
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center">Re<Underline>v</Underline>erse webcast</TextBlock>
+                </Grid>
+            </Button>
+            <Button Margin="5" Command="{Binding ClearCommand}">C_lear input</Button>
+        </StackPanel>
+        <ListBox Grid.Column="2" Grid.RowSpan="2" Margin="3" ItemsSource="{Binding Documents}" ItemTemplateSelector="{StaticResource GenTplSel}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
+            <!--<ListBox.Resources>
+                <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#DDD" />
+                <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+                <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Grid>
+                                    <Rectangle x:Name="Rectangle" Fill="Transparent" Stroke="Black" 
+    								   StrokeDashCap="Square" StrokeThickness="0" SnapsToDevicePixels="True">
+                                        <Rectangle.StrokeDashArray>
+                                            <system:Double>5</system:Double>
+                                        </Rectangle.StrokeDashArray>
+                                    </Rectangle>
+                                    <Border 
+    							Name="Border"
+    							Padding="5"
+    							BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}"
+    							BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}">
+                                        <ContentPresenter />
+                                    </Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Rectangle" Property="StrokeThickness" Value="1" />
+                                        <Setter TargetName="Border" Property="BorderThickness" Value="0" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Rectangle" Property="Fill" Value="{StaticResource SelectedBackgroundBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.Resources>-->
+        </ListBox>
+        <Grid Grid.Row="2" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Height="23" Margin="3">
+                <TextBox.Text>
+                    <Binding Path="Directory" ValidatesOnDataErrors="True" />
+                </TextBox.Text>
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip"
+                                  Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                                  Path=(Validation.Errors)[0].ErrorContent}"/>
+                                <Setter Property="Foreground" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <CheckBox VerticalAlignment="Center" Margin="5,0,10,0" FlowDirection="LeftToRight" IsChecked="{Binding OpenExplorer}">Open explorer</CheckBox>
+                <ComboBox Height="23" Margin="0,0,10,0" MinWidth="120" ItemsSource="{Binding DeviceConfiguration.Devices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="Name" />
+                <Button Command="{Binding LoadCommand}" Padding="16,1" Height="23">Load</Button>
+                <Button Command="{Binding SaveCommand}" Padding="16,1" Margin="10,0" Height="23">Save</Button>
+                <Button Command="{Binding RenderCommand}" Padding="10,1" Margin="0,0,3,0" Height="23">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Content" Value="Render"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                    <Setter Property="Content" Value="Cancel" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

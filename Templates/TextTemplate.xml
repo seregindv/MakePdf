@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="my-page" page-width="60mm" page-height="84mm" margin-left="2mm" margin-right="2mm">
+      <fo:region-body />
+    </fo:simple-page-master>
+  </fo:layout-master-set>
+  <fo:page-sequence master-reference="my-page">
+    <fo:flow flow-name="xsl-region-body" font-family="Tahoma" text-align="justify">
+      <fo:table break-after="page" width="56mm" height="84mm" table-layout="fixed">
+        <fo:table-column />
+        <fo:table-body>
+          <fo:table-row height="25mm">
+            <fo:table-cell>
+              <fo:block />
+            </fo:table-cell>
+          </fo:table-row>
+          <fo:table-row height="84mm">
+            <fo:table-cell text-align="center" vertical-align="middle">
+              <fo:block font-size="20pt">
+                <TitlePlaceholder />
+              </fo:block>
+              <fo:block font-size="14pt">
+                <AnnotationPlaceholder />
+              </fo:block>
+            </fo:table-cell>
+          </fo:table-row>
+        </fo:table-body>
+      </fo:table>
+      <fo:block>
+        <TextPlaceholder>
+          <fo:block text-indent="4mm" />
+        </TextPlaceholder>
+        <LinkTemplate>
+          <fo:basic-link text-decoration="underline" color="blue" />
+        </LinkTemplate>
+      </fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

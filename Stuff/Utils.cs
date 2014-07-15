@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Media;
+using MakePdf.Markup;
+
+namespace MakePdf.Stuff
+{
+    public static class Utils
+    {
+        static readonly Regex _splitRegex = new Regex(@"\b(?:(?:https?|ftp|file)://|www\.|ftp\.)([\w\.-]+)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])", RegexOptions.IgnoreCase);
+        public static MatchCollection GetHyperlinkMatches(string s)
+        {
+            return _splitRegex.Matches(s);
+        }
+
+        public static string GetFullPath(string directory, string fileName)
+        {
+            return Path.Combine(directory, TrimIllegalChars(fileName));
+        }
+
+        public static string GetPdfPath(string directory, string title, string extension = ".pdf")
+        {
+            var fileName = (title.Length > 255 ? title.Substring(0, 255) : title).Trim() + extension;
+            return GetFullPath(directory, fileName);
+        }
+
+        public static string TrimIllegalChars(string path)
+        {
+            return String.Concat(path.Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries));
+        }
+
+        public static void CopyStream(Stream source, Stream destination)
+        {
+            var buffer = new byte[32768];
+            int read;
+            while ((read = source.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                destination.Write(buffer, 0, read);
+            }
+        }
+
+        public static Stream GetResponseStream(string url)
+        {
+            var request = WebRequest.Create(url);
+            request.Proxy.Credentials = CredentialCache.DefaultCredentials;
+            var response = request.GetResponse();
+            return response.GetResponseStream();
+        }
+
+        public static void FixUriTrailingDotBug()
+        {
+            var getSyntax = typeof(UriParser).GetMethod("GetSyntax", BindingFlags.Static | BindingFlags.NonPublic);
+            var flagsField = typeof(UriParser).GetField("m_Flags", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (getSyntax == null || flagsField == null)
+                return;
+            foreach (string scheme in new[] { "http", "https" })
+            {
+                var parser = (UriParser)getSyntax.Invoke(null, new object[] { scheme });
+                if (parser == null)
+                    continue;
+                var flagsValue = (int)flagsField.GetValue(parser);
+                // Clear the CanonicalizeAsFilePath attribute
+                if ((flagsValue & 0x1000000) != 0)
+                    flagsField.SetValue(parser, flagsValue & ~0x1000000);
+            }
+        }
+
+        public static string GetFileName(int fileNum, string format = "00000000")
+        {
+            return fileNum.ToString(format);
+        }
+
+        public static Tuple<TEnum, TAttr>[] GetDecoratedEnumMembers<TEnum, TAttr>()
+        {
+            return GetEnumMembers<TEnum, TAttr>(true);
+        }
+
+        public static Tuple<TEnum, TAttr>[] GetNonDecoratedEnumMembers<TEnum, TAttr>()
+        {
+            return GetEnumMembers<TEnum, TAttr>(false);
+        }
+
+        private static Tuple<TEnum, TAttr>[] GetEnumMembers<TEnum, TAttr>(bool? decorated)
+        {
+            var result =
+                from field in typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static)
+                let attrs = field.GetCustomAttributes(typeof(TAttr), true)
+                where decorated == null || (decorated.Value && attrs.Length > 0) || (!decorated.Value && attrs.Length == 0)
+                select new Tuple<TEnum, TAttr>((TEnum)Enum.Parse(typeof(TEnum), field.Name), (TAttr)attrs[0]);
+            return result.ToArray();
+        }
+
+        public static Tuple<TEnum, TAttr> FindFirstField<TEnum, TAttr>(Tuple<TEnum, TAttr>[] fields, Func<TAttr, bool> criteria)
+        {
+            return fields.FirstOrDefault(@field => criteria(@field.Item2));
+        }
+
+        public static string Trim(string s)
+        {
+            return s.Trim(' ', '\r', '\n', '\t');
+        }
+
+        public static string TruncateAfterEOL(string s)
+        {
+            var index = s.IndexOf('\n');
+            if (index >= 0)
+                return s.Substring(0, index);
+            return s;
+        }
+
+        public static void SaveStream(Stream s, string f)
+        {
+            if (!s.CanSeek)
+                throw new NotSupportedException("Nonseekable streams are not supported");
+            var pos = s.Position;
+            s.Position = 0L;
+            var sr = new StreamReader(s);
+            var cnt = sr.ReadToEnd();
+            File.WriteAllText(f, cnt);
+            s.Position = pos;
+        }
+
+        public static bool IsNullOrEmpty<T>(T collection) where T : ICollection
+        {
+            return collection == null || collection.Count == 0;
+        }
+
+        public static string FixUrlProtocol(string url)
+        {
+            var builder = new UriBuilder(new Uri(url));
+            if (builder.Scheme == Uri.UriSchemeFile)
+                builder.Scheme = Uri.UriSchemeHttp;
+            return builder.ToString();
+        }
+
+        public static string SubstringAfter(string s, string after)
+        {
+            var afterIndex = s.IndexOf(after);
+            return afterIndex == -1 ? s : s.Substring(0, afterIndex);
+        }
+
+        public static IEnumerable<T> ToEnumerable<T>(this T obj)
+        {
+            yield return obj;
+        }
+    }
+}

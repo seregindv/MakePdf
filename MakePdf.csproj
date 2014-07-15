@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F15AA3E7-83E1-44AB-B9B7-B2399B133AEC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MakePdf</RootNamespace>
+    <AssemblyName>MakePdf</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>\\wmrobpfnp02\Users%24\DSeregin\MakePdf.install\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
+    <UpdateInterval>3</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>true</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>PDF Maker</ProductName>
+    <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Main.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>6F779EB9F30491CBCD2256D8B3AC99FEA35B3B3F</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MakePdf_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.5.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Fonet, Version=1.0.4657.22647, Culture=neutral, PublicKeyToken=52effa152c4a9dc6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\fo.net\Core\bin\Release\Fonet.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive.Windows.Threading, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Attributes\ArticleAttribute.cs" />
+    <Compile Include="Attributes\DocumentAttributeManager.cs" />
+    <Compile Include="Attributes\DocumentAttribute.cs" />
+    <Compile Include="Configuration\Config.cs" />
+    <Compile Include="Configuration\Device.cs" />
+    <Compile Include="Configuration\GenericConfigurationSection.cs" />
+    <Compile Include="Configuration\IConfig.cs" />
+    <Compile Include="Configuration\Template.cs" />
+    <Compile Include="Configuration\TemplateType.cs" />
+    <Compile Include="Controls\AutonavigateHyperlinkBehavior.cs" />
+    <Compile Include="Controls\Buttons\SplitButton.cs" />
+    <Compile Include="Controls\DoubleClickCollapseGridSplitterBehavior.cs" />
+    <Compile Include="Controls\TextBoxHyperlinkBehavior.cs" />
+    <Compile Include="Converters\BoolToVisibilityConvertercs.cs" />
+    <Compile Include="Converters\DefaultToFontWeightConverter.cs" />
+    <Compile Include="Converters\EnumDescriptionAttributeConverter.cs" />
+    <Compile Include="Converters\FromArrayConverter.cs" />
+    <Compile Include="Galleries\ClipboardSourceHtmlGallery.cs" />
+    <Compile Include="Galleries\DofigaGallery.cs" />
+    <Compile Include="Galleries\ForbesGallery.cs" />
+    <Compile Include="Galleries\ForbesMultipageSlideshow.cs" />
+    <Compile Include="Galleries\ForbesSlideshow.cs" />
+    <Compile Include="Attributes\GalleryAttribute.cs" />
+    <Compile Include="Galleries\Gallery.cs" />
+    <Compile Include="Galleries\GazetaGallery.cs" />
+    <Compile Include="Galleries\Helpers\LentaPictureProcessor.cs" />
+    <Compile Include="Galleries\ItarTassGallery.cs" />
+    <Compile Include="Galleries\LentaArticleGallery.cs" />
+    <Compile Include="Galleries\LentaBeelineGallery.cs" />
+    <Compile Include="Galleries\LentaInterview.cs" />
+    <Compile Include="Galleries\LentaRealtyGallery.cs" />
+    <Compile Include="Galleries\Loaders\GalleryLoader.cs" />
+    <Compile Include="Galleries\HtmlGallery.cs" />
+    <Compile Include="Galleries\GalleryItem.cs" />
+    <Compile Include="Galleries\LentaGallery.cs" />
+    <Compile Include="Galleries\Loaders\ParallelGalleryLoader.cs" />
+    <Compile Include="Galleries\Loaders\SingleThreadedGalleryLoader.cs" />
+    <Compile Include="Galleries\MkGallery.cs" />
+    <Compile Include="Galleries\MotorArticleGallery.cs" />
+    <Compile Include="Galleries\MotorGallery.cs" />
+    <Compile Include="Galleries\NovayaGazetaGallery.cs" />
+    <Compile Include="Galleries\RiaGallery.cs" />
+    <Compile Include="Galleries\SlonAuthorGallery.cs" />
+    <Compile Include="Galleries\TextGallery.cs" />
+    <Compile Include="Markup\Tag.cs" />
+    <Compile Include="Markup\TagFactory.cs" />
+    <Compile Include="Markup\TagList.cs" />
+    <Compile Include="Pooling\Containers\SingleContainer.cs" />
+    <Compile Include="Pooling\Containers\IObjectContainer.cs" />
+    <Compile Include="Pooling\Containers\ListContainer.cs" />
+    <Compile Include="Pooling\DelegateThreadedPool.cs" />
+    <Compile Include="Pooling\Pools\DisposableObject.cs" />
+    <Compile Include="Pooling\Pools\IObjectPool.cs" />
+    <Compile Include="Pooling\Storages\IObjectStorage.cs" />
+    <Compile Include="Pooling\Pools\ObjectPool.cs" />
+    <Compile Include="Pooling\Storages\LimitedStorage.cs" />
+    <Compile Include="Pooling\Storages\SingleUseUnlimitedStorage.cs" />
+    <Compile Include="Pooling\Storages\Storage.cs" />
+    <Compile Include="Pooling\Storages\UnlimitedStorage.cs" />
+    <Compile Include="Serialization\ISerializationControl.cs" />
+    <Compile Include="Serialization\SerializeHelper.cs" />
+    <Compile Include="Serialization\XmlSerializerWrapper.cs" />
+    <Compile Include="Sizing\ImageSize.cs" />
+    <Compile Include="Stuff\AddressType.cs" />
+    <Compile Include="Stuff\LineReader.cs" />
+    <Compile Include="Controls\ManualPasteTextBox.cs" />
+    <Compile Include="Converters\StringLengthToVisibilityConverter.cs" />
+    <Compile Include="Stuff\ParagraphReverser.cs" />
+    <Compile Include="Stuff\PasteProcessor.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\GenericTemplateSelector.cs" />
+    <Compile Include="ViewModels\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\GalleryDocumentViewModel.cs" />
+    <Compile Include="ViewModels\GalleryItemViewModel.cs" />
+    <Compile Include="ViewModels\MenuItemViewModel.cs" />
+    <Compile Include="Watermark\WatermarkAdorner.cs" />
+    <Compile Include="Watermark\WatermarkService.cs" />
+    <Page Include="Controls\Buttons\SplitButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DocumentListItemTemlpates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converters\BoolToCursorConverter.cs" />
+    <Compile Include="Stuff\DelegateCommand.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pooling\ThreadedPool.cs" />
+    <Compile Include="Stuff\Utils.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\TextDocumentViewModel.cs" />
+    <Compile Include="XmlMakers\GalleryDocumentXmlMaker.cs" />
+    <Compile Include="XmlMakers\TextDocumentXmlMaker.cs" />
+    <Compile Include="XmlMakers\XmlMaker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="MakePdf_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\_GalleryTemplate2.xsl" />
+    <None Include="Templates\_GalleryTemplate3.xsl" />
+    <None Include="Templates\_GalleryTemplate4.xsl" />
+    <Content Include="Templates\iPodGalleryTemplate.xsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\iPodTextTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\GalleryTemplate.xsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\TextTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="c">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="de\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="en\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="es\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="Fonet">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="fr\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="HtmlAgilityPack">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="it\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ja\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ko\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="zh-Hans\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="zh-Hant\System.Windows.Interactivity.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
