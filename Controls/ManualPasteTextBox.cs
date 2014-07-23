@@ -41,6 +41,24 @@ namespace MakePdf.Controls
         public static readonly DependencyProperty AllSelectedProperty =
             DependencyProperty.Register("AllSelected", typeof(bool), typeof(ManualPasteTextBox), new PropertyMetadata(default(bool)));
 
+        public static readonly DependencyProperty BindableSelectionStartProperty =
+            DependencyProperty.Register("BindableSelectionStart", typeof(int), typeof(ManualPasteTextBox), new FrameworkPropertyMetadata(default(int)));
+
+        public static readonly DependencyProperty BindableSelectionLengthProperty =
+            DependencyProperty.Register("BindableSelectionLength", typeof(int), typeof(ManualPasteTextBox), new FrameworkPropertyMetadata(default(int)));
+
+        public int BindableSelectionStart
+        {
+            get { return (int)GetValue(BindableSelectionStartProperty); }
+            set { SetValue(BindableSelectionStartProperty, value); }
+        }
+
+        public int BindableSelectionLength
+        {
+            get { return (int)GetValue(BindableSelectionLengthProperty); }
+            set { SetValue(BindableSelectionLengthProperty, value); }
+        }
+
         public bool AllSelected
         {
             get { return (bool)GetValue(AllSelectedProperty); }
@@ -83,6 +101,8 @@ namespace MakePdf.Controls
             var newValue = SelectionLength == Text.Length;
             if (newValue != AllSelected)
                 AllSelected = newValue;
+            BindableSelectionStart = SelectionStart;
+            BindableSelectionLength = SelectionLength;
         }
     }
 

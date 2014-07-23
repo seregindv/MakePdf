@@ -46,7 +46,10 @@ namespace MakePdf.ViewModels
             ClearCommand = new DelegateCommand(OnClear);
             RemoveAllCommand = new DelegateCommand(OnRemoveAll, _ => Documents.Count > 0);
             ReverseParagraphsCommand = new DelegateCommand(OnReverseParagraphs, IsContentPresent);
+            PictureCommand = new DelegateCommand(OnPicture);
+            UnpictureCommand = new DelegateCommand(OnUnpicture);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
+
             AddMenuItems = new List<MenuItemViewModel> {
                 new MenuItemViewModel(AddCommand)
                 {
@@ -69,6 +72,23 @@ namespace MakePdf.ViewModels
             SelectedDevice = _config.SelectedDevice;
         }
 
+        private void OnPicture(object obj)
+        {
+            PictureUnpicture(false);
+        }
+
+        private void OnUnpicture(object obj)
+        {
+            PictureUnpicture(true);
+        }
+
+        private void PictureUnpicture(bool unpicture)
+        {
+            if (DisplayedDocument != null && DisplayedDocument.Contents != null)
+                DisplayedDocument.Contents = Utils.InsertOrDeleteAtLineStart(DisplayedDocument.Contents, "pic:", SelectionStart, SelectionLength, unpicture);
+            //Debug.WriteLine(Utils.InsertOrDeleteAtLineStart(DisplayedDocument.Contents, "pic:", SelectionStart, SelectionLength, unpicture));
+        }
+
         void Documents_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaiseCanExecuteChanged(RenderCommand);
@@ -85,6 +105,8 @@ namespace MakePdf.ViewModels
         public DelegateCommand ClearCommand { private set; get; }
         public DelegateCommand RemoveAllCommand { private set; get; }
         public DelegateCommand ReverseParagraphsCommand { private set; get; }
+        public DelegateCommand PictureCommand { private set; get; }
+        public DelegateCommand UnpictureCommand { private set; get; }
         public List<MenuItemViewModel> AddMenuItems { private set; get; }
         public string Directory
         {
@@ -185,6 +207,9 @@ namespace MakePdf.ViewModels
             }
             get { return _selectedDocument; }
         }
+
+        public int SelectionStart { get; set; }
+        public int SelectionLength { get; set; }
 
         void DisplayedDocument_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -16,6 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/DocumentListItemTemlpates.xaml" />
                 <ResourceDictionary Source="Controls/Buttons/SplitButton.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Controls/Buttons/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:GenericTemplateSelector x:Key="GenTplSel" />
             <converters:DefaultToFontWeightConverter x:Key="defaultToFontWeight" />
@@ -63,11 +64,24 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions-->
-        <controls:ManualPasteTextBox Grid.Row="1" Margin="3" Text="{Binding DisplayedDocument.Contents, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" PasteCommand="{Binding PasteCommand}" AllSelected="{Binding AllContentSelected, Mode=OneWayToSource}" VerticalScrollBarVisibility="Auto" AllowDrop="True" x:Name="Content">
-            <watermark:WatermarkService.Watermark>
-                <TextBlock Text="Content" />
-            </watermark:WatermarkService.Watermark>
-        </controls:ManualPasteTextBox>
+        <Grid Grid.Row="1" Margin="3">
+            <controls:ManualPasteTextBox BindableSelectionLength="{Binding SelectionLength, Mode=OneWayToSource}"
+                                     BindableSelectionStart="{Binding SelectionStart, Mode=OneWayToSource}"
+                                     Text="{Binding DisplayedDocument.Contents, UpdateSourceTrigger=PropertyChanged}"
+                                     TextWrapping="Wrap" AcceptsReturn="True"
+                                     PasteCommand="{Binding PasteCommand}"
+                                     AllSelected="{Binding AllContentSelected, Mode=OneWayToSource}"
+                                     VerticalScrollBarVisibility="Auto" AllowDrop="True"
+                                     x:Name="Content">
+                <watermark:WatermarkService.Watermark>
+                    <TextBlock Margin="3,0,0,0" Text="Content" />
+                </watermark:WatermarkService.Watermark>
+            </controls:ManualPasteTextBox>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="3" Orientation="Horizontal">
+                <Button Content="Picture" Margin="0,0,3,0" Padding="7,0" Command="{Binding PictureCommand}" Style="{StaticResource SemitransparentButton}" Focusable="False" />
+                <Button Content="Unpicture" Padding="7,0" Command="{Binding UnpictureCommand}" Style="{StaticResource SemitransparentButton}" Focusable="False" />
+            </StackPanel>
+        </Grid>
         <!--GridSplitter Grid.Row="1" VerticalAlignment="Top" Height="2" Background="LightGray" ResizeDirection="Rows" HorizontalAlignment="Stretch">
                 <i:Interaction.Behaviors>
                     <controls:DoubleClickCollapseGridSplitterBehavior />

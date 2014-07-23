@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -146,9 +147,62 @@ namespace MakePdf.Stuff
             return afterIndex == -1 ? s : s.Substring(0, afterIndex);
         }
 
+        public static string SafeSubstring(string s, int startIndex, int length)
+        {
+            if (s.Length <= startIndex)
+                return String.Empty;
+            if (startIndex + length >= s.Length)
+                length = s.Length - startIndex;
+            return s.Substring(startIndex, length);
+        }
+
         public static IEnumerable<T> ToEnumerable<T>(this T obj)
         {
             yield return obj;
+        }
+
+        public static string InsertOrDeleteAtLineStart(string s, string text, int start, int length, bool delete = false)
+        {
+            var result = s;
+            var pos = Math.Min(start + length, s.Length - 1);
+            var IsRN = (Func<char, bool>) (c => c == '\r' || c == '\n');
+            var skipRN = IsRN(result[pos]);
+            if (length > 0 && IsRN(result[pos - 1]))
+            {
+                skipRN = true;
+                --pos;
+            }
+            var exitAfterInsert = false;
+            while (true)
+            {
+                if (skipRN)
+                {
+                    if (!IsRN(result[pos]) || pos == 1)
+                        skipRN = false;
+                }
+                else if (IsRN(result[pos]) || pos == 0)
+                {
+                    var picTextPos = pos == 0 ? pos : pos + 1;
+                    var isPic = SafeSubstring(result, picTextPos, text.Length) == text;
+                    if (delete)
+                    {
+                        if (isPic)
+                            result = result.Remove(picTextPos, text.Length);
+                    }
+                    else
+                    {
+                        if (!isPic)
+                            result = result.Insert(picTextPos, text);
+                    }
+                    if (exitAfterInsert || pos == 0)
+                        break;
+                    skipRN = true;
+                }
+                --pos;
+                if (pos <= start)
+                    exitAfterInsert = true;
+            }
+            return result;
         }
     }
 }
