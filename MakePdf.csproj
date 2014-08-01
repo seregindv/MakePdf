@@ -168,6 +168,7 @@
     <Compile Include="Galleries\MotorArticleGallery.cs" />
     <Compile Include="Galleries\MotorGallery.cs" />
     <Compile Include="Galleries\NovayaGazetaGallery.cs" />
+    <Compile Include="Galleries\PhotofileGallery.cs" />
     <Compile Include="Galleries\RiaGallery.cs" />
     <Compile Include="Galleries\SlonAuthorGallery.cs" />
     <Compile Include="Galleries\TextGallery.cs" />

@@ -26,7 +26,7 @@ namespace MakePdf.Attributes
             return _decoratedMembers;
         }
 
-        public static IEnumerable<AddressType> GetDecodated()
+        public static IEnumerable<AddressType> GetDecorated()
         {
             return GetDecoratedInternal().Select(attr => attr.Item1);
         }

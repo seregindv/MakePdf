@@ -11,7 +11,7 @@ namespace MakePdf.Pooling.Storages
     {
         readonly AutoResetEvent _signal = new AutoResetEvent(true);
         readonly int _maxCount;
-        int _count = 0;
+        int _count;
 
         public LimitedStorage(IObjectContainer<T> container, Func<T> createNew, int maxCount)
             : base(container, createNew)

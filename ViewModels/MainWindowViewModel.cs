@@ -59,7 +59,7 @@ namespace MakePdf.ViewModels
                 }
             };
             AddMenuItems.AddRange(
-                from addressType in GalleryAttribute.GetDecodated()
+                from addressType in GalleryAttribute.GetDecorated()
                 let title = GalleryAttribute.GetTitle(addressType)
                 where title != null
                 select new MenuItemViewModel(AddCommand)
