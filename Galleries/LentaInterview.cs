@@ -168,7 +168,7 @@ namespace MakePdf.Galleries
                     navigator.MoveToFirstChild();
                     var gotTags = GetTags(navigator);
                     if (tags.Any())
-                        if (gotTags.First() is ParagraphTag)
+                        if (gotTags.Count > 0 && gotTags.First() is ParagraphTag)
                             tags.AddRange(gotTags);
                         else
                             tags.Last().DrillDown().Tags = gotTags;
