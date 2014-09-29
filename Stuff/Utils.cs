@@ -8,6 +8,8 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web.UI.WebControls;
+using System.Windows.Input;
 using System.Windows.Media;
 using MakePdf.Markup;
 
@@ -165,7 +167,7 @@ namespace MakePdf.Stuff
         {
             var result = s;
             var pos = Math.Min(start + length, s.Length - 1);
-            var IsRN = (Func<char, bool>) (c => c == '\r' || c == '\n');
+            var IsRN = (Func<char, bool>)(c => c == '\r' || c == '\n');
             var skipRN = IsRN(result[pos]);
             if (length > 0 && IsRN(result[pos - 1]))
             {
@@ -203,6 +205,14 @@ namespace MakePdf.Stuff
                     exitAfterInsert = true;
             }
             return result;
+        }
+
+        public static bool IsTablet
+        {
+            get
+            {
+                return Tablet.TabletDevices.Count > 0;
+            }
         }
     }
 }

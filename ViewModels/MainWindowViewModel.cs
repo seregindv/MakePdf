@@ -49,6 +49,7 @@ namespace MakePdf.ViewModels
             PictureCommand = new DelegateCommand(OnPicture);
             UnpictureCommand = new DelegateCommand(OnUnpicture);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
+            IsTablet = Utils.IsTablet;
 
             AddMenuItems = new List<MenuItemViewModel> {
                 new MenuItemViewModel(AddCommand)
@@ -210,6 +211,8 @@ namespace MakePdf.ViewModels
 
         public int SelectionStart { get; set; }
         public int SelectionLength { get; set; }
+
+        public bool IsTablet { get; private set; }
 
         void DisplayedDocument_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -26,6 +26,7 @@
                 <Setter Property="CommandParameter" Value="{Binding AddressType}" />
                 <Setter Property="FontWeight" Value="{Binding IsDefault, Converter={StaticResource defaultToFontWeight}}" />
             </Style>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -77,6 +78,9 @@
                     <TextBlock Margin="3,0,0,0" Text="Content" />
                 </watermark:WatermarkService.Watermark>
             </controls:ManualPasteTextBox>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" Style="{StaticResource SemitransparentButton}" Command="{Binding Source={x:Static ApplicationCommands.Paste}}" CommandTarget="{Binding ElementName=Content}" Visibility="{Binding IsTablet, Converter={StaticResource BoolToVis}}">
+                <Image Source="Resources/paste.png" Stretch="None" />
+            </Button>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="3" Orientation="Horizontal">
                 <Button Content="Picture" Margin="0,0,3,0" Padding="7,0" Command="{Binding PictureCommand}" Style="{StaticResource SemitransparentButton}" Focusable="False" />
                 <Button Content="Unpicture" Padding="7,0" Command="{Binding UnpictureCommand}" Style="{StaticResource SemitransparentButton}" Focusable="False" />

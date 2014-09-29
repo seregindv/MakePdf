@@ -151,7 +151,7 @@ namespace MakePdf.Controls.Buttons
         /// </summary>
         protected override void OnClick()
         {
-            if (IsMouseOverSplitElement)
+            if (IsMouseOverSplitElement || Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 OpenButtonMenu();
             }

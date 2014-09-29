@@ -274,6 +274,7 @@
     <None Include="Templates\_GalleryTemplate2.xsl" />
     <None Include="Templates\_GalleryTemplate3.xsl" />
     <None Include="Templates\_GalleryTemplate4.xsl" />
+    <Resource Include="Resources\paste.png" />
     <Content Include="Templates\iPodGalleryTemplate.xsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
