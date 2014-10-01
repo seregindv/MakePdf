@@ -23,7 +23,7 @@
     <root>
       <!-- pages -->
       <layout-master-set>
-        <simple-page-master master-name="p0" page-width="60mm" page-height="84mm" margin-left="2mm" margin-right="2mm">
+        <simple-page-master master-name="p0" page-width="60mm" page-height="85mm" margin-left="2mm" margin-right="2mm">
           <region-body />
         </simple-page-master>
         <simple-page-master master-name="p1" page-width="95mm" page-height="60mm" margin-left="2mm" margin-right="2mm">
