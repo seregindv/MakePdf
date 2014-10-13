@@ -10,7 +10,8 @@
         xmlns:vm="clr-namespace:MakePdf.ViewModels"
         xmlns:buttons="clr-namespace:MakePdf.Controls.Buttons"
         xmlns:converters="clr-namespace:MakePdf.Converters"
-        xmlns:system="clr-namespace:System;assembly=mscorlib">
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:dialog="clr-namespace:MakePdf.Dialog">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -194,6 +195,24 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <CheckBox VerticalAlignment="Center" Margin="5,0,10,0" FlowDirection="LeftToRight" IsChecked="{Binding OpenExplorer}">Open explorer</CheckBox>
                 <ComboBox Height="23" Margin="0,0,10,0" MinWidth="120" ItemsSource="{Binding DeviceConfiguration.Devices}" SelectedItem="{Binding SelectedDevice}" DisplayMemberPath="Name" />
+                <Button Command="{Binding OptionsCommand}" Margin="0,0,10,0" Height="23">
+                    <Grid>
+                        <TextBlock TextAlignment="Center">...</TextBlock>
+                        <Grid>
+                            <Grid.RenderTransform>
+                                <TranslateTransform X="12" Y="-10" />
+                            </Grid.RenderTransform>
+                            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity=".5" Direction="270" ShadowDepth="0" BlurRadius="5" />
+                                </Border.Effect>
+                            </Border>
+                            <Border MinWidth="19" CornerRadius="9" Background="Red" BorderBrush="White" BorderThickness="2" Padding="5,0,5,1.4" Margin="1">
+                                <TextBlock TextAlignment="Center" Foreground="White" FontFamily="Tahoma">!</TextBlock>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Button>
                 <Button Command="{Binding LoadCommand}" Padding="16,1" Height="23">Load</Button>
                 <Button Command="{Binding SaveCommand}" Padding="16,1" Margin="10,0" Height="23">Save</Button>
                 <Button Command="{Binding RenderCommand}" Padding="10,1" Margin="0,0,3,0" Height="23">
@@ -210,5 +229,39 @@
                 </Button>
             </StackPanel>
         </Grid>
+        <dialog:ModalDialog Grid.ColumnSpan="3" Grid.RowSpan="3" DataContext="{Binding OptionsDialog}" IsShowing="{Binding IsVisible, Mode=TwoWay}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition MinWidth="200" />
+                </Grid.ColumnDefinitions>
+
+                <Label VerticalAlignment="Center">Path</Label>
+                <TextBox VerticalAlignment="Center" Grid.Column="1" Text="{Binding Path}" />
+
+                <Label VerticalAlignment="Center" Grid.Row="1">Open Explorer</Label>
+                <CheckBox VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" IsChecked="{Binding OpenExplorer}" />
+
+                <Label VerticalAlignment="Center" Grid.Row="2">Device</Label>
+                <ComboBox VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Devices}" SelectedItem="{Binding DefaultDevice}" DisplayMemberPath="Name" />
+
+                <Label VerticalAlignment="Center" Grid.Row="3">Text gallery split</Label>
+                <TextBox VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Text="{Binding TextGallerySplit}" />
+
+                <Label VerticalAlignment="Center" Grid.Row="4">Save intermediate files</Label>
+                <CheckBox VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" IsChecked="{Binding SaveIntermediateFiles}" />
+
+                <Label VerticalAlignment="Center" Grid.Row="5">Add device to file name</Label>
+                <CheckBox VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" IsChecked="{Binding AddDeviceToPdfName}" />
+            </Grid>
+        </dialog:ModalDialog>
     </Grid>
 </Window>

@@ -144,6 +144,10 @@
     <Compile Include="Converters\DefaultToFontWeightConverter.cs" />
     <Compile Include="Converters\EnumDescriptionAttributeConverter.cs" />
     <Compile Include="Converters\FromArrayConverter.cs" />
+    <Compile Include="Dialog\ModalDialog.xaml.cs">
+      <DependentUpon>ModalDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ModalDialogViewModel.cs" />
     <Compile Include="Galleries\ClipboardSourceHtmlGallery.cs" />
     <Compile Include="Galleries\DofigaGallery.cs" />
     <Compile Include="Galleries\ForbesGallery.cs" />
@@ -169,6 +173,7 @@
     <Compile Include="Galleries\MotorGallery.cs" />
     <Compile Include="Galleries\NovayaGazetaGallery.cs" />
     <Compile Include="Galleries\PhotofileGallery.cs" />
+    <Compile Include="Galleries\RbcPhotoreportGallery.cs" />
     <Compile Include="Galleries\RiaGallery.cs" />
     <Compile Include="Galleries\SlonAuthorGallery.cs" />
     <Compile Include="Galleries\TextGallery.cs" />
@@ -203,6 +208,7 @@
     <Compile Include="ViewModels\GalleryDocumentViewModel.cs" />
     <Compile Include="ViewModels\GalleryItemViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
+    <Compile Include="ViewModels\OptionsDialogViewModel.cs" />
     <Compile Include="Watermark\WatermarkAdorner.cs" />
     <Compile Include="Watermark\WatermarkService.cs" />
     <Page Include="Controls\Buttons\SplitButton.xaml">
@@ -212,6 +218,10 @@
     <Page Include="Controls\Buttons\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ModalDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\DocumentListItemTemlpates.xaml">
       <SubType>Designer</SubType>

@@ -48,8 +48,10 @@ namespace MakePdf.ViewModels
             ReverseParagraphsCommand = new DelegateCommand(OnReverseParagraphs, IsContentPresent);
             PictureCommand = new DelegateCommand(OnPicture);
             UnpictureCommand = new DelegateCommand(OnUnpicture);
+            OptionsCommand = new DelegateCommand(OnOptions);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
             IsTablet = Utils.IsTablet;
+            OptionsDialog = new OptionsDialogViewModel();
 
             AddMenuItems = new List<MenuItemViewModel> {
                 new MenuItemViewModel(AddCommand)
@@ -83,6 +85,11 @@ namespace MakePdf.ViewModels
             PictureUnpicture(true);
         }
 
+        private void OnOptions(object obj)
+        {
+            OptionsDialog.IsVisible = true;
+        }
+
         private void PictureUnpicture(bool unpicture)
         {
             if (DisplayedDocument != null && DisplayedDocument.Contents != null)
@@ -108,6 +115,7 @@ namespace MakePdf.ViewModels
         public DelegateCommand ReverseParagraphsCommand { private set; get; }
         public DelegateCommand PictureCommand { private set; get; }
         public DelegateCommand UnpictureCommand { private set; get; }
+        public DelegateCommand OptionsCommand { private set; get; }
         public List<MenuItemViewModel> AddMenuItems { private set; get; }
         public string Directory
         {
@@ -208,6 +216,8 @@ namespace MakePdf.ViewModels
             }
             get { return _selectedDocument; }
         }
+
+        public OptionsDialogViewModel OptionsDialog { set; get; }
 
         public int SelectionStart { get; set; }
         public int SelectionLength { get; set; }

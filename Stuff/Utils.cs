@@ -8,9 +8,11 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI.WebControls;
 using System.Windows.Input;
 using System.Windows.Media;
+using HtmlAgilityPack;
 using MakePdf.Markup;
 
 namespace MakePdf.Stuff
@@ -213,6 +215,13 @@ namespace MakePdf.Stuff
             {
                 return Tablet.TabletDevices.Count > 0;
             }
+        }
+
+        public static string GetInnerText(string html)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(html)));
+            return doc.DocumentNode.InnerText;
         }
     }
 }

@@ -47,6 +47,8 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(ItarTassGallery), Regex = @".*itar\-tass\.com\/.*")]
         ItarTassGallery,
         [Gallery(Type = typeof(PhotofileGallery),Regex = @".*photo\.qip\.ru.*")]
-        PhotofileGallery
+        PhotofileGallery,
+        [Gallery(Type = typeof(RbcPhotoreportGallery),Regex = @".*rbc\.ru\/photoreport.*")]
+        RbcPhotoreportGallery
     }
 }
