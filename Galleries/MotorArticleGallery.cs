@@ -144,7 +144,7 @@ namespace MakePdf.Galleries
 
         private bool AddImage(HtmlNodeNavigator contentNavigator)
         {
-            var imageNode = contentNavigator.CurrentNode.SelectSingleNode("img[@width]");
+            var imageNode = contentNavigator.CurrentNode.SelectSingleNode("img[@width or @class='photo']");
             if (imageNode == null)
                 return false;
             Flush();
