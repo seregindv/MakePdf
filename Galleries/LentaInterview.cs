@@ -77,6 +77,9 @@ namespace MakePdf.Galleries
                     case "h1":
                         tags.Add(new ColorTag("grey").Wrap<ParagraphTag>());
                         break;
+                    case "blockquote":
+                        tags.Add(new ParagraphTag());
+                        break;
                     default:
                         var text = Utils.Trim(navigator.CurrentNode.InnerText);
                         if (text.Length > 0)
@@ -91,7 +94,7 @@ namespace MakePdf.Galleries
                                 tags.Add(TagFactory.GetTextTag(text).Wrap(new ColorTag("red")).Wrap<ParagraphTag>());
                             }
                             else
-                                tags.Add(TagFactory.GetTextTag(text));
+                                tags.Add(TagFactory.GetTextTag(HttpUtility.HtmlDecode(text)));
                         }
                         break;
                 }
