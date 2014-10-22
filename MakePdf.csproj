@@ -157,6 +157,7 @@
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
     <Compile Include="Galleries\Helpers\LentaPictureProcessor.cs" />
+    <Compile Include="Galleries\InterviewBase.cs" />
     <Compile Include="Galleries\ItarTassGallery.cs" />
     <Compile Include="Galleries\LentaArticleGallery.cs" />
     <Compile Include="Galleries\LentaBeelineGallery.cs" />
