@@ -14,7 +14,7 @@ using MakePdf.Sizing;
 namespace MakePdf.Galleries
 {
     [System.Diagnostics.DebuggerDisplay("{ImageUrl}")]
-    public class GalleryItem : IHasTags
+    public class GalleryItem : Tag
     {
         public GalleryItem()
         {
@@ -53,13 +53,6 @@ namespace MakePdf.Galleries
         public string ImageUrl { set; get; }
         public string Url { set; get; }
 
-        public List<Tag> Tags { set; get; }
-
-        public List<Tag> EnsuredTags
-        {
-            get { return Tags ?? (Tags = new List<Tag>()); }
-        }
-
         public string ThumbnailImageUrl { set; get; }
 
         public ImageSize Size { set; get; }
@@ -69,6 +62,21 @@ namespace MakePdf.Galleries
         public string GetFormattedIndex(string format = "00000000")
         {
             return Utils.GetFileName(Index, format);
+        }
+
+        public override Tag Wrap(Tag with)
+        {
+            throw GetWrappingException();
+        }
+
+        public override Tag Wrap<T>()
+        {
+            throw GetWrappingException();
+        }
+
+        private ArgumentException GetWrappingException()
+        {
+            return new ArgumentException("GalleryItem doesn't support wrapping");
         }
     }
 }

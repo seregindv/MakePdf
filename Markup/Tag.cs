@@ -27,12 +27,12 @@ namespace MakePdf.Markup
     {
         public List<Tag> Tags { set; get; }
 
-        public Tag Wrap<T>() where T : Tag, new()
+        public virtual Tag Wrap<T>() where T : Tag, new()
         {
             return new T { Tags = this.ToTags() };
         }
 
-        public Tag Wrap(Tag with)
+        public virtual Tag Wrap(Tag with)
         {
             with.Tags = this.ToTags();
             return with;
@@ -44,6 +44,11 @@ namespace MakePdf.Markup
             while (result.Tags != null && result.Tags.Any())
                 result = result.Tags[0];
             return result;
+        }
+
+        public List<Tag> EnsuredTags
+        {
+            get { return Tags ?? (Tags = new List<Tag>()); }
         }
     }
 
