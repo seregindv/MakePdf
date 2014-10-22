@@ -46,6 +46,7 @@ namespace MakePdf.Markup
             return result;
         }
 
+        [XmlIgnore]
         public List<Tag> EnsuredTags
         {
             get { return Tags ?? (Tags = new List<Tag>()); }

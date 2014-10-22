@@ -79,9 +79,9 @@ namespace MakePdf.Galleries
             do
             {
                 var processed = ProcessGalleryNode(navigator.CurrentNode, result);
-                if(processed)
+                if (processed)
                     tags = result.Last().EnsuredTags;
-var processChildren = !processed;
+                var processChildren = !processed;
                 if (!processed)
                     processed = ProcessTextNode(navigator.CurrentNode, tags);
                 if (!processed)

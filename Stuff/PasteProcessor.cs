@@ -54,7 +54,7 @@ namespace MakePdf.Stuff
         {
             using (var lineReader = new NonEmptyStringReader(htmlData))
             {
-                var lentaEx = new Regex(@"^SourceURL.+?(http:\/\/(www\.)?.+)$");
+                var lentaEx = new Regex(@"^SourceURL.+?(https?s:\/\/(www\.)?.+)$");
                 string line;
                 while ((line = lineReader.ReadLine()) != null)
                 {

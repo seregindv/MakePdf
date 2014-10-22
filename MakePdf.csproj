@@ -165,6 +165,7 @@
     <Compile Include="Galleries\LentaGallery.cs" />
     <Compile Include="Galleries\Loaders\ParallelGalleryLoader.cs" />
     <Compile Include="Galleries\Loaders\SingleThreadedGalleryLoader.cs" />
+    <Compile Include="Galleries\MedusaInterview.cs" />
     <Compile Include="Galleries\MkGallery.cs" />
     <Compile Include="Galleries\MotorArticleGallery.cs" />
     <Compile Include="Galleries\MotorGallery.cs" />
