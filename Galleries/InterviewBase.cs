@@ -12,6 +12,21 @@ using Newtonsoft.Json.Linq;
 
 namespace MakePdf.Galleries
 {
+    public struct NodeProcessResult
+    {
+        public NodeProcessResult(bool processed, bool processChildren)
+            : this()
+        {
+            Processed = processed;
+            ProcessChildren = processChildren;
+        }
+
+        public NodeProcessResult(bool processed) : this(processed, true) { }
+
+        public bool Processed { get; private set; }
+        public bool ProcessChildren { get; private set; }
+    }
+
     public abstract class InterviewBase : HtmlGallery
     {
         protected override IEnumerable<GalleryItem> GetItems()
@@ -23,7 +38,7 @@ namespace MakePdf.Galleries
             return GetItems(navigator, GetMainItem(document)).Cast<GalleryItem>();
         }
 
-        protected virtual bool ProcessTextNode(HtmlNode node, List<Tag> tags)
+        protected virtual NodeProcessResult ProcessTextNode(HtmlNode node, List<Tag> tags)
         {
             switch (node.Name)
             {
@@ -40,12 +55,17 @@ namespace MakePdf.Galleries
                     tags.Add(new HrefTag(node.GetAttributeValue("href", String.Empty)));
                     break;
                 case "h1":
-                    tags.Add(new ColorTag("grey").Wrap<ParagraphTag>());
+                    tags.Add(GetHeaderTag());
                     break;
                 default:
-                    return false;
+                    return new NodeProcessResult(false);
             }
-            return true;
+            return new NodeProcessResult(true);
+        }
+
+        protected Tag GetHeaderTag()
+        {
+            return new ColorTag("grey").Wrap<ParagraphTag>();
         }
 
         protected virtual bool ProcessGalleryNode(HtmlNode node, List<Tag> tags)
@@ -83,7 +103,11 @@ namespace MakePdf.Galleries
                     tags = result.Last().EnsuredTags;
                 var processChildren = !processed;
                 if (!processed)
-                    processed = ProcessTextNode(navigator.CurrentNode, tags);
+                {
+                    var processResult = ProcessTextNode(navigator.CurrentNode, tags);
+                    processed = processResult.Processed;
+                    processChildren = processResult.ProcessChildren;
+                }
                 if (!processed)
                 {
                     var text = Utils.Trim(navigator.CurrentNode.InnerText);

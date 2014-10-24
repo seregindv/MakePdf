@@ -107,7 +107,7 @@ namespace MakePdf.Stuff
 
         public static string Trim(string s)
         {
-            return s.Trim(' ', '\r', '\n', '\t');
+            return s.Replace("&nbsp;", String.Empty).Trim(' ', '\r', '\n', '\t');
         }
 
         public static string TruncateAfterEOL(string s)

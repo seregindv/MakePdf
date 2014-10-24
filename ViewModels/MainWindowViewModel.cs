@@ -293,7 +293,7 @@ namespace MakePdf.ViewModels
                 }
             }
             DocumentViewModel newDocument;
-            bool displayedIsGallery = GalleryAttribute.IsGallery(DisplayedDocument.AddressType);
+            var displayedIsGallery = GalleryAttribute.IsGallery(DisplayedDocument.AddressType);
 
             if (addressType == null)
                 newDocument = displayedIsGallery

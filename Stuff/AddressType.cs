@@ -49,6 +49,8 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(PhotofileGallery),Regex = @".*photo\.qip\.ru.*")]
         PhotofileGallery,
         [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview")]
-        MedusaInterview
+        MedusaInterview,
+        [Gallery(Type = typeof(RbcInterview), Title = "RBC interview")]
+        RbcInterview
     }
 }

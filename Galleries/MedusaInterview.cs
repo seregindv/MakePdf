@@ -42,10 +42,10 @@ namespace MakePdf.Galleries
             return base.ProcessGalleryNode(node, tags);
         }
 
-        protected override bool ProcessTextNode(HtmlNode node, List<Tag> tags)
+        protected override NodeProcessResult ProcessTextNode(HtmlNode node, List<Tag> tags)
         {
             if (node.Name == "br" || node.Name == "nobr")
-                return true;
+                return new NodeProcessResult(true);
 
             return base.ProcessTextNode(node, tags);
         }
