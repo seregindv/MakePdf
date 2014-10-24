@@ -109,7 +109,7 @@ namespace MakePdf.Stuff
 
         public static string Trim(string s)
         {
-            return s.Trim(' ', '\r', '\n', '\t');
+            return s.Replace("&nbsp;", String.Empty).Trim(' ', '\r', '\n', '\t');
         }
 
         public static string TruncateAfterEOL(string s)
@@ -222,6 +222,43 @@ namespace MakePdf.Stuff
             var doc = new HtmlDocument();
             doc.LoadHtml(HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(html)));
             return doc.DocumentNode.InnerText;
+        }
+
+        public static void DisableWPFTabletSupport()
+        {
+            // Get a collection of the tablet devices for this window.  
+            var devices = Tablet.TabletDevices;
+            if (devices.Count > 0)
+            {
+                // Get the Type of InputManager.
+                var inputManagerType = typeof(InputManager);
+
+                // Call the StylusLogic method on the InputManager.Current instance.
+                var stylusLogic = inputManagerType.InvokeMember("StylusLogic",
+                            BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                            null, InputManager.Current, null);
+
+                if (stylusLogic != null)
+                {
+                    //  Get the type of the stylusLogic returned from the call to StylusLogic.
+                    var stylusLogicType = stylusLogic.GetType();
+
+                    // Loop until there are no more devices to remove.
+                    while (devices.Count > 0)
+                        // Remove the first tablet device in the devices collection.
+                        stylusLogicType.InvokeMember("OnTabletRemoved",
+                            BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+                            null, stylusLogic, new object[] {(uint) 0});
+                }
+            }
+        }
+
+        public static void EnableFocusTracking()
+        {
+            var cp = new InputPanelConfiguration();
+            var icp = cp as IInputPanelConfiguration;
+            if (icp != null)
+                icp.EnableFocusTracking();
         }
     }
 }

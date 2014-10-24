@@ -16,6 +16,7 @@ namespace MakePdf.Configuration
         decimal ScreenWidth { get; }
         decimal ScreenHeight { get; }
         bool AddDeviceToPdfName { get; }
+        bool TabletAutoOnScreenKeyboard { get; }
 
         string GetTemplate(TemplateType type);
     }

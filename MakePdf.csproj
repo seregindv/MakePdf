@@ -169,12 +169,14 @@
     <Compile Include="Galleries\LentaGallery.cs" />
     <Compile Include="Galleries\Loaders\ParallelGalleryLoader.cs" />
     <Compile Include="Galleries\Loaders\SingleThreadedGalleryLoader.cs" />
+    <Compile Include="Galleries\MedusaInterview.cs" />
     <Compile Include="Galleries\MkGallery.cs" />
     <Compile Include="Galleries\MotorArticleGallery.cs" />
     <Compile Include="Galleries\MotorGallery.cs" />
     <Compile Include="Galleries\NovayaGazetaGallery.cs" />
     <Compile Include="Galleries\PhotofileGallery.cs" />
     <Compile Include="Galleries\RbcPhotoreportGallery.cs" />
+    <Compile Include="Galleries\RbcInterview.cs" />
     <Compile Include="Galleries\RiaGallery.cs" />
     <Compile Include="Galleries\SlonAuthorGallery.cs" />
     <Compile Include="Galleries\TextGallery.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Serialization\XmlSerializerWrapper.cs" />
     <Compile Include="Sizing\ImageSize.cs" />
     <Compile Include="Stuff\AddressType.cs" />
+    <Compile Include="Stuff\InputPanelConfiguration.cs" />
     <Compile Include="Stuff\LineReader.cs" />
     <Compile Include="Controls\ManualPasteTextBox.cs" />
     <Compile Include="Converters\StringLengthToVisibilityConverter.cs" />

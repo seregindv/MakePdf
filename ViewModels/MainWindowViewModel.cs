@@ -73,6 +73,11 @@ namespace MakePdf.ViewModels
             );
             DeviceConfiguration = _config.DeviceConfiguration;
             SelectedDevice = _config.SelectedDevice;
+            if(_config.TabletAutoOnScreenKeyboard)
+            {
+                Utils.DisableWPFTabletSupport();
+                Utils.EnableFocusTracking();
+            }
         }
 
         private void OnPicture(object obj)
@@ -303,7 +308,7 @@ namespace MakePdf.ViewModels
                 }
             }
             DocumentViewModel newDocument;
-            bool displayedIsGallery = GalleryAttribute.IsGallery(DisplayedDocument.AddressType);
+            var displayedIsGallery = GalleryAttribute.IsGallery(DisplayedDocument.AddressType);
 
             if (addressType == null)
                 newDocument = displayedIsGallery

@@ -43,7 +43,9 @@
                 or /Gallery/Gallery/@xsi:type = 'MotorArticleGallery'
                 or /Gallery/Gallery/@xsi:type = 'LentaInterview'
                 or /Gallery/Gallery/@xsi:type = 'SlonAuthorGallery'
-                or /Gallery/Gallery/@xsi:type = 'LentaBeelineGallery'">True</xsl:when>
+                or /Gallery/Gallery/@xsi:type = 'LentaBeelineGallery'
+                or /Gallery/Gallery/@xsi:type = 'MedusaInterview'
+                or /Gallery/Gallery/@xsi:type = 'RbcInterview'">True</xsl:when>
       <xsl:otherwise>False</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -227,16 +229,14 @@
           </inline>
         </xsl:when>
         <xsl:when test="./@xsi:type = 'Text'">
-          <xsl:choose>
-            <xsl:when test="./Tags/Tag">
-              <xsl:call-template name="ProcessTags">
-                <xsl:with-param name="Tags" select="./Tags" />
-              </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="." />
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:for-each select="text()">
+            <xsl:value-of select="." />
+          </xsl:for-each>
+          <xsl:if test="./Tags/Tag">
+            <xsl:call-template name="ProcessTags">
+              <xsl:with-param name="Tags" select="./Tags" />
+            </xsl:call-template>
+          </xsl:if>
         </xsl:when>
         <xsl:when test="./@xsi:type = 'Ref'">
           <xsl:element name="basic-link">

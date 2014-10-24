@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using System.Xml.Xsl;
@@ -35,6 +36,11 @@ namespace MakePdf.ViewModels
 
         public string HtmlContents { get; set; }
 
+        private string GetFonetSafeFolderName(string name)
+        {
+            return Regex.Replace(name, @"\s*[\(\)]\s*", " ").Trim();
+        }
+
         protected override void RenderDocument(string directory)
         {
             try
@@ -44,7 +50,7 @@ namespace MakePdf.ViewModels
                 Status = DocumentStatus.Loading;
                 if (Gallery == null)
                     Gallery = Gallery.Create(AddressType);
-                Gallery.Load(this, Utils.GetFullPath(directory, Name));
+                Gallery.Load(this, Utils.GetFullPath(directory, GetFonetSafeFolderName(Name)));
 #if DEBUG
                 var galleryLoader = new SingleThreadedGalleryLoader();
 #else

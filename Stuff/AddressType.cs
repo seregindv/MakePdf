@@ -32,7 +32,7 @@ namespace MakePdf.Stuff
         TextGallery,
         [Gallery(Type = typeof(MotorArticleGallery), Regex = @".*motor.ru\/articles\/.*")]
         MotorArticleGallery,
-        [Gallery(Type = typeof(LentaInterview), Title = "interview")]
+        [Gallery(Type = typeof(LentaInterview), Title = "Lenta interview")]
         LentaInterview,
         [Gallery(Type = typeof(RiaGallery), Regex = @".*ria\.ru\/photolents\/.*")]
         RiaGallery,
@@ -49,6 +49,10 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(PhotofileGallery),Regex = @".*photo\.qip\.ru.*")]
         PhotofileGallery,
         [Gallery(Type = typeof(RbcPhotoreportGallery),Regex = @".*rbc\.ru\/photoreport.*")]
-        RbcPhotoreportGallery
+        RbcPhotoreportGallery,
+        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview")]
+        MedusaInterview,
+        [Gallery(Type = typeof(RbcInterview), Title = "RBC interview")]
+        RbcInterview
     }
 }

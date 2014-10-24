@@ -44,7 +44,7 @@ namespace MakePdf.Galleries
             return GetHtmlDocument(url, "interview");
         }
 
-        protected override bool ProcessTextNode(HtmlNode node, List<Tag> tags)
+        protected override NodeProcessResult ProcessTextNode(HtmlNode node, List<Tag> tags)
         {
             if (node.Name == "p")
             {
@@ -52,14 +52,14 @@ namespace MakePdf.Galleries
                 if (classAttr != null && classAttr.Value == "question")
                 {
                     tags.Add(new ItalicTag().Wrap<BoldTag>().Wrap<ParagraphTag>());
-                    return true;
+                    return new NodeProcessResult(true);
                 }
             }
 
             if (node.Name == "blockquote")
             {
                 tags.Add(new ParagraphTag());
-                return true;
+                return new NodeProcessResult(true);
             }
 
             return base.ProcessTextNode(node, tags);
