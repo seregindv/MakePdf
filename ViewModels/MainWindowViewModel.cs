@@ -71,6 +71,11 @@ namespace MakePdf.ViewModels
             );
             DeviceConfiguration = _config.DeviceConfiguration;
             SelectedDevice = _config.SelectedDevice;
+            if(_config.TabletAutoOnScreenKeyboard)
+            {
+                Utils.DisableWPFTabletSupport();
+                Utils.EnableFocusTracking();
+            }
         }
 
         private void OnPicture(object obj)

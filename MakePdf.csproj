@@ -195,6 +195,7 @@
     <Compile Include="Serialization\XmlSerializerWrapper.cs" />
     <Compile Include="Sizing\ImageSize.cs" />
     <Compile Include="Stuff\AddressType.cs" />
+    <Compile Include="Stuff\InputPanelConfiguration.cs" />
     <Compile Include="Stuff\LineReader.cs" />
     <Compile Include="Controls\ManualPasteTextBox.cs" />
     <Compile Include="Converters\StringLengthToVisibilityConverter.cs" />

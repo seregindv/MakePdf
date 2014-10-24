@@ -65,6 +65,13 @@ namespace MakePdf.Configuration
             private set { _screenWidth = value; }
         }
 
+        public bool TabletAutoOnScreenKeyboard {
+            get
+            {
+                return ToBoolean("TabletAutoOnScreenKeyboard");
+            }
+        }
+
         public string GetTemplate(TemplateType type)
         {
             if (SelectedDevice != null && SelectedDevice.Templates != null)
