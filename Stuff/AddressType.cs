@@ -32,7 +32,7 @@ namespace MakePdf.Stuff
         TextGallery,
         [Gallery(Type = typeof(MotorArticleGallery), Regex = @".*motor.ru\/articles\/.*")]
         MotorArticleGallery,
-        [Gallery(Type = typeof(LentaInterview), Title = "Lenta interview")]
+        [Gallery(Type = typeof(LentaInterview), Title = "Lenta interview", Group = "interview", Regex = @".*lenta\.ru\/.*")]
         LentaInterview,
         [Gallery(Type = typeof(RiaGallery), Regex = @".*ria\.ru\/photolents\/.*")]
         RiaGallery,
@@ -46,11 +46,11 @@ namespace MakePdf.Stuff
         LentaBeelineGallery,
         [Gallery(Type = typeof(ItarTassGallery), Regex = @".*itar\-tass\.com\/.*")]
         ItarTassGallery,
-        [Gallery(Type = typeof(PhotofileGallery),Regex = @".*photo\.qip\.ru.*")]
+        [Gallery(Type = typeof(PhotofileGallery), Regex = @".*photo\.qip\.ru.*")]
         PhotofileGallery,
-        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview")]
+        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview", Group = "interview", Regex = @".*meduza\.io\/.*")]
         MedusaInterview,
-        [Gallery(Type = typeof(RbcInterview), Title = "RBC interview")]
+        [Gallery(Type = typeof(RbcInterview), Title = "RBC interview", Group = "interview", Regex = @".*rbc\.ru\/.*")]
         RbcInterview
     }
 }

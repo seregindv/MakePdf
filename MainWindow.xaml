@@ -23,7 +23,7 @@
             <Style x:Key="menuStyle" TargetType="MenuItem">
                 <Setter Property="Header" Value="{Binding Title}" />
                 <Setter Property="Command" Value="{Binding Command}" />
-                <Setter Property="CommandParameter" Value="{Binding AddressType}" />
+                <Setter Property="CommandParameter" Value="{Binding}" />
                 <Setter Property="FontWeight" Value="{Binding IsDefault, Converter={StaticResource defaultToFontWeight}}" />
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />

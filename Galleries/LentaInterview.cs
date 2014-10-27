@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
@@ -67,21 +68,44 @@ namespace MakePdf.Galleries
 
         protected override bool ProcessGalleryNode(HtmlNode node, List<Tag> tags)
         {
-            if (node.Name == "aside" && node.GetAttributeValue("class", String.Empty).Contains("b-inline-gallery-box"))
+            if (node.Name == "aside")
             {
-                var data = node.GetAttributeValue("data-box", String.Empty);
-                if (!String.IsNullOrEmpty(data))
+                var className = node.GetAttributeValue("class", String.Empty);
+                if (className.Contains("b-inline-gallery-box"))
                 {
-                    var json = JToken.Parse(HttpUtility.HtmlDecode(node.GetAttributeValue("data-box", String.Empty)));
-                    var images = json.Children()
-                        .Select(jsonItem =>
-                            new GalleryItem(jsonItem.Value<string>("original_url"),
-                                jsonItem.Value<string>("caption"),
-                                jsonItem.Value<int>("original_width"),
-                                jsonItem.Value<int>("original_height")));
-                    var oldCount = tags.Count;
-                    tags.AddRange(images);
-                    return oldCount != tags.Count;
+                    var data = node.GetAttributeValue("data-box", String.Empty);
+                    if (!String.IsNullOrEmpty(data))
+                    {
+                        var json = JToken.Parse(HttpUtility.HtmlDecode(node.GetAttributeValue("data-box", String.Empty)));
+                        var images = json.Children()
+                            .Select(jsonItem =>
+                                new GalleryItem(jsonItem.Value<string>("original_url"),
+                                    jsonItem.Value<string>("caption"),
+                                    jsonItem.Value<int>("original_width"),
+                                    jsonItem.Value<int>("original_height")));
+                        var oldCount = tags.Count;
+                        tags.AddRange(images);
+                        return oldCount != tags.Count;
+                    }
+                }
+                else if (className.Contains("b-inline-image-box"))
+                {
+                    var imageNode = node.SelectSingleNode("img");
+                    if (imageNode != null)
+                    {
+                        tags.Add(new GalleryItem(imageNode.GetAttributeValue("src", String.Empty),
+                            imageNode.GetAttributeValue("alt", String.Empty),
+                            imageNode.GetAttributeValue("width", 0),
+                            imageNode.GetAttributeValue("height", 0)));
+                        return true;
+                    }
+                    var divNode = node.SelectSingleNode("div[@class='picture js-zoom']");
+                    if (divNode != null)
+                    {
+                        tags.Add(new GalleryItem(divNode.GetAttributeValue("data-url", String.Empty),
+                            divNode.GetAttributeValue("data-alt", String.Empty)));
+                        return true;
+                    }
                 }
             }
             return base.ProcessGalleryNode(node, tags);

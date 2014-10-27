@@ -60,9 +60,21 @@ namespace MakePdf.ViewModels
                 }
             };
             AddMenuItems.AddRange(
+                (from addressType in GalleryAttribute.GetDecorated()
+                 let groupName = GalleryAttribute.GetGroup(addressType)
+                 where groupName != null
+                 select groupName)
+                .Distinct()
+                .Select(groupName => new MenuItemViewModel(AddCommand)
+                {
+                    Group = groupName,
+                    Title = "As " + groupName
+                })
+            );
+            AddMenuItems.AddRange(
                 from addressType in GalleryAttribute.GetDecorated()
                 let title = GalleryAttribute.GetTitle(addressType)
-                where title != null
+                where title != null && GalleryAttribute.GetGroup(addressType) == null
                 select new MenuItemViewModel(AddCommand)
                 {
                     AddressType = @addressType,
@@ -71,7 +83,7 @@ namespace MakePdf.ViewModels
             );
             DeviceConfiguration = _config.DeviceConfiguration;
             SelectedDevice = _config.SelectedDevice;
-            if(_config.TabletAutoOnScreenKeyboard)
+            if (_config.TabletAutoOnScreenKeyboard)
             {
                 Utils.DisableWPFTabletSupport();
                 Utils.EnableFocusTracking();
@@ -283,7 +295,15 @@ namespace MakePdf.ViewModels
 
         private void OnAdd(object data)
         {
-            var addressType = data as AddressType?;
+            var menuItem = data as MenuItemViewModel;
+            AddressType? addressType = null;
+            if (menuItem != null)
+            {
+                if (menuItem.AddressType != null)
+                    addressType = menuItem.AddressType;
+                else if (menuItem.Group != null)
+                    addressType = GalleryAttribute.GetAddressType(DisplayedDocument.SourceAddress, menuItem.Group);
+            }
             AddItem(addressType);
         }
 

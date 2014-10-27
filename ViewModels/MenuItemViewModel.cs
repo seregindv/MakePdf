@@ -17,6 +17,7 @@ namespace MakePdf.ViewModels
         public string Title { set; get; }
         public bool IsDefault { set; get; }
         public AddressType? AddressType { set; get; }
+        public string Group { set; get; }
         public DelegateCommand Command { set; get; }
     }
 }

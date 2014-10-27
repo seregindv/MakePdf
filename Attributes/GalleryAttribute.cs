@@ -12,7 +12,8 @@ namespace MakePdf.Attributes
     {
         public Type Type { set; get; }
         public string Regex { set; get; }
-        public string Title { get; set; }
+        public string Title { set; get; }
+        public string Group { set; get; }
 
         public GalleryAttribute()
         {
@@ -46,12 +47,13 @@ namespace MakePdf.Attributes
                 .Select(@item => @item.Item2.Type).ToArray();
         }
 
-        public static AddressType GetAddressType(string url)
+        public static AddressType GetAddressType(string url, string groupName = null)
         {
             var result = Utils.FindFirstField(GetDecoratedInternal(),
-                                              @tuple => @tuple.Regex != null &&
-                                              System.Text.RegularExpressions.Regex.Match(url, @tuple.Regex,
-                                                System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success);
+                attr => attr.Regex != null
+                    && attr.Group == groupName
+                    && System.Text.RegularExpressions.Regex.Match(url, attr.Regex,
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success);
             return result == null ? AddressType.TextGallery : result.Item1;
         }
 
@@ -63,6 +65,11 @@ namespace MakePdf.Attributes
         public static string GetTitle(AddressType addressType)
         {
             return GetDecoratedInternal().First(@t => @t.Item1 == addressType).Item2.Title;
+        }
+
+        public static string GetGroup(AddressType addressType)
+        {
+            return GetDecoratedInternal().First(@t => @t.Item1 == addressType).Item2.Group;
         }
 
         public static bool IsGallery(AddressType addressType)
