@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using System.Xml.Xsl;
@@ -41,7 +43,7 @@ namespace MakePdf.ViewModels
             return Regex.Replace(name, @"\s*[\(\)]\s*", " ").Trim();
         }
 
-        protected override void RenderDocument(string directory)
+        protected override void RenderDocument(string directory, CancellationToken ct)
         {
             try
             {
@@ -52,9 +54,9 @@ namespace MakePdf.ViewModels
                     Gallery = Gallery.Create(AddressType);
                 Gallery.Load(this, Utils.GetFullPath(directory, GetFonetSafeFolderName(Name)));
 #if DEBUG
-                var galleryLoader = new SingleThreadedGalleryLoader();
+                var galleryLoader = new SingleThreadedGalleryLoader(ct);
 #else
-                var galleryLoader = new ParallelGalleryLoader();
+                var galleryLoader = new ParallelGalleryLoader(ct);
 #endif
                 galleryLoader.GalleryItemLoaded += galleryLoader_GalleryItemLoaded;
                 galleryLoader.LoadGallery(Gallery);

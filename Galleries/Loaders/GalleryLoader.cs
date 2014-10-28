@@ -25,6 +25,12 @@ namespace MakePdf.Galleries.Loaders
     {
         Gallery _galleryBeingLoaded;
         int _loadedCount;
+        protected CancellationToken _ct;
+
+        protected GalleryLoader(CancellationToken ct)
+        {
+            _ct = ct;
+        }
 
         public event EventHandler<GalleryItemLoadedEventArgs> GalleryItemLoaded;
 

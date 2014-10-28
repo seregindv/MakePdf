@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Xml.Serialization;
 using MakePdf.Configuration;
 using MakePdf.Pooling.Pools;
@@ -27,7 +28,7 @@ namespace MakePdf.ViewModels
             return result;
         }
 
-        protected override void RenderDocument(string directory)
+        protected override void RenderDocument(string directory, CancellationToken ct)
         {
             Status = DocumentStatus.InProcess;
             Exception = null;

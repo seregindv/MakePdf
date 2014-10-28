@@ -172,10 +172,10 @@ namespace MakePdf.ViewModels
                 else
                     SourceName = SourceAddress;
             }
-            RenderDocument(directory);
+            RenderDocument(directory, ct);
         }
 
-        protected abstract void RenderDocument(string directory);
+        protected abstract void RenderDocument(string directory, CancellationToken ct);
 
         public abstract DocumentViewModel Clone();
 
