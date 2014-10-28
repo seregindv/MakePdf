@@ -1,12 +1,16 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using HtmlAgilityPack;
 using MakePdf.Markup;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries
 {
@@ -63,7 +67,13 @@ namespace MakePdf.Galleries
 
             if (node.Name == "div")
             {
-                tags.Add(TagFactory.GetParagraphTag(HttpUtility.HtmlDecode(node.InnerText)));
+                var match = Regex.Match(node.GetAttributeValue("style", String.Empty),
+                    @"background:\s*rgb\((\d+),\s*(\d+),\s*(\d+)\)");
+                var tag = TagFactory.GetParagraphTag(HttpUtility.HtmlDecode(node.InnerText));
+                tag.BackgroundColor = match.Success
+                    ? Utils.GetColorAsString(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value)
+                    : String.Empty;
+                tags.Add(tag);
                 return new NodeProcessResult(true, false);
             }
 

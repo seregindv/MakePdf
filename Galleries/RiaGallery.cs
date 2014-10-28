@@ -39,7 +39,7 @@ namespace MakePdf.Galleries
             return Regex
                 .Split(desc.Replace("\\", String.Empty), @"(&lt;br\s*\/?&gt;)+\s*")
                 .Where((@token, @index) => @index % 2 == 0)
-                .Select(tag => TagFactory.GetParagraphTag(tag))
+                .Select(tag => (Tag)TagFactory.GetParagraphTag(tag))
                 .ToList();
         }
     }

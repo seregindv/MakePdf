@@ -142,6 +142,13 @@
           <xsl:if test="Tags/Tag">
             <xsl:element name="block">
               <xsl:attribute name="text-indent">4mm</xsl:attribute>
+              <xsl:if test="@BackgroundColor">
+                <xsl:attribute name="background-color">
+                  <xsl:value-of select="@BackgroundColor" />
+                </xsl:attribute>
+                <xsl:attribute name="padding-left">0.8mm</xsl:attribute>
+                <xsl:attribute name="padding-right">0.8mm</xsl:attribute>
+              </xsl:if>
               <xsl:call-template name="Color" />
               <xsl:call-template name="ProcessTags">
                 <xsl:with-param name="Tags" select="./Tags" />

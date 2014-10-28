@@ -25,10 +25,10 @@ namespace MakePdf.ViewModels
     [XmlInclude(typeof(TextDocumentViewModel))]
     public abstract class DocumentViewModel : BaseViewModel, ISerializationControl, IHasTags
     {
-        //static readonly DelegateThreadedPool<FonetDriver> _fonetDriverPool = new DelegateThreadedPool<FonetDriver>(() => new FonetDriver { Options = new PdfRendererOptions { FontType = FontType.Subset } });
+        //static readonly DelegateThreadedPool<FonetDriver> _fonetDriverPool = new DelegateThreadedPool<FonetDriver>(Utils.GetFonetDriver);
         //static readonly DelegateThreadedPool<Pdfer> _pdferPool = new DelegateThreadedPool<Pdfer>(() => new Pdfer(Config.Instance.AppSettings["Template"]));
 
-        protected static readonly ObjectPool<FonetDriver> _fonetDriverPool = ObjectPool<FonetDriver>.Get(() => new FonetDriver { Options = new PdfRendererOptions { FontType = FontType.Subset } });
+        protected static readonly ObjectPool<FonetDriver> _fonetDriverPool = ObjectPool<FonetDriver>.Get(Utils.GetFonetDriver);
 
         protected DocumentViewModel()
         {

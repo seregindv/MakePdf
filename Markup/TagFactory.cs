@@ -17,7 +17,7 @@ namespace MakePdf.Markup
             return s.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static Tag GetParagraphTag(string text, bool parseHyperlinks = false)
+        public static ParagraphTag GetParagraphTag(string text, bool parseHyperlinks = false)
         {
             if (!parseHyperlinks)
                 return GetTextTag(text).Wrap<ParagraphTag>();
@@ -42,7 +42,7 @@ namespace MakePdf.Markup
 
         public static List<Tag> GetParagraphTags(IEnumerable<string> lines, bool parseHyperlinks = false)
         {
-            return lines.Select(line => GetParagraphTag(line, parseHyperlinks)).ToList();
+            return lines.Select(line => (Tag)GetParagraphTag(line, parseHyperlinks)).ToList();
         }
 
         public static List<Tag> GetParagraphTags(string s, bool trim = false, bool parseHyperlinks = false)
@@ -58,7 +58,7 @@ namespace MakePdf.Markup
             return new TextTag(s);
         }
 
-        public static Tag Wrap<T>(this List<Tag> tags) where T : Tag, new()
+        public static T Wrap<T>(this List<Tag> tags) where T : Tag, new()
         {
             return new T { Tags = tags };
         }

@@ -139,6 +139,7 @@
     <Compile Include="Controls\AutonavigateHyperlinkBehavior.cs" />
     <Compile Include="Controls\Buttons\SplitButton.cs" />
     <Compile Include="Controls\DoubleClickCollapseGridSplitterBehavior.cs" />
+    <Compile Include="Controls\FileDropBehavior.cs" />
     <Compile Include="Controls\TextBoxHyperlinkBehavior.cs" />
     <Compile Include="Converters\BoolToVisibilityConvertercs.cs" />
     <Compile Include="Converters\DefaultToFontWeightConverter.cs" />

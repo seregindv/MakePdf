@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Fonet;
+using Fonet.Render.Pdf;
 using MakePdf.Markup;
 
 namespace MakePdf.Stuff
@@ -239,7 +241,7 @@ namespace MakePdf.Stuff
                         // Remove the first tablet device in the devices collection.
                         stylusLogicType.InvokeMember("OnTabletRemoved",
                             BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
-                            null, stylusLogic, new object[] {(uint) 0});
+                            null, stylusLogic, new object[] { (uint)0 });
                 }
             }
         }
@@ -250,6 +252,19 @@ namespace MakePdf.Stuff
             var icp = cp as IInputPanelConfiguration;
             if (icp != null)
                 icp.EnableFocusTracking();
+        }
+
+        public static FonetDriver GetFonetDriver()
+        {
+            return new FonetDriver { Options = new PdfRendererOptions { FontType = FontType.Subset } };
+        }
+
+        public static string GetColorAsString(string r, string g, string b)
+        {
+            return "#" + (Byte.Parse(r) << 16 |
+                   Byte.Parse(g) << 8 |
+                   Byte.Parse(b)).ToString("X6");
+
         }
     }
 }

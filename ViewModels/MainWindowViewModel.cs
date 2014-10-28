@@ -6,12 +6,15 @@ using System.Configuration;
 using System.IO;
 using System.Net.Mime;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Reactive.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Fonet;
 using MakePdf.Attributes;
 using MakePdf.Configuration;
 using MakePdf.Controls;
@@ -37,7 +40,7 @@ namespace MakePdf.ViewModels
             Documents.CollectionChanged += Documents_CollectionChanged;
             SkipEmptyLines = true;
             AddCommand = new DelegateCommand(OnAdd, _ => IsContentPresent() || IsTitlePresent());
-            RenderCommand = new DelegateCommand(OnRender, _ => Documents.Count > 0 && !DirectoryError);
+            RenderCommand = new DelegateCommand(OnRender, _ => !DirectoryError);
             RemoveCommand = new DelegateCommand(OnRemove, IsDocumentSelected);
             ChangeCommand = new DelegateCommand(OnChange, IsDocumentSelected);
             SaveCommand = new DelegateCommand(OnSave, _ => !DirectoryError);
@@ -48,6 +51,7 @@ namespace MakePdf.ViewModels
             ReverseParagraphsCommand = new DelegateCommand(OnReverseParagraphs, IsContentPresent);
             PictureCommand = new DelegateCommand(OnPicture);
             UnpictureCommand = new DelegateCommand(OnUnpicture);
+            RenderFilesCommand = new DelegateCommand(OnRenderFiles);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
             IsTablet = Utils.IsTablet;
 
@@ -113,7 +117,6 @@ namespace MakePdf.ViewModels
 
         void Documents_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RaiseCanExecuteChanged(RenderCommand);
             RaiseCanExecuteChanged(RemoveAllCommand);
         }
 
@@ -129,6 +132,7 @@ namespace MakePdf.ViewModels
         public DelegateCommand ReverseParagraphsCommand { private set; get; }
         public DelegateCommand PictureCommand { private set; get; }
         public DelegateCommand UnpictureCommand { private set; get; }
+        public DelegateCommand RenderFilesCommand { private set; get; }
         public List<MenuItemViewModel> AddMenuItems { private set; get; }
         public string Directory
         {
@@ -419,6 +423,35 @@ namespace MakePdf.ViewModels
         private void OnClear(object data)
         {
             Clear();
+        }
+
+        private void OnRenderFiles(object data)
+        {
+            var files = data as string[];
+            if (files == null)
+                return;
+            Task.Factory.StartNew(() => files.AsParallel().ForAll(file =>
+                Utils.GetFonetDriver().Render(file, file + ".pdf")))
+                .ContinueWith(t =>
+                {
+                    try
+                    {
+                        t.Wait();
+                    }
+                    catch (AggregateException ex)
+                    {
+                        var contents = DisplayedDocument.Contents;
+                        DisplayedDocument.Contents = ex.InnerExceptions.Aggregate(new StringBuilder(contents),
+                            (sb, exc) =>
+                            {
+                                sb.AppendLine(exc.Message);
+                                if (exc.InnerException != null)
+                                    sb.AppendLine(exc.InnerException.Message);
+                                return sb;
+                            },
+                            b => b.ToString());
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnReverseParagraphs(object data)

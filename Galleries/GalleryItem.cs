@@ -69,7 +69,7 @@ namespace MakePdf.Galleries
             throw GetWrappingException();
         }
 
-        public override Tag Wrap<T>()
+        public override T Wrap<T>()
         {
             throw GetWrappingException();
         }

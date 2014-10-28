@@ -27,7 +27,7 @@ namespace MakePdf.Markup
     {
         public List<Tag> Tags { set; get; }
 
-        public virtual Tag Wrap<T>() where T : Tag, new()
+        public virtual T Wrap<T>() where T : Tag, new()
         {
             return new T { Tags = this.ToTags() };
         }
@@ -58,6 +58,9 @@ namespace MakePdf.Markup
     {
         [XmlAttribute]
         public string Color { set; get; }
+
+        [XmlAttribute]
+        public string BackgroundColor { set; get; }
     }
 
     [XmlType(TypeName = "Bold")]
