@@ -104,7 +104,7 @@
           </xsl:element>
         </xsl:if>
         <!--description-->
-        <xsl:if test="Tags/Tag or (last() = position() and /Gallery/SourceAddress)">
+        <xsl:if test="Tags/Tag or (last() = position() and /Gallery/SourceAddress and /Gallery/SourceAddress != '')">
           <xsl:element name="page-sequence">
             <xsl:attribute name="master-reference">
               <xsl:choose>
@@ -211,7 +211,7 @@
   </xsl:template>
 
   <xsl:template name="SourceParagraph">
-    <xsl:if test="/Gallery/SourceAddress">
+    <xsl:if test="/Gallery/SourceAddress and /Gallery/SourceAddress != ''">
       <block text-indent="4mm">
         Источник: <xsl:element name="basic-link">
           <xsl:attribute name="text-decoration">underline</xsl:attribute>
