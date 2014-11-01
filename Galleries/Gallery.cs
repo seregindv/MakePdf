@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using HtmlAgilityPack;
 using MakePdf.Attributes;
 using MakePdf.Sizing;
 using MakePdf.Stuff;

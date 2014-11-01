@@ -32,7 +32,7 @@ namespace MakePdf.ViewModels
 
         protected DocumentViewModel()
         {
-            Status = DocumentStatus.New;
+            Status = ProcessingStatus.New;
         }
 
         public AddressType AddressType { set; get; }
@@ -109,9 +109,9 @@ namespace MakePdf.ViewModels
             }
         }
 
-        private DocumentStatus _status;
+        private ProcessingStatus _status;
 
-        public DocumentStatus Status
+        public ProcessingStatus Status
         {
             get { return _status; }
             set
@@ -158,7 +158,7 @@ namespace MakePdf.ViewModels
         {
             if (ct.IsCancellationRequested)
             {
-                Status = DocumentStatus.Cancelled;
+                Status = ProcessingStatus.Cancelled;
                 return;
             }
             ScreenWidth = Config.Instance.ScreenWidth;
@@ -225,7 +225,7 @@ namespace MakePdf.ViewModels
         }
     }
 
-    public enum DocumentStatus
+    public enum ProcessingStatus
     {
         New,
         Loading,

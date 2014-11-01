@@ -273,6 +273,17 @@ namespace MakePdf.ViewModels
             }
         }
 
+        private ProcessingStatus _dragDropActionStatus;
+        public ProcessingStatus DragDropActionStatus
+        {
+            set
+            {
+                _dragDropActionStatus = value;
+                OnPropertyChanged("DragDropActionStatus");
+            }
+            get { return _dragDropActionStatus; }
+        }
+
         public bool SkipEmptyLines { set; get; }
 
         public bool OpenExplorer { set; get; }
@@ -350,7 +361,7 @@ namespace MakePdf.ViewModels
                     else
                         newDocument = DisplayedDocumentToGallery(addressType.Value);
             newDocument.Exception = null;
-            newDocument.Status = DocumentStatus.New;
+            newDocument.Status = ProcessingStatus.New;
             Documents.Add(newDocument);
             Clear();
         }
@@ -430,16 +441,19 @@ namespace MakePdf.ViewModels
             var files = data as string[];
             if (files == null)
                 return;
+            DragDropActionStatus = ProcessingStatus.InProcess;
             Task.Factory.StartNew(() => files.AsParallel().ForAll(file =>
-                Utils.GetFonetDriver().Render(file, file + ".pdf")))
+                Utils.GetFonetDriver().Render(file, file + ".pdf")), TaskCreationOptions.PreferFairness)
                 .ContinueWith(t =>
                 {
                     try
                     {
                         t.Wait();
+                        DragDropActionStatus = ProcessingStatus.Complete;
                     }
                     catch (AggregateException ex)
                     {
+                        DragDropActionStatus = ProcessingStatus.Error;
                         var contents = DisplayedDocument.Contents;
                         DisplayedDocument.Contents = ex.InnerExceptions.Aggregate(new StringBuilder(contents),
                             (sb, exc) =>

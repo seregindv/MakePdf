@@ -141,6 +141,7 @@
     <Compile Include="Controls\DoubleClickCollapseGridSplitterBehavior.cs" />
     <Compile Include="Controls\FileDropBehavior.cs" />
     <Compile Include="Controls\TextBoxHyperlinkBehavior.cs" />
+    <Compile Include="Converters\ArithmeticConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConvertercs.cs" />
     <Compile Include="Converters\DefaultToFontWeightConverter.cs" />
     <Compile Include="Converters\EnumDescriptionAttributeConverter.cs" />
@@ -154,6 +155,9 @@
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
     <Compile Include="Galleries\Helpers\LentaPictureProcessor.cs" />
+    <Compile Include="Galleries\HrefGallery.cs" />
+    <Compile Include="Galleries\HtmlSourceGallery.cs" />
+    <Compile Include="Galleries\ImgGallery.cs" />
     <Compile Include="Galleries\InterviewBase.cs" />
     <Compile Include="Galleries\ItarTassGallery.cs" />
     <Compile Include="Galleries\LentaArticleGallery.cs" />

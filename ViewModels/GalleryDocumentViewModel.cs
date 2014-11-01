@@ -49,7 +49,7 @@ namespace MakePdf.ViewModels
             {
                 Exception = null;
 
-                Status = DocumentStatus.Loading;
+                Status = ProcessingStatus.Loading;
                 if (Gallery == null)
                     Gallery = Gallery.Create(AddressType);
                 Gallery.Load(this, Utils.GetFullPath(directory, GetFonetSafeFolderName(Name)));
@@ -61,7 +61,7 @@ namespace MakePdf.ViewModels
                 galleryLoader.GalleryItemLoaded += galleryLoader_GalleryItemLoaded;
                 galleryLoader.LoadGallery(Gallery);
 
-                Status = DocumentStatus.InProcess;
+                Status = ProcessingStatus.InProcess;
                 using (var foStream = new MemoryStream())
                 {
                     using (var serializedThis = new MemoryStream())
@@ -102,11 +102,11 @@ namespace MakePdf.ViewModels
                     }
                 }
 
-                Status = DocumentStatus.Complete;
+                Status = ProcessingStatus.Complete;
             }
             catch (Exception ex)
             {
-                Status = DocumentStatus.Error;
+                Status = ProcessingStatus.Error;
                 Exception = ex;
             }
         }
@@ -127,7 +127,7 @@ namespace MakePdf.ViewModels
         protected override void OnPropertyChanged(string propertyName)
         {
             if (propertyName == "Status")
-                IsLoading = Status == DocumentStatus.Loading;
+                IsLoading = Status == ProcessingStatus.Loading;
             base.OnPropertyChanged(propertyName);
         }
 

@@ -27,6 +27,7 @@
                 <Setter Property="FontWeight" Value="{Binding IsDefault, Converter={StaticResource defaultToFontWeight}}" />
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
+            <converters:ArithmeticConverter x:Key="ArithmeticConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -202,8 +203,62 @@
                     </interactivity:Interaction.Behaviors>
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Content" Value="Render"></Setter>
+                            <Setter Property="Content" Value="Render" />
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="ScaleTransform" 
+                                            CenterX="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=ActualWidth, Converter={StaticResource ArithmeticConverter}, ConverterParameter=2}"
+                                            CenterY="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=ActualHeight, Converter={StaticResource ArithmeticConverter}, ConverterParameter=2}" />
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Opacity="0" Direction="270" ShadowDepth="0" Color="#ff0000" BlurRadius="20" />
+                                </Setter.Value>
+                            </Setter>
                             <Style.Triggers>
+                                <EventTrigger RoutedEvent="Drop">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX" To="1.2" Duration="0:0:0.1" BeginTime="0:0:0" />
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY" To="1.2" Duration="0:0:0.1" BeginTime="0:0:0" />
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX" Duration="0:0:0.1" BeginTime="0:0:0.1" />
+                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY" Duration="0:0:0.1" BeginTime="0:0:0.1" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding DragDropActionStatus}" Value="Complete" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="Effect.Color" Duration="0" To="#00ff00" />
+                                                <DoubleAnimation Storyboard.TargetProperty="Effect.Opacity" Duration="0" To="1"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="Effect.Opacity" BeginTime="0:0:1" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiDataTrigger.EnterActions>
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding DragDropActionStatus}" Value="Error" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="Effect.Color" Duration="0" To="#ff0000" />
+                                                <DoubleAnimation Storyboard.TargetProperty="Effect.Opacity" Duration="0" To="1"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="Effect.Opacity" BeginTime="0:0:1" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiDataTrigger.EnterActions>
+                                </MultiDataTrigger>
                                 <DataTrigger Binding="{Binding IsBusy}" Value="True">
                                     <Setter Property="Content" Value="Cancel" />
                                 </DataTrigger>

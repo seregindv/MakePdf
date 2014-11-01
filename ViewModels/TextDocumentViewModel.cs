@@ -30,7 +30,7 @@ namespace MakePdf.ViewModels
 
         protected override void RenderDocument(string directory, CancellationToken ct)
         {
-            Status = DocumentStatus.InProcess;
+            Status = ProcessingStatus.InProcess;
             Exception = null;
             try
             {
@@ -41,11 +41,11 @@ namespace MakePdf.ViewModels
                     var xml = pdfer.Object.GetXml(Name, Annotation, Contents, SkipEmptyLines, SourceAddress);
                     driver.Object.Render(xml, outStream);
                 }
-                Status = DocumentStatus.Complete;
+                Status = ProcessingStatus.Complete;
             }
             catch (Exception ex)
             {
-                Status = DocumentStatus.Error;
+                Status = ProcessingStatus.Error;
                 Exception = ex;
             }
         }
