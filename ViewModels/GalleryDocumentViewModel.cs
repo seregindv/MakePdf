@@ -61,6 +61,12 @@ namespace MakePdf.ViewModels
                 galleryLoader.GalleryItemLoaded += galleryLoader_GalleryItemLoaded;
                 galleryLoader.LoadGallery(Gallery);
 
+                if (ct.IsCancellationRequested)
+                {
+                    Status = ProcessingStatus.Cancelled;
+                    return;
+                }
+
                 Status = ProcessingStatus.InProcess;
                 using (var foStream = new MemoryStream())
                 {
