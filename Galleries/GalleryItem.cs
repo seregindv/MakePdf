@@ -78,5 +78,7 @@ namespace MakePdf.Galleries
         {
             return new ArgumentException("GalleryItem doesn't support wrapping");
         }
+
+        public bool HasUrl { get { return Url != null; } }
     }
 }

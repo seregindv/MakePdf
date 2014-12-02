@@ -56,6 +56,14 @@ namespace MakePdf.Galleries
                 GalleryDocument.Name = summary.Value;
             GalleryDocument.Annotation = Utils.Trim(titleNode.SelectDescendants("p", String.Empty, false).OfType<HtmlNodeNavigator>().First().Value);
 
+            var headerImage = Document.DocumentNode.SelectSingleNode(@"//div[contains(@class,'image_first')]/img");
+            if (headerImage != null)
+                _items.Add(new GalleryItem(
+                    headerImage.GetAttributeValue("src", String.Empty),
+                    null,
+                    headerImage.GetAttributeValue("width", 0),
+                    headerImage.GetAttributeValue("height", 0)));
+
             var contentNavigator = navigator
                 .SelectDescendants("span", String.Empty, false)
                 .OfType<HtmlNodeNavigator>()
@@ -92,10 +100,14 @@ namespace MakePdf.Galleries
                                 AddTechTable(contentNavigator);
                                 break;
                             case "g-align-center":
+                            case "question":
                                 _tags.Add(TagFactory.GetTextTag(contentNavigator.CurrentNode.InnerText).Wrap<BoldTag>().Wrap<ParagraphTag>());
                                 break;
                             case "incut":
                                 AddIncut(contentNavigator);
+                                break;
+                            default:
+                                _tags.Add(TagFactory.GetParagraphTag(contentNavigator.CurrentNode.InnerText));
                                 break;
                         }
                         break;

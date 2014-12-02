@@ -154,7 +154,8 @@
     <Compile Include="Attributes\GalleryAttribute.cs" />
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
-    <Compile Include="Galleries\Helpers\LentaPictureProcessor.cs" />
+    <Compile Include="Galleries\Processors\FIleListProcessor.cs" />
+    <Compile Include="Galleries\Processors\LentaPictureProcessor.cs" />
     <Compile Include="Galleries\HrefGallery.cs" />
     <Compile Include="Galleries\HtmlSourceGallery.cs" />
     <Compile Include="Galleries\ImgGallery.cs" />

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
-using MakePdf.Galleries.Helpers;
 using MakePdf.Markup;
 using MakePdf.Stuff;
 using Newtonsoft.Json.Linq;

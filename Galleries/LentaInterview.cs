@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
 using HtmlAgilityPack;
-using MakePdf.Galleries.Helpers;
+using MakePdf.Galleries.Processors;
 using MakePdf.Markup;
 using MakePdf.Stuff;
 using Newtonsoft.Json.Linq;
@@ -49,6 +49,9 @@ namespace MakePdf.Galleries
         {
             if (node.Name == "p")
             {
+                if (node.ParentNode.Name == "blockquote")
+                    return new NodeProcessResult(true);
+
                 var classAttr = node.Attributes["class"];
                 if (classAttr != null && classAttr.Value == "question")
                 {
@@ -59,7 +62,8 @@ namespace MakePdf.Galleries
 
             if (node.Name == "blockquote")
             {
-                tags.Add(new ParagraphTag());
+                if (node.ParentNode.Name != "p")
+                    tags.Add(new ParagraphTag());
                 return new NodeProcessResult(true);
             }
 

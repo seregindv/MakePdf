@@ -37,8 +37,8 @@ namespace MakePdf.Controls
         void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
             var files = e.Data.GetData(DataFormats.FileDrop);
-            if (files == null) return;
-            Command.Execute(files);
+            if (files != null && Command != null)
+                Command.Execute(files);
         }
 
         protected override void OnDetaching()

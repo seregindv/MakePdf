@@ -18,6 +18,7 @@ using Fonet;
 using MakePdf.Attributes;
 using MakePdf.Configuration;
 using MakePdf.Controls;
+using MakePdf.Galleries.Processors;
 using MakePdf.Stuff;
 using System.Linq;
 using System.Windows;
@@ -52,6 +53,7 @@ namespace MakePdf.ViewModels
             PictureCommand = new DelegateCommand(OnPicture);
             UnpictureCommand = new DelegateCommand(OnUnpicture);
             RenderFilesCommand = new DelegateCommand(OnRenderFiles);
+            AddFilesCommand = new DelegateCommand(OnAddFiles);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
             IsTablet = Utils.IsTablet;
 
@@ -133,6 +135,7 @@ namespace MakePdf.ViewModels
         public DelegateCommand PictureCommand { private set; get; }
         public DelegateCommand UnpictureCommand { private set; get; }
         public DelegateCommand RenderFilesCommand { private set; get; }
+        public DelegateCommand AddFilesCommand { private set; get; }
         public List<MenuItemViewModel> AddMenuItems { private set; get; }
         public string Directory
         {
@@ -466,6 +469,30 @@ namespace MakePdf.ViewModels
                             b => b.ToString());
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void OnAddFiles(object data)
+        {
+            var files = data as string[];
+            if (files == null)
+                return;
+            var processor = new FileListProcessor();
+            var fileSets = processor.Process(files);
+            var setCount = 0;
+            foreach (var fileSet in fileSets)
+            {
+                if (setCount != 0)
+                    AddItem(null);
+                DisplayedDocument.Contents = files
+                    .Aggregate(new StringBuilder(DisplayedDocument.Contents ?? String.Empty),
+                        (sb, s) => sb.AppendLine("pic:" + s),
+                        sb => sb.ToString());
+                if (!String.IsNullOrEmpty(fileSet.Title) && String.IsNullOrEmpty(DisplayedDocument.Contents))
+                    DisplayedDocument.Name = fileSet.Title;
+                ++setCount;
+            }
+            if (setCount > 1)
+                AddItem(null);
         }
 
         private void OnReverseParagraphs(object data)

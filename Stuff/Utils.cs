@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Fonet;
 using Fonet.Render.Pdf;
+using MakePdf.Configuration;
 using MakePdf.Markup;
 
 namespace MakePdf.Stuff
@@ -265,6 +266,30 @@ namespace MakePdf.Stuff
                    Byte.Parse(g) << 8 |
                    Byte.Parse(b)).ToString("X6");
 
+        }
+
+        static readonly object _syncRoot = new object();
+
+        static volatile string[] _supportedImages;
+        static IEnumerable<string> SupportedImages
+        {
+            get
+            {
+                if (_supportedImages == null)
+                    lock (_syncRoot)
+                        if (_supportedImages == null)
+                            _supportedImages = Config.Instance.AppSettings["SupportedImages"].Split(',');
+                return _supportedImages;
+            }
+        }
+
+        public static bool IsImage(string pathToImage)
+        {
+            var extension = Path.GetExtension(pathToImage);
+            if (extension == null)
+                return false;
+            extension = extension.Replace(".", String.Empty);
+            return SupportedImages.Contains(extension, StringComparer.InvariantCultureIgnoreCase);
         }
     }
 }
