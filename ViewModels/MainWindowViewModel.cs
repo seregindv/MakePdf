@@ -483,11 +483,11 @@ namespace MakePdf.ViewModels
             {
                 if (setCount != 0)
                     AddItem(null);
-                DisplayedDocument.Contents = files
+                DisplayedDocument.Contents = fileSet.Files
                     .Aggregate(new StringBuilder(DisplayedDocument.Contents ?? String.Empty),
                         (sb, s) => sb.AppendLine("pic:" + s),
                         sb => sb.ToString());
-                if (!String.IsNullOrEmpty(fileSet.Title) && String.IsNullOrEmpty(DisplayedDocument.Contents))
+                if (!String.IsNullOrEmpty(fileSet.Title) && !String.IsNullOrEmpty(DisplayedDocument.Contents))
                     DisplayedDocument.Name = fileSet.Title;
                 ++setCount;
             }

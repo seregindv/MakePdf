@@ -29,49 +29,50 @@ namespace MakePdf.Galleries.Processors
 
             if (listFiles.Length > 0)
             {
-                //var localities = GetLocalityMap(listFiles)
-                //    .Select((l, i) => new { Index = i, Locality = l })
-                //    .ToArray();
-                //var regex = new Regex(@"(\d+)");
-                //var fileNums = (from file in files
-                //                select regex.Match(file)
-                //                    into match
-                //                    where match.Success
-                //                    select new NumberNamePair
-                //                    {
-                //                        Number = Int32.Parse(match.Groups[1].Value),
-                //                        Name = match.Value
-                //                    }).ToArray();
-                //foreach (var localityName in localities.Select(l => l.Locality.Name).Distinct())
-                //{
-                //    var name = localityName;
-                //    return localities
-                //        .Where(locality => locality.Locality.Name == name)
-                //        .Select(locality =>
-                //            new FileSet
-                //            {
-                //                Files =
-                //                    fileNums.Where(file =>
-                //                    {
-                //                        var lowerNumber = locality.Index == 0
-                //                            ? 0
-                //                            : localities[locality.Index - 1].Locality.Number;
-                //                        var upperNumber = locality.Index == localities.Length - 1
-                //                            ? Int32.MaxValue
-                //                            : localities[locality.Index + 1].Locality.Number;
-                //                        return file.Number > lowerNumber && file.Number < upperNumber && Utils.IsImage(file.Name) && File.Exists(file.Name);
-                //                    }).Select(fileNum => fileNum.Name),
-                //                Title = locality.Locality.Name
-                //            });
-                //}
-
-                yield return
-                    new FileSet
+                var localities = GetLocalityMap(listFiles)
+                    .Select((l, i) => new { Index = i, Locality = l })
+                    .ToArray();
+                var regex = new Regex(@"(\d+)");
+                var fileNums = (from file in files
+                                select new { Match = regex.Match(file), File = file }
+                                    into match
+                                    where match.Match.Success
+                                    select new NumberNamePair
+                                    {
+                                        Number = Int32.Parse(match.Match.Groups[1].Value),
+                                        Name = match.File
+                                    }).ToArray();
+                return localities.Select(l => l.Locality.Name).Distinct().SelectMany(
+                    localityName =>
                     {
-                        Title = String.Empty,
-                        Files = files.Where(file => File.Exists(file) && Utils.IsImage(file))
-                    };
+                        var name = localityName;
+                        return localities
+                            .Where(locality => locality.Locality.Name == name)
+                            .Select(locality =>
+                                new FileSet
+                                {
+                                    Files =
+                                        fileNums.Where(file =>
+                                        {
+                                            var lowerNumber = locality.Index == 0
+                                                ? 0
+                                                : localities[locality.Index - 1].Locality.Number;
+                                            var upperNumber = locality.Index == localities.Length - 1
+                                                ? Int32.MaxValue
+                                                : localities[locality.Index + 1].Locality.Number;
+                                            return file.Number > lowerNumber && file.Number < upperNumber && Utils.IsImage(file.Name) && File.Exists(file.Name);
+                                        }).Select(fileNum => fileNum.Name),
+                                    Title = locality.Locality.Name
+                                });
+                    }
+                    );
             }
+            return new[]{
+                new FileSet
+                {
+                    Title = String.Empty,
+                    Files = files.Where(file => File.Exists(file) && Utils.IsImage(file))
+                }};
         }
 
         private IEnumerable<string> GetListFiles(IEnumerable<string> files)
