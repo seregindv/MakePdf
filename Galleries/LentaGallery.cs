@@ -21,8 +21,9 @@ namespace MakePdf.Galleries
                     jsonNode = HttpUtility.HtmlDecode(jsonNode);
                     var json = JObject.Parse(jsonNode);
                     return new GalleryItem(json.GetValue("url").Value<string>(),
-                        json.GetValue("caption").Value<string>() + Environment.NewLine +
-                        json.GetValue("alt").Value<string>(),
+                        json.GetValue("credits") + Environment.NewLine
+                        + json.GetValue("caption").Value<string>() + Environment.NewLine
+                        + json.GetValue("alt").Value<string>(),
                         json.GetValue("width").Value<int>(),
                         json.GetValue("height").Value<int>(),
                         imgNode.GetAttributeValue("src", String.Empty));
