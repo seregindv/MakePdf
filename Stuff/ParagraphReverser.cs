@@ -19,7 +19,7 @@ namespace MakePdf.Stuff
 
         public string ReverseParagraphs(string text)
         {
-            var paragraphStartRegEx = new Regex(@"^\d{1,2}\D\d{2}(\s|$)");
+            var paragraphStartRegEx = new Regex(@"^\d{1,2}:\d{2}\b");
             var paragraphs = new List<string>();
             var nonReversableCount = 0;
             foreach (var line in GetLines(text))
