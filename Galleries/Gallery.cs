@@ -36,7 +36,7 @@ namespace MakePdf.Galleries
 
         protected void SetSize(GalleryItem item, Stream fileStream = null)
         {
-            if (item.Size != null)
+            if (item.Size != null && item.Size.Height != 0 && item.Size.Width != 0)
                 return;
             try
             {

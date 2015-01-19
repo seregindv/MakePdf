@@ -112,6 +112,16 @@ namespace MakePdf.Galleries
                     }
                 }
             }
+            else if (node.Name == "p" && node.HasChildNodes && node.ChildNodes.Count == 1 &&
+                     node.ChildNodes[0].Name == "img")
+            {
+                var imageNode = node.ChildNodes[0];
+                tags.Add(new GalleryItem(imageNode.GetAttributeValue("src", String.Empty),
+                    imageNode.GetAttributeValue("alt", String.Empty),
+                    imageNode.GetAttributeValue("width", 0),
+                    imageNode.GetAttributeValue("height", 0)));
+                return true;
+            }
             return base.ProcessGalleryNode(node, tags);
         }
     }
