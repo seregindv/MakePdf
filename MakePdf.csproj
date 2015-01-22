@@ -177,6 +177,7 @@
     <Compile Include="Galleries\MotorGallery.cs" />
     <Compile Include="Galleries\NovayaGazetaGallery.cs" />
     <Compile Include="Galleries\PhotofileGallery.cs" />
+    <Compile Include="Galleries\RbcGallery.cs" />
     <Compile Include="Galleries\RbcInterview.cs" />
     <Compile Include="Galleries\RiaGallery.cs" />
     <Compile Include="Galleries\SlonAuthorGallery.cs" />

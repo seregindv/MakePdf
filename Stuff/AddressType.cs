@@ -55,6 +55,8 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(HrefGallery), Title = "href gallery")]
         HrefGallery,
         [Gallery(Type = typeof(ImgGallery), Title = "img gallery")]
-        ImgGallery
+        ImgGallery,
+        [Gallery(Type = typeof(RbcGallery), Regex = @".*daily\.rbc\.ru\/photoreport\/.+")]
+        RbcGallery
     }
 }
