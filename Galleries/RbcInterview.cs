@@ -79,7 +79,7 @@ namespace MakePdf.Galleries
                 return new NodeProcessResult(true, false);
             }
 
-            if (node.Name == "stsrong")
+            if (node.Name == "strong")
                 return new NodeProcessResult(true);
 
             return base.ProcessTextNode(node, tags);
