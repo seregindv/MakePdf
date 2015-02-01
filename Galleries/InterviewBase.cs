@@ -81,7 +81,7 @@ namespace MakePdf.Galleries
             return Document;
         }
 
-        private List<Tag> GetItems(HtmlNodeNavigator navigator, Tag mainItem = null)
+        protected List<Tag> GetItems(HtmlNodeNavigator navigator, Tag mainItem = null)
         {
             List<Tag> result = null;
             List<Tag> tags;

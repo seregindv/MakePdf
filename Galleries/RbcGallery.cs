@@ -12,7 +12,7 @@ using MakePdf.Markup;
 
 namespace MakePdf.Galleries
 {
-    public class RbcGallery : HtmlGallery
+    public class RbcGallery : InterviewBase
     {
         private readonly Regex _addressRegex = new Regex(@"(\d+)(?=\.shtml)");
 
@@ -23,11 +23,21 @@ namespace MakePdf.Galleries
                 GalleryDocument.Name = titleNode.InnerText;
             var annotationNode = Document.DocumentNode.SelectSingleNode("//div[@class='article__overview__text']");
             if (annotationNode != null)
-                GalleryDocument.Tags = TagFactory.GetParagraphTags(annotationNode.InnerText);
+                GalleryDocument.Tags = TagFactory.GetParagraphTags(HttpUtility.HtmlDecode(annotationNode.InnerText));
             return Document
                 .DocumentNode
                 .SelectNodes("//div[@class='fotorama']/a")
                 .Select(GetGalleryItem);
+        }
+
+        protected override GalleryItem GetMainItem(HtmlDocument document)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override HtmlNodeNavigator GetNavigator(HtmlDocument document)
+        {
+            throw new NotImplementedException();
         }
 
         private GalleryItem GetGalleryItem(HtmlNode node, int index)
@@ -40,12 +50,33 @@ namespace MakePdf.Galleries
             var descDoc = CreateHtmlDocument();
             descDoc.LoadHtml(descText);
             var baseDescNode = descDoc.DocumentNode.SelectSingleNode("/p");
-            result.Tags = new List<Tag>
+
+            var titleNode = baseDescNode.SelectSingleNode("b");
+            if (titleNode != null)
             {
-                TagFactory.GetTextTag(baseDescNode.SelectSingleNode("b").InnerText).Wrap<BoldTag>().Wrap<ParagraphTag>(),
-                TagFactory.GetParagraphTag(HttpUtility.HtmlDecode(baseDescNode.SelectSingleNode("span").InnerText))
-            };
+                result.EnsuredTags.Add(
+                    TagFactory.GetTextTag(baseDescNode.SelectSingleNode("b").InnerText)
+                        .Wrap<BoldTag>()
+                        .Wrap<ParagraphTag>());
+                result.EnsuredTags.Add(
+                    TagFactory.GetParagraphTag(HttpUtility.HtmlDecode(baseDescNode.SelectSingleNode("span").InnerText)));
+            }
+            else
+            {
+                result.Tags = GetItems((HtmlNodeNavigator)descDoc.DocumentNode.ChildNodes[0].CreateNavigator());
+            }
             return result;
+        }
+
+        protected override NodeProcessResult ProcessTextNode(HtmlNode node, List<Tag> tags)
+        {
+            if (node.Name == "strong" || node.Name == "span")
+            {
+                tags.Add(TagFactory.GetTextTag(HttpUtility.HtmlDecode(node.InnerText)).Wrap<BoldTag>());
+                return new NodeProcessResult(true, false);
+            }
+
+            return base.ProcessTextNode(node, tags);
         }
 
         /*

@@ -67,20 +67,20 @@ namespace MakePdf.Galleries
 
             if (node.Name == "div")
             {
+                if (node.GetAttributeValue("class", String.Empty).Contains("banner"))
+                    return new NodeProcessResult(true, false);
                 var match = Regex.Match(node.GetAttributeValue("style", String.Empty),
                     @"background:\s*rgb\((\d+),\s*(\d+),\s*(\d+)\)");
                 var tag = TagFactory.GetParagraphTag(HttpUtility.HtmlDecode(node.InnerText));
                 tag.BackgroundColor = match.Success
                     ? Utils.GetColorAsString(match.Groups[1].Value, match.Groups[2].Value, match.Groups[3].Value)
-                    : String.Empty;
+                    : null;
                 tags.Add(tag);
                 return new NodeProcessResult(true, false);
             }
 
-            if (node.Name == "strong")
-            {
+            if (node.Name == "stsrong")
                 return new NodeProcessResult(true);
-            }
 
             return base.ProcessTextNode(node, tags);
         }
