@@ -31,7 +31,7 @@ namespace MakePdf.Galleries
 
             var textDiv = Document.DocumentNode.SelectSingleNode("//div[@itemprop='text']");
             if (textDiv != null)
-                return textDiv.SelectNodes("//img[@border]").Select(node =>
+                return textDiv.SelectNodes(".//img[@border]").Select(node =>
                     new GalleryItem(new Uri(GalleryUri, node.GetAttributeValue("src", String.Empty)).ToString(), null, node.GetAttributeValue("width", 0), node.GetAttributeValue("height", 0)));
             return Enumerable.Empty<GalleryItem>();
         }

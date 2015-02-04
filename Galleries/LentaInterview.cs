@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Web;
 using HtmlAgilityPack;
+using MakePdf.Controls;
 using MakePdf.Galleries.Processors;
 using MakePdf.Markup;
 using MakePdf.Stuff;
@@ -112,17 +114,60 @@ namespace MakePdf.Galleries
                     }
                 }
             }
-            else if (node.Name == "p" && node.HasChildNodes && node.ChildNodes.Count == 1 &&
-                     node.ChildNodes[0].Name == "img")
+            else if (node.Name == "p" && node.HasChildNodes)
             {
-                var imageNode = node.ChildNodes[0];
-                tags.Add(new GalleryItem(imageNode.GetAttributeValue("src", String.Empty),
-                    imageNode.GetAttributeValue("alt", String.Empty),
-                    imageNode.GetAttributeValue("width", 0),
-                    imageNode.GetAttributeValue("height", 0)));
-                return true;
+                var childNode = node.ChildNodes[0];
+                if (childNode.Name == "img" && node.ChildNodes.Count == 1)
+                {
+                    tags.Add(new GalleryItem(childNode.GetAttributeValue("src", String.Empty),
+                        childNode.GetAttributeValue("alt", String.Empty),
+                        childNode.GetAttributeValue("width", 0),
+                        childNode.GetAttributeValue("height", 0)));
+                    return true;
+                }
+
+                childNode = node.SelectSingleNode("./blockquote[@class='instagram-media']");
+                if (childNode != null)
+                {
+                    tags.Add(new GalleryItem
+                    {
+                        Url = childNode.SelectSingleNode(".//a").GetAttributeValue("href", String.Empty),
+                        Tags = TagFactory.GetParagraphTag(childNode.InnerText).ToTags()
+                    });
+                    return true;
+                }
+
+                //childNode = node.SelectSingleNode("./div[@class='fb-post']");
+                //if (childNode != null)
+                //{
+                //    tags.Add(new GalleryItem
+                //    {
+                //        Url = childNode.GetAttributeValue("data-href", String.Empty),
+                //        Tags = TagFactory.GetParagraphTag(node.InnerText).ToTags()
+                //    });
+                //}
             }
             return base.ProcessGalleryNode(node, tags);
+        }
+
+        public override void LoadItem(GalleryItem item)
+        {
+            if (item.Url != null)
+            {
+                var uri = new Uri(item.Url);
+                var document = GetItemHtmlDocument(item);
+                if (uri.Host == "instagram.com")
+                    item.ImageUrl = document
+                        .DocumentNode
+                        .SelectSingleNode("//meta[@property='og:image']")
+                        .GetAttributeValue("content", String.Empty);
+                //else if (uri.Host == "www.facebook.com")
+                //    item.ImageUrl = document
+                //        .DocumentNode
+                //        .SelectSingleNode("//img[@id='fbPhotoImage']")
+                //        .GetAttributeValue("src", String.Empty);
+            }
+            base.LoadItem(item);
         }
     }
 }

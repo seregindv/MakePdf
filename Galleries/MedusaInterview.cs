@@ -31,7 +31,7 @@ namespace MakePdf.Galleries
         {
             if (node.Name == "figure")
             {
-                var imageNode = node.SelectSingleNode("//img");
+                var imageNode = node.SelectSingleNode(".//img");
                 if (imageNode != null)
                 {
                     tags.Add(new GalleryItem(new Uri(GalleryUri, imageNode.GetAttributeValue("src", String.Empty)).ToString(), node.InnerText));
