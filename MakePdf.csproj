@@ -271,6 +271,7 @@
     <None Include="App.config" />
     <None Include="MakePdf_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="PostExtract.ps1" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -282,6 +283,7 @@
     <None Include="Main.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Publish-Package.ps1" />
     <None Include="Templates\_GalleryTemplate2.xsl" />
     <None Include="Templates\_GalleryTemplate3.xsl" />
     <None Include="Templates\_GalleryTemplate4.xsl" />
