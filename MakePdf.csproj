@@ -154,6 +154,7 @@
     <Compile Include="Attributes\GalleryAttribute.cs" />
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
+    <Compile Include="Galleries\MotorGallery.cs" />
     <Compile Include="Galleries\Processors\FileListProcessor.cs" />
     <Compile Include="Galleries\Processors\LentaPictureProcessor.cs" />
     <Compile Include="Galleries\HrefGallery.cs" />
@@ -174,7 +175,7 @@
     <Compile Include="Galleries\MedusaInterview.cs" />
     <Compile Include="Galleries\MkGallery.cs" />
     <Compile Include="Galleries\MotorArticleGallery.cs" />
-    <Compile Include="Galleries\MotorGallery.cs" />
+    <Compile Include="Galleries\MotorPhotoGallery.cs" />
     <Compile Include="Galleries\NovayaGazetaGallery.cs" />
     <Compile Include="Galleries\PhotofileGallery.cs" />
     <Compile Include="Galleries\RbcGallery.cs" />

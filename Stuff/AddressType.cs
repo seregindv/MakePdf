@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Serialization;
 using MakePdf.Attributes;
 using MakePdf.Galleries;
 
@@ -38,8 +40,8 @@ namespace MakePdf.Stuff
         RiaGallery,
         [Gallery(Type = typeof(SlonAuthorGallery), Regex = @".*slon\.ru\/authors\/.*")]
         SlonAuthorGallery,
-        [Gallery(Type = typeof(MotorGallery), Regex = @".*motor.ru\/photo\/.*")]
-        MotorGallery,
+        [Gallery(Type = typeof(MotorPhotoGallery), Regex = @".*motor.ru\/photo\/.*")]
+        MotorPhoto,
         [Gallery(Type = typeof(DofigaGallery), Regex = @".*dofiga\.net\/.*")]
         DofigaGallery,
         [Gallery(Type = typeof(LentaBeelineGallery), Regex = @".*beeline\.lenta\.ru\/.*")]
@@ -57,6 +59,8 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(ImgGallery), Title = "img gallery")]
         ImgGallery,
         [Gallery(Type = typeof(RbcGallery), Regex = @".*.rbc\.ru\/photoreport\/.+")]
-        RbcGallery
+        RbcGallery,
+        [Gallery(Type=typeof(MotorGallery), Regex = @".*motor.ru\/gallery\/.*")]
+        MotorGallery
     }
 }
