@@ -14,8 +14,8 @@ namespace MakePdf.Galleries
         protected override IEnumerable<GalleryItem> GetItems()
         {
             var galleryItemsNode = Document.DocumentNode.SelectSingleNode("//script[contains(.,'gallery_images')]");
-            var itemsJsonMatch = Regex.Match(galleryItemsNode.InnerText, @"gallery_images\=(.+);");
-            var jsonToken = JToken.Parse(itemsJsonMatch.Groups[1].Value);
+            var jsonMatch = Regex.Match(galleryItemsNode.InnerText, @"gallery_images\=(.+);");
+            var jsonToken = JToken.Parse(jsonMatch.Groups[1].Value);
 
             return jsonToken.Children().Select(child =>
             {

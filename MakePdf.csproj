@@ -270,6 +270,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="Deploy\package.ini" />
+    <None Include="Deploy\PostExtract.ps1" />
+    <None Include="Deploy\Publish-Package.ps1" />
     <None Include="MakePdf_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="PostExtract.ps1" />
