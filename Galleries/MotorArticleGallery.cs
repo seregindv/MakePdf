@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -15,19 +16,100 @@ using MakePdf.ViewModels;
 
 namespace MakePdf.Galleries
 {
-    public class MotorArticleGallery : HtmlGallery
+    public class MotorArticleGallery : InterviewBase
     {
         List<GalleryItem> _items = new List<GalleryItem>();
         List<Tag> _tags = new List<Tag>();
 
-
         protected override IEnumerable<GalleryItem> GetItems()
+        {
+            var result = GetItemsV1();
+            if (result == null)
+            {
+                HtmlEncoding = Encoding.UTF8;
+                ReloadDocument();
+                result = GetItemsV2();
+            }
+            return result;
+        }
+
+        #region V2
+
+        private IEnumerable<GalleryItem> GetItemsV2()
+        {
+            GalleryDocument.Name = Document
+                .DocumentNode
+                .SelectSingleNode(@"//meta[@property='og:title']")
+                .GetAttributeValue("content", String.Empty);
+            GalleryDocument.Annotation = Document
+                .DocumentNode
+                .SelectSingleNode(@"//meta[@property='og:description']")
+                .GetAttributeValue("content", String.Empty);
+            return base.GetItems();
+        }
+
+        protected override GalleryItem GetMainItem(HtmlDocument document)
+        {
+            return new GalleryItem(Document
+                .DocumentNode
+                .SelectSingleNode(@"//meta[@property='og:image']")
+                .GetAttributeValue("content", String.Empty));
+        }
+
+        protected override HtmlNodeNavigator GetNavigator(HtmlDocument document)
+        {
+            return (HtmlNodeNavigator)document.DocumentNode.SelectSingleNode("//p").ParentNode.CreateNavigator();
+        }
+
+        protected override bool ProcessGalleryNode(HtmlNode node, List<Tag> tags)
+        {
+            if (node.Name != "div")
+                return base.ProcessGalleryNode(node, tags);
+
+            var nodeClass = node.GetAttributeValue("class", String.Empty);
+            if (!nodeClass.StartsWith("widget "))
+                return base.ProcessGalleryNode(node, tags);
+
+            var imgNodes = node.SelectNodes(".//img");
+            if (imgNodes == null)
+                return base.ProcessGalleryNode(node, tags);
+
+            var isRight = nodeClass.EndsWith("widget--right");
+
+            foreach (var imgNode in imgNodes)
+            {
+                var galleryItem = new GalleryItem(imgNode.GetAttributeValue("src", String.Empty));
+                tags.Add(galleryItem);
+                var pNodes = imgNode.SelectNodes("./following-sibling::*");
+                if (pNodes != null && pNodes.Count > 0)
+                    GetItems((HtmlNodeNavigator)pNodes.First().CreateNavigator(), galleryItem);
+                if (isRight)
+                    galleryItem.EnsuredTags.Add(TagFactory.GetTextTag("* * *").Wrap(new ParagraphTag { Alignment = "center" }));
+            }
+
+            return true;
+        }
+
+        protected override NodeProcessResult ProcessTextNode(HtmlNode node, List<Tag> tags)
+        {
+            if (node.Name == "img" || node.GetAttributeValue("class", String.Empty) == "article__adverts-container")
+                return new NodeProcessResult(true, false);
+            if (node.Name == "div" && node.GetAttributeValue("class", String.Empty).StartsWith("adverts--hide"))
+                return new NodeProcessResult(true, false);
+            return base.ProcessTextNode(node, tags);
+        }
+
+        #endregion
+
+        private IEnumerable<GalleryItem> GetItemsV1()
         {
             var navigator = Document.CreateNavigator();
             var titleNode = navigator
                 .SelectDescendants("div", String.Empty, false)
                 .OfType<HtmlNodeNavigator>()
-                .Single(@node => @node.GetAttribute("class", String.Empty) == "header");
+                .SingleOrDefault(@node => @node.GetAttribute("class", String.Empty) == "header");
+            if (titleNode == null)
+                return null;
             var h1 = titleNode.SelectDescendants("h1", String.Empty, false).OfType<HtmlNodeNavigator>().First();
             var summary = h1.SelectSingleNode("span[@class='summary']");
             if (summary == null)

@@ -213,8 +213,11 @@
                 <xsl:attribute name="background-color">
                   <xsl:value-of select="@BackgroundColor" />
                 </xsl:attribute>
-                <xsl:attribute name="padding-left">0.8mm</xsl:attribute>
-                <xsl:attribute name="padding-right">0.8mm</xsl:attribute>
+              </xsl:if>
+              <xsl:if test="@Alignment">
+                <xsl:attribute name="text-align">
+                  <xsl:value-of select="@Alignment" />
+                </xsl:attribute>
               </xsl:if>
               <xsl:call-template name="Color" />
               <xsl:call-template name="ProcessTags">

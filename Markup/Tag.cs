@@ -61,6 +61,9 @@ namespace MakePdf.Markup
 
         [XmlAttribute]
         public string BackgroundColor { set; get; }
+
+        [XmlAttribute]
+        public string Alignment { set; get; }
     }
 
     [XmlType(TypeName = "Bold")]

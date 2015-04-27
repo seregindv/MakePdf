@@ -30,6 +30,11 @@ namespace MakePdf.Galleries
             }
         }
 
+        protected void ReloadDocument()
+        {
+            _document = null;
+        }
+
         protected string LoadFile(string url, string fileName)
         {
             var file = Path.Combine(GalleryFolder, fileName);
@@ -68,9 +73,13 @@ namespace MakePdf.Galleries
             return LoadHtmlFile(url, fileName + ".html");
         }
 
-        protected HtmlDocument CreateHtmlDocument()
+        protected HtmlDocument CreateHtmlDocument(string s = null)
         {
-            return new HtmlDocument { OptionFixNestedTags = true };
+            var result = new HtmlDocument { OptionFixNestedTags = true };
+            if (s != null)
+                result.LoadHtml(s);
+            return result;
         }
+
     }
 }

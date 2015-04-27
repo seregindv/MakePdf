@@ -45,8 +45,7 @@ namespace MakePdf.Galleries
                 ThumbnailImageUrl = node.SelectSingleNode("img").GetAttributeValue("src", String.Empty)
             };
             var descText = HttpUtility.HtmlDecode(node.GetAttributeValue("data-rbc-description", String.Empty));
-            var descDoc = CreateHtmlDocument();
-            descDoc.LoadHtml(descText);
+            var descDoc = CreateHtmlDocument(descText);
             var baseDescNode = descDoc.DocumentNode.SelectSingleNode("/p");
 
             var titleNode = baseDescNode.SelectSingleNode("b");

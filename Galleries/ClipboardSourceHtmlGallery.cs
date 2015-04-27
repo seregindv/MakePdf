@@ -13,10 +13,7 @@ namespace MakePdf.Galleries
             get
             {
                 if (_document == null)
-                {
-                    _document = CreateHtmlDocument();
-                    _document.LoadHtml(GalleryDocument.HtmlContents);
-                }
+                    _document = CreateHtmlDocument(GalleryDocument.HtmlContents);
                 return _document;
             }
         }

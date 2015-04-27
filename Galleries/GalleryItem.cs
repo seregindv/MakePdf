@@ -38,11 +38,18 @@ namespace MakePdf.Galleries
             Tags = tags;
         }
 
+        public GalleryItem(string imageUrl, List<Tag> tags, int width, int height, string thumbnailUrl)
+            : this(imageUrl)
+        {
+            Tags = tags;
+            SetSize(width, height);
+            ThumbnailImageUrl = thumbnailUrl;
+        }
+
         public GalleryItem(string imageUrl, string description, int width, int height)
             : this(imageUrl, description)
         {
-            if (width != Int32.MinValue && height != Int32.MinValue)
-                Size = new ImageSize(width, height);
+            SetSize(width, height);
         }
 
         public GalleryItem(string imageUrl, string description, int width, int height, string thumbnailImageUrl)
@@ -58,6 +65,12 @@ namespace MakePdf.Galleries
         public ImageSize Size { set; get; }
         public string LocalPath { set; get; }
         public int Index { get; set; }
+
+        protected void SetSize(int width, int height)
+        {
+            if (width != Int32.MinValue && height != Int32.MinValue)
+                Size = new ImageSize(width, height);
+        }
 
         public string GetFormattedIndex(string format = "00000000")
         {

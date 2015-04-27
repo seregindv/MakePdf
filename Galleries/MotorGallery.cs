@@ -11,6 +11,11 @@ namespace MakePdf.Galleries
 {
     public class MotorGallery : HtmlGallery
     {
+        public MotorGallery()
+        {
+            HtmlEncoding = Encoding.UTF8;
+        }
+
         protected override IEnumerable<GalleryItem> GetItems()
         {
             var galleryItemsNode = Document.DocumentNode.SelectSingleNode("//script[contains(.,'gallery_images')]");

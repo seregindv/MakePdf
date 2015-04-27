@@ -54,7 +54,15 @@ namespace MakePdf.Galleries
                     tags.Add(new HrefTag(node.GetAttributeValue("href", String.Empty)));
                     break;
                 case "h1":
+                case "h2":
+                case "h3":
+                case "h4":
+                case "h5":
                     tags.Add(GetHeaderTag());
+                    break;
+                case "script":
+                    return new NodeProcessResult(true, false);
+                case "span":
                     break;
                 default:
                     return new NodeProcessResult(false);
@@ -140,6 +148,27 @@ namespace MakePdf.Galleries
                 }
             } while (navigator.MoveToNext());
             return mainItem == null ? tags : result;
+        }
+
+        protected List<Tag> GetTags(params string[] htmlStrings)
+        {
+            var htmlDocument = CreateHtmlDocument();
+            var anyNode = false;
+            foreach (var htmlString in htmlStrings)
+            {
+                if (htmlString == null || htmlString.Trim().Length == 0)
+                    continue;
+                var p = htmlDocument.CreateElement("p");
+                p.InnerHtml = htmlString;
+                htmlDocument.DocumentNode.AppendChild(p);
+                anyNode = true;
+
+            }
+            var navigator = (HtmlNodeNavigator)htmlDocument.CreateNavigator();
+            if (navigator == null || !anyNode)
+                return null;
+            navigator.MoveToFirstChild();
+            return GetItems(navigator);
         }
     }
 }
