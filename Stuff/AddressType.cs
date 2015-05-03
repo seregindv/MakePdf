@@ -60,7 +60,9 @@ namespace MakePdf.Stuff
         ImgGallery,
         [Gallery(Type = typeof(RbcGallery), Regex = @".*.rbc\.ru\/photoreport\/.+")]
         RbcGallery,
-        [Gallery(Type=typeof(MotorGallery), Regex = @".*motor.ru\/gallery\/.*")]
-        MotorGallery
+        [Gallery(Type = typeof(MotorGallery), Regex = @".*motor.ru\/gallery\/.*")]
+        MotorGallery,
+        [Gallery(Type = typeof(PhotoshareGallery), Regex = @".*photoshare\.ru.+")]
+        PhotoshareGallery
     }
 }

@@ -155,6 +155,7 @@
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
     <Compile Include="Galleries\MotorGallery.cs" />
+    <Compile Include="Galleries\PhotoshareGallery.cs" />
     <Compile Include="Galleries\Processors\FileListProcessor.cs" />
     <Compile Include="Galleries\Processors\LentaPictureProcessor.cs" />
     <Compile Include="Galleries\HrefGallery.cs" />
