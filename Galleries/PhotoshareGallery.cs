@@ -24,7 +24,7 @@ namespace MakePdf.Galleries
             var navDoc = LoadHtmlFile(navUrl, "album_nav.html");
 
             return navDoc.DocumentNode.SelectNodes("//a").Select(
-                node => new GalleryItem { Url = node.GetAttributeValue("href", String.Empty) });
+                node => new GalleryItem { Url = new Uri(GalleryUri, node.GetAttributeValue("href", String.Empty)).ToString() });
         }
 
         public override void LoadItem(GalleryItem item)

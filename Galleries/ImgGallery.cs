@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MakePdf.Galleries
 {
-    public class ImgGallery:HtmlSourceGallery
+    public class ImgGallery : HtmlSourceGallery
     {
         protected override Regex Regex
         {
