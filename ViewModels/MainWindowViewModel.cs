@@ -74,7 +74,7 @@ namespace MakePdf.ViewModels
                 .Select(groupName => new MenuItemViewModel(AddCommand)
                 {
                     Group = groupName,
-                    Title = "As " + groupName
+                    Title = groupName
                 })
             );
             AddMenuItems.AddRange(
@@ -84,7 +84,7 @@ namespace MakePdf.ViewModels
                 select new MenuItemViewModel(AddCommand)
                 {
                     AddressType = @addressType,
-                    Title = "As " + title
+                    Title = title
                 }
             );
             DeviceConfiguration = _config.DeviceConfiguration;

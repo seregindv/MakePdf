@@ -8,7 +8,7 @@ namespace MakePdf.Stuff
 {
     public enum AddressType
     {
-        [Gallery(Title = "text")]
+        [Gallery(Title = "As text")]
         Other,
         [Gallery(Type = typeof(TextGallery), Regex = @".*lenta\.ru\/news\/.+(?<!#\d{1,2})$")]
         LentaNews,
@@ -34,7 +34,7 @@ namespace MakePdf.Stuff
         TextGallery,
         [Gallery(Type = typeof(MotorArticleGallery), Regex = @".*motor.ru\/articles\/.*")]
         MotorArticleGallery,
-        [Gallery(Type = typeof(LentaInterview), Title = "Lenta interview", Group = "interview", Regex = @".*lenta\.ru\/.*")]
+        [Gallery(Type = typeof(LentaInterview), Title = "Lenta interview", Group = "As interview", Regex = @".*lenta\.ru\/.*")]
         LentaInterview,
         [Gallery(Type = typeof(RiaGallery), Regex = @".*ria\.ru\/photolents\/.*")]
         RiaGallery,
@@ -50,19 +50,21 @@ namespace MakePdf.Stuff
         ItarTassGallery,
         [Gallery(Type = typeof(PhotofileGallery), Regex = @".*photo\.qip\.ru.*")]
         PhotofileGallery,
-        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview", Group = "interview", Regex = @".*meduza\.io\/.*")]
+        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview", Group = "As interview", Regex = @".*meduza\.io\/.*")]
         MedusaInterview,
-        [Gallery(Type = typeof(RbcInterview), Title = "RBC interview", Group = "interview", Regex = @".*rbc\.ru\/.*")]
+        [Gallery(Type = typeof(RbcInterview), Title = "RBC interview", Group = "As interview", Regex = @".*rbc\.ru\/.*")]
         RbcInterview,
-        [Gallery(Type = typeof(HrefGallery), Title = "href gallery")]
+        [Gallery(Type = typeof(HrefGallery), Title = "As href gallery")]
         HrefGallery,
-        [Gallery(Type = typeof(ImgGallery), Title = "img gallery")]
+        [Gallery(Type = typeof(ImgGallery), Title = "As img gallery")]
         ImgGallery,
         [Gallery(Type = typeof(RbcGallery), Regex = @".*.rbc\.ru\/photoreport\/.+")]
         RbcGallery,
         [Gallery(Type = typeof(MotorGallery), Regex = @".*motor.ru\/gallery\/.*")]
         MotorGallery,
         [Gallery(Type = typeof(PhotoshareGallery), Regex = @".*photoshare\.ru.+")]
-        PhotoshareGallery
+        PhotoshareGallery,
+        [Gallery(Type = typeof(TextGallery), Title = "With no title")]
+        NoTitleGallery
     }
 }

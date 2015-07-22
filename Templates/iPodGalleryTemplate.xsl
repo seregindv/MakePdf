@@ -47,39 +47,41 @@
         </xsl:for-each>
       </layout-master-set>
       <!-- cover page -->
-      <page-sequence master-reference="p0">
-        <flow flow-name="xsl-region-body" font-family="Tahoma" text-align="justify">
-          <table width="56mm" height="84mm" table-layout="fixed">
-            <table-column />
-            <table-body>
-              <table-row height="1mm">
-                <table-cell text-align="right" padding-top="1mm">
-                  <block font-size="3pt">
-                    <xsl:value-of select="/Gallery/Date" />
-                  </block>
-                </table-cell>
-              </table-row>
-              <table-row height="83mm">
-                <table-cell text-align="center" display-align="center">
-                  <block font-size="20pt">
-                    <xsl:value-of select ="/Gallery/Name" />
-                  </block>
-                  <block font-size="14pt">
-                    <xsl:value-of select ="/Gallery/Annotation" />
-                  </block>
-                </table-cell>
-              </table-row>
-            </table-body>
-          </table>
-          <!-- contents -->
-          <xsl:call-template name="ProcessTags">
-            <xsl:with-param name="Tags" select="/Gallery/Tags" />
-          </xsl:call-template>
-          <xsl:if test="not(/Gallery/Gallery/Items/GalleryItem)">
-            <xsl:call-template name="SourceParagraph" />
-          </xsl:if>
-        </flow>
-      </page-sequence>
+      <xsl:if test="/Gallery/AddressType != 'NoTitleGallery'">
+        <page-sequence master-reference="p0">
+          <flow flow-name="xsl-region-body" font-family="Tahoma" text-align="justify">
+            <table width="56mm" height="84mm" table-layout="fixed">
+              <table-column />
+              <table-body>
+                <table-row height="1mm">
+                  <table-cell text-align="right" padding-top="1mm">
+                    <block font-size="3pt">
+                      <xsl:value-of select="/Gallery/Date" />
+                    </block>
+                  </table-cell>
+                </table-row>
+                <table-row height="83mm">
+                  <table-cell text-align="center" display-align="center">
+                    <block font-size="20pt">
+                      <xsl:value-of select ="/Gallery/Name" />
+                    </block>
+                    <block font-size="14pt">
+                      <xsl:value-of select ="/Gallery/Annotation" />
+                    </block>
+                  </table-cell>
+                </table-row>
+              </table-body>
+            </table>
+            <!-- contents -->
+            <xsl:call-template name="ProcessTags">
+              <xsl:with-param name="Tags" select="/Gallery/Tags" />
+            </xsl:call-template>
+            <xsl:if test="not(/Gallery/Gallery/Items/GalleryItem)">
+              <xsl:call-template name="SourceParagraph" />
+            </xsl:if>
+          </flow>
+        </page-sequence>
+      </xsl:if>
       <!-- gallery -->
       <xsl:for-each select="/Gallery/Gallery/Items/GalleryItem">
         <!--picture-->

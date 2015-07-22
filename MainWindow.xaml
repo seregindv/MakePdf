@@ -127,12 +127,6 @@
         <GridSplitter Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right" Width="2" Background="LightGray" ResizeBehavior="PreviousAndNext"/>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" Grid.RowSpan="3">
             <buttons:SplitButton Margin="5" IsDefault="True" Content="_Add" Command="{Binding AddCommand}" ButtonMenuItemsSource="{Binding AddMenuItems}" MenuItemStyle="{StaticResource menuStyle}" />
-            <!--<buttons:SplitButton.ButtonMenuItemsSource>
-                    <MenuItem Header="Auto" Command="{Binding AddCommand}" FontWeight="Bold" />
-                    <MenuItem Header="As gallery" Command="{Binding AddCommand}" CommandParameter="{x:Static stuff:AddressType.TextGallery}"/>
-                    <MenuItem Header="As interview" Command="{Binding AddCommand}" CommandParameter="{x:Static stuff:AddressType.LentaInterview}"/>
-                </buttons:SplitButton.ButtonMenuItemsSource>
-            </buttons:SplitButton>-->
             <Button Margin="5" Command="{Binding ChangeCommand}">_Change</Button>
             <Button Margin="5" Command="{Binding RemoveCommand}">_Remove</Button>
             <Button Margin="5" Command="{Binding RemoveAllCommand}">Remove all</Button>
