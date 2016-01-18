@@ -16,7 +16,8 @@
                 or /Gallery/Gallery/@xsi:type = 'SlonAuthorGallery'
                 or /Gallery/Gallery/@xsi:type = 'LentaBeelineGallery'
                 or /Gallery/Gallery/@xsi:type = 'MedusaInterview'
-                or /Gallery/Gallery/@xsi:type = 'RbcInterview'">True</xsl:when>
+                or /Gallery/Gallery/@xsi:type = 'RbcInterview'
+                or /Gallery/Gallery/@xsi:type = 'VillageGallery'">True</xsl:when>
       <xsl:otherwise>False</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>

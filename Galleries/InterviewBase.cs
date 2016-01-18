@@ -105,9 +105,16 @@ namespace MakePdf.Galleries
                 return null;
             do
             {
+                //Tag lastResultTag = null;
+                //if (result != null)
+                //    lastResultTag = result.Last();
                 var processed = ProcessGalleryNode(navigator.CurrentNode, result);
                 if (processed)
+                {
+                    //if (tags != null)
+                    //    lastResultTag.EnsuredTags.AddRange(tags);
                     tags = result.Last().EnsuredTags;
+                }
                 var processChildren = !processed;
                 if (!processed)
                 {
@@ -137,13 +144,10 @@ namespace MakePdf.Galleries
                 {
                     navigator.MoveToFirstChild();
                     var gotTags = GetItems(navigator);
-                    if (tags.Any())
-                        if (gotTags.Count > 0 && gotTags.First() is ParagraphTag)
-                            tags.AddRange(gotTags);
-                        else
-                            tags.Last().DrillDown().Tags = gotTags;
+                    if (!tags.Any() || (tags.Any() && gotTags.Count > 0 && gotTags.First() is ParagraphTag))
+                        tags.AddRange(gotTags);
                     else
-                        tags = gotTags;
+                        tags.Last().DrillDown().Tags = gotTags;
                     navigator.MoveToParent();
                 }
             } while (navigator.MoveToNext());

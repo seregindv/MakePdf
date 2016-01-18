@@ -65,6 +65,8 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(PhotoshareGallery), Regex = @".*photoshare\.ru.+")]
         PhotoshareGallery,
         [Gallery(Type = typeof(TextGallery), Title = "With no title")]
-        NoTitleGallery
+        NoTitleGallery,
+        [Gallery(Type = typeof(VillageGallery), Regex = @".*the-village\.ru\/village\/.*")]
+        VillageGallery
     }
 }

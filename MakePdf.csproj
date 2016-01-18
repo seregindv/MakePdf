@@ -184,6 +184,7 @@
     <Compile Include="Galleries\RiaGallery.cs" />
     <Compile Include="Galleries\SlonAuthorGallery.cs" />
     <Compile Include="Galleries\TextGallery.cs" />
+    <Compile Include="Galleries\VillageGallery.cs" />
     <Compile Include="Markup\Tag.cs" />
     <Compile Include="Markup\TagFactory.cs" />
     <Compile Include="Markup\TagList.cs" />

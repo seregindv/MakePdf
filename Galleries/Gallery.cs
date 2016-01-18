@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using HtmlAgilityPack;
 using MakePdf.Attributes;
 using MakePdf.Sizing;
@@ -83,7 +84,7 @@ namespace MakePdf.Galleries
                 }
                 else
                 {
-                    var responseStream = Utils.GetResponseStream(item.ImageUrl);
+                    var responseStream = GetResponseStream(item.ImageUrl);
                     using (var fileStream = new FileStream(item.LocalPath, FileMode.Create))
                     {
                         Utils.CopyStream(responseStream, fileStream);
@@ -98,6 +99,20 @@ namespace MakePdf.Galleries
         public static Gallery Create(AddressType addressType)
         {
             return GalleryAttribute.CreateGallery(addressType);
+        }
+
+        public Stream GetResponseStream(string url)
+        {
+            var request = WebRequest.Create(url);
+            request.Proxy.Credentials = CredentialCache.DefaultCredentials;
+            /*request.Proxy = new WebProxy
+            {
+                Address = new Uri("http://202.29.97.2:3128"),
+                BypassProxyOnLocal = true//,
+                //Credentials = CredentialCache.DefaultCredentials
+            };*/
+            var response = request.GetResponse();
+            return response.GetResponseStream();
         }
     }
 }

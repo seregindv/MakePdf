@@ -41,7 +41,7 @@ namespace MakePdf.Galleries
             if (!File.Exists(file))
             {
                 using (var fileStream = new FileStream(file, FileMode.Create))
-                    Utils.CopyStream(Utils.GetResponseStream(url), fileStream);
+                    Utils.CopyStream(GetResponseStream(url), fileStream);
             }
             return file;
         }

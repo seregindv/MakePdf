@@ -52,14 +52,6 @@ namespace MakePdf.Stuff
             }
         }
 
-        public static Stream GetResponseStream(string url)
-        {
-            var request = WebRequest.Create(url);
-            request.Proxy.Credentials = CredentialCache.DefaultCredentials;
-            var response = request.GetResponse();
-            return response.GetResponseStream();
-        }
-
         public static void FixUriTrailingDotBug()
         {
             var getSyntax = typeof(UriParser).GetMethod("GetSyntax", BindingFlags.Static | BindingFlags.NonPublic);
