@@ -156,7 +156,7 @@ namespace MakePdf.Galleries
 
         protected List<Tag> GetTags(params string[] htmlStrings)
         {
-            var htmlDocument = CreateHtmlDocument();
+            var htmlDocument = HtmlUtils.CreateHtmlDocument();
             var anyNode = false;
             foreach (var htmlString in htmlStrings)
             {

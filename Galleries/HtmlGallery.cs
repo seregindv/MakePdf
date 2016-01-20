@@ -55,7 +55,7 @@ namespace MakePdf.Galleries
         protected HtmlDocument LoadHtmlFile(string url, string fileName)
         {
             var file = LoadFile(url, fileName);
-            var result = CreateHtmlDocument();
+            var result = HtmlUtils.CreateHtmlDocument();
             if (HtmlEncoding == null)
                 result.DetectEncodingAndLoad(file);
             else
@@ -72,14 +72,5 @@ namespace MakePdf.Galleries
         {
             return LoadHtmlFile(url, fileName + ".html");
         }
-
-        protected HtmlDocument CreateHtmlDocument(string s = null)
-        {
-            var result = new HtmlDocument { OptionFixNestedTags = true };
-            if (s != null)
-                result.LoadHtml(s);
-            return result;
-        }
-
     }
 }

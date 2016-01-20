@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.IO;
-using System.Net.Mime;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Fonet;
 using MakePdf.Attributes;
 using MakePdf.Configuration;
 using MakePdf.Controls;
@@ -22,7 +17,6 @@ using MakePdf.Galleries.Processors;
 using MakePdf.Stuff;
 using System.Linq;
 using System.Windows;
-using Microsoft.Practices.Unity;
 
 namespace MakePdf.ViewModels
 {
@@ -53,7 +47,7 @@ namespace MakePdf.ViewModels
             PictureCommand = new DelegateCommand(OnPicture);
             UnpictureCommand = new DelegateCommand(OnUnpicture);
             RenderFilesCommand = new DelegateCommand(OnRenderFiles);
-            AddFilesCommand = new DelegateCommand(OnAddFiles);
+            DropCommand = new DelegateCommand(OnDrop);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
             IsTablet = Utils.IsTablet;
 
@@ -135,7 +129,7 @@ namespace MakePdf.ViewModels
         public DelegateCommand PictureCommand { private set; get; }
         public DelegateCommand UnpictureCommand { private set; get; }
         public DelegateCommand RenderFilesCommand { private set; get; }
-        public DelegateCommand AddFilesCommand { private set; get; }
+        public DelegateCommand DropCommand { private set; get; }
         public List<MenuItemViewModel> AddMenuItems { private set; get; }
         public string Directory
         {
@@ -471,9 +465,36 @@ namespace MakePdf.ViewModels
                 }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void OnAddFiles(object data)
+        private void OnDrop(object data)
         {
-            var files = data as string[];
+            var dataArray = data as object[];
+            if (dataArray == null)
+                return;
+            foreach (var datum in dataArray)
+            {
+                var datumArray = datum as object[];
+                if (datumArray == null)
+                    continue;
+                var datumType = datumArray[0] as string;
+                if (datumType == DataFormats.FileDrop)
+                    OnDropFiles(datumArray[1] as string[]);
+                else if (datumType == "HTML Format")
+                    OnDropHtml(datumArray[1] as string);
+            }
+        }
+
+        private void OnDropHtml(string htmlData)
+        {
+            DisplayedDocument.Contents = HtmlUtils
+                .CreateHtmlDocument(HtmlUtils.GetHtml(htmlData))
+                .DocumentNode
+                .SelectNodes("//img")
+                .Select(node => "pic:" + node.GetAttributeValue("src", String.Empty))
+                .Aggregate(new StringBuilder(DisplayedDocument.Contents ?? String.Empty), (sb, s) => sb.AppendLine(s), sb => sb.ToString());
+        }
+
+        private void OnDropFiles(string[] files)
+        {
             if (files == null)
                 return;
             var processor = new FileListProcessor();

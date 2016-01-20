@@ -110,7 +110,12 @@
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="3" Orientation="Horizontal">
                 <Button Content="Picture" Margin="0,0,3,0" Padding="7,0" Command="{Binding PictureCommand}" Style="{StaticResource SemitransparentButton}" Focusable="False">
                     <interactivity:Interaction.Behaviors>
-                        <controls:FileDropBehavior Command="{Binding AddFilesCommand}" />
+                        <controls:DropBehavior Command="{Binding DropCommand}">
+                            <controls:DropBehavior.Formats>
+                                <system:String>FileDrop</system:String>
+                                <system:String>HTML Format</system:String>
+                            </controls:DropBehavior.Formats>
+                        </controls:DropBehavior>
                     </interactivity:Interaction.Behaviors>
                 </Button>
                 <Button Content="Unpicture" Padding="7,0" Command="{Binding UnpictureCommand}" Style="{StaticResource SemitransparentButton}" Focusable="False" />
@@ -222,7 +227,7 @@
                 <Button Command="{Binding SaveCommand}" Padding="16,1" Margin="10,0" Height="23">Save</Button>
                 <Button Command="{Binding RenderCommand}" Padding="10,1" Margin="0,0,3,0" Height="23">
                     <interactivity:Interaction.Behaviors>
-                        <controls:FileDropBehavior Command="{Binding RenderFilesCommand}" />
+                        <controls:DropBehavior Command="{Binding RenderFilesCommand}" />
                     </interactivity:Interaction.Behaviors>
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DropButton}">

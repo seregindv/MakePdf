@@ -19,9 +19,9 @@ namespace MakePdf.Stuff
             if (parameter.ClipboardData.GetDataPresent(HTML_FORMAT))
             {
                 var htmlData = parameter.ClipboardData.GetData(HTML_FORMAT).ToString();
-                var address = GetAddress(htmlData);
+                var address = HtmlUtils.GetAddress(htmlData);
                 var addressType = GetAddressType(address);
-                Document = DocumentViewModel.Create(addressType, GetHtml(htmlData));
+                Document = DocumentViewModel.Create(addressType, HtmlUtils.GetHtml(htmlData));
                 Document.SourceAddress = address;
 
                 string clipboardText = null;
@@ -48,38 +48,6 @@ namespace MakePdf.Stuff
                     Document.Contents = clipboardText;
                 parameter.Processed = true;
             }
-        }
-
-        private string GetAddress(string htmlData)
-        {
-            using (var lineReader = new NonEmptyStringReader(htmlData))
-            {
-                var lentaEx = new Regex(@"^SourceURL.+?(https?:\/\/(www\.)?.+)$");
-                string line;
-                while ((line = lineReader.ReadLine()) != null)
-                {
-                    var match = lentaEx.Match(line);
-                    if (match.Success)
-                    {
-                        return match.Groups[1].Value;
-                    }
-                }
-            }
-            return String.Empty;
-        }
-
-        private string GetHtml(string htmlData)
-        {
-            using (var lineReader = new NonEmptyStringReader(htmlData))
-            {
-                string line;
-                while ((line = lineReader.ReadLine()) != null)
-                {
-                    if (line.StartsWith("<"))
-                        return line + Environment.NewLine + lineReader.ReadToEnd();
-                }
-            }
-            return String.Empty;
         }
 
         private AddressType GetAddressType(string address)
