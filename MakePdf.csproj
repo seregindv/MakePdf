@@ -154,6 +154,7 @@
     <Compile Include="Attributes\GalleryAttribute.cs" />
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
+    <Compile Include="Galleries\MeduzaGallery.cs" />
     <Compile Include="Galleries\MotorGallery.cs" />
     <Compile Include="Galleries\PhotoshareGallery.cs" />
     <Compile Include="Galleries\Processors\FileListProcessor.cs" />

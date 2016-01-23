@@ -50,7 +50,9 @@ namespace MakePdf.Stuff
         ItarTassGallery,
         [Gallery(Type = typeof(PhotofileGallery), Regex = @".*photo\.qip\.ru.*")]
         PhotofileGallery,
-        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview", Group = "As interview", Regex = @".*meduza\.io\/.*")]
+        [Gallery(Type = typeof(MeduzaGallery), Regex = @".*meduza\.io\/galleries\/.*")]
+        MeduzaGallery,
+        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview", Group = "As interview", Regex = @".*meduza\.io\/(?!galleries\/).*")]
         MedusaInterview,
         [Gallery(Type = typeof(RbcInterview), Title = "RBC interview", Group = "As interview", Regex = @".*rbc\.ru\/.*")]
         RbcInterview,

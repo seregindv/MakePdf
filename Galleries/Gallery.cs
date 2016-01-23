@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using HtmlAgilityPack;
@@ -112,7 +113,17 @@ namespace MakePdf.Galleries
                 //Credentials = CredentialCache.DefaultCredentials
             };*/
             var response = request.GetResponse();
-            return response.GetResponseStream();
+            var webResponse = response as HttpWebResponse;
+            var responseStream = response.GetResponseStream();
+            if (responseStream == null)
+                return null;
+
+            if (webResponse != null && webResponse.ContentEncoding == "gzip")
+            {
+                var gz = new GZipStream(responseStream, CompressionMode.Decompress);
+                return gz;
+            }
+            return responseStream;
         }
     }
 }
