@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 using MakePdf.Markup;
 
 namespace MakePdf.Galleries
 {
-    public class MedusaInterview : InterviewBase
+    public class MeduzaInterview : InterviewBase
     {
-        public MedusaInterview()
+        public MeduzaInterview()
         {
             HtmlEncoding = Encoding.UTF8;
         }

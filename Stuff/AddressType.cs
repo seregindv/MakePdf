@@ -52,7 +52,7 @@ namespace MakePdf.Stuff
         PhotofileGallery,
         [Gallery(Type = typeof(MeduzaGallery), Regex = @".*meduza\.io\/galleries\/.*")]
         MeduzaGallery,
-        [Gallery(Type = typeof(MedusaInterview), Title = "Medusa interview", Group = "As interview", Regex = @".*meduza\.io\/(?!galleries\/).*")]
+        [Gallery(Type = typeof(MeduzaInterview), Title = "Medusa interview", Group = "As interview", Regex = @".*meduza\.io\/(?!galleries\/).*")]
         MedusaInterview,
         [Gallery(Type = typeof(RbcInterview), Title = "RBC interview", Group = "As interview", Regex = @".*rbc\.ru\/.*")]
         RbcInterview,
@@ -60,7 +60,7 @@ namespace MakePdf.Stuff
         HrefGallery,
         [Gallery(Type = typeof(ImgGallery), Title = "As img gallery")]
         ImgGallery,
-        [Gallery(Type = typeof(RbcGallery), Regex = @".*.rbc\.ru\/photoreport\/.+")]
+        [Gallery(Type = typeof(RbcGallery), Regex = @".*\.rbc\.ru\/photoreport\/.+")]
         RbcGallery,
         [Gallery(Type = typeof(MotorGallery), Regex = @".*motor.ru\/gallery\/.*")]
         MotorGallery,
@@ -69,6 +69,8 @@ namespace MakePdf.Stuff
         [Gallery(Type = typeof(TextGallery), Title = "With no title")]
         NoTitleGallery,
         [Gallery(Type = typeof(VillageGallery), Regex = @".*the-village\.ru\/village\/.*")]
-        VillageGallery
+        VillageGallery,
+        [Gallery(Type = typeof(JoannaGallery),Regex = @"\.joannastingray\.com")]
+        JoannaGallery
     }
 }
