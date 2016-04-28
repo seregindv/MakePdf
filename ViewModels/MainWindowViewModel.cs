@@ -489,7 +489,7 @@ namespace MakePdf.ViewModels
                 .CreateHtmlDocument(HtmlUtils.GetHtml(htmlData))
                 .DocumentNode
                 .SelectNodes("//img")
-                .Select(node => "pic:" + node.GetAttributeValue("src", String.Empty))
+                .Select(node => "pic:" + node.GetSrc())
                 .Aggregate(new StringBuilder(DisplayedDocument.Contents ?? String.Empty), (sb, s) => sb.AppendLine(s), sb => sb.ToString());
         }
 

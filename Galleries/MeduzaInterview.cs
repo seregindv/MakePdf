@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using MakePdf.Markup;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries
 {
@@ -18,7 +19,7 @@ namespace MakePdf.Galleries
         {
             var imageNode = document.DocumentNode.SelectSingleNode("//link[@rel='image_src']");
             var textNode = document.DocumentNode.SelectSingleNode("//div[@class='Lead']/p");
-            return new GalleryItem(imageNode.GetAttributeValue("href", String.Empty), textNode.InnerText);
+            return new GalleryItem(imageNode.GetHref(), textNode.InnerText);
         }
 
         protected override HtmlNodeNavigator GetNavigator(HtmlDocument document)
@@ -33,7 +34,7 @@ namespace MakePdf.Galleries
                 var imageNode = node.SelectSingleNode(".//img");
                 if (imageNode != null)
                 {
-                    tags.Add(new GalleryItem(new Uri(GalleryUri, imageNode.GetAttributeValue("src", String.Empty)).ToString(), node.InnerText));
+                    tags.Add(new GalleryItem(new Uri(GalleryUri, imageNode.GetSrc()).ToString(), node.InnerText));
                     return true;
                 }
             }

@@ -78,7 +78,7 @@ namespace MakePdf.Galleries
 
             foreach (var imgNode in imgNodes)
             {
-                var galleryItem = new GalleryItem(imgNode.GetAttributeValue("src", String.Empty));
+                var galleryItem = new GalleryItem(imgNode.GetSrc());
                 tags.Add(galleryItem);
                 var pNodes = imgNode.SelectNodes("./following-sibling::*");
                 if (pNodes != null && pNodes.Count > 0)
@@ -141,7 +141,7 @@ namespace MakePdf.Galleries
             var headerImage = Document.DocumentNode.SelectSingleNode(@"//div[contains(@class,'image_first')]/img");
             if (headerImage != null)
                 _items.Add(new GalleryItem(
-                    headerImage.GetAttributeValue("src", String.Empty),
+                    headerImage.GetSrc(),
                     null,
                     headerImage.GetAttributeValue("width", 0),
                     headerImage.GetAttributeValue("height", 0)));
@@ -228,7 +228,7 @@ namespace MakePdf.Galleries
                         var textNode = @node.SelectSingleNode("div/div");
                         return
                             new GalleryItem(
-                                Utils.FixUrlProtocol(@node.SelectSingleNode("img").GetAttributeValue("src", String.Empty)),
+                                Utils.FixUrlProtocol(@node.SelectSingleNode("img").GetSrc()),
                                 textNode == null ? null : @node.SelectSingleNode("div/div").InnerText
                                 );
                     }
@@ -243,7 +243,7 @@ namespace MakePdf.Galleries
                 return false;
             Flush();
             var imageSource =
-                imageNode.GetAttributeValue("src", String.Empty);
+                imageNode.GetSrc();
             var item = new GalleryItem(Utils.FixUrlProtocol(imageSource));
             var captionNode = contentNavigator.CurrentNode.SelectSingleNode("div[@class='caption']");
             if (captionNode != null)
@@ -257,7 +257,7 @@ namespace MakePdf.Galleries
             var videoNode = contentNavigator.CurrentNode.SelectSingleNode("iframe[@class='youtube-player' and @src]");
             if (videoNode == null)
                 return;
-            var tubeID = videoNode.GetAttributeValue("src", String.Empty);
+            var tubeID = videoNode.GetSrc();
             var address = Regex.Replace(tubeID, @"http:\/\/(?:www\.)?youtube\.com\/embed\/(.+?)(?:\/|\?|$).*", "http://www.youtube.com/watch?v=$1");
             _tags.Add(TagFactory.GetTextTag("Видео>>").Wrap(new HrefTag(address)).Wrap<ParagraphTag>());
         }
@@ -267,7 +267,7 @@ namespace MakePdf.Galleries
             Flush();
             var imageSource =
                 contentNavigator.CurrentNode.SelectSingleNode("img")
-                    .GetAttributeValue("src", String.Empty);
+                    .GetSrc();
             var lines = contentNavigator
                 .CurrentNode
                 .SelectNodes("div/div/p")
@@ -286,7 +286,7 @@ namespace MakePdf.Galleries
                 .CurrentNode
                 .SelectNodes("div/div")
                 .Select(@node =>
-                    new GalleryItem(@node.SelectSingleNode("div/a").GetAttributeValue("href", String.Empty),
+                    new GalleryItem(@node.SelectSingleNode("div/a").GetHref(),
                         @node.SelectSingleNode("div/p").InnerText))
                 );
         }

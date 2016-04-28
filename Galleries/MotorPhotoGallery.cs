@@ -46,7 +46,7 @@ namespace MakePdf.Galleries
                     var @imgNode = @node.SelectSingleNode("img");
                     var result = new GalleryItem
                     {
-                        ImageUrl = Utils.FixUrlProtocol(@node.GetAttribute("href", String.Empty)),
+                        ImageUrl = Utils.FixUrlProtocol(@node.GetHref()),
                         ThumbnailImageUrl = Utils.FixUrlProtocol(@imgNode.GetAttribute("src", String.Empty))
                     };
                     var text = @imgNode.GetAttribute("alt", String.Empty);

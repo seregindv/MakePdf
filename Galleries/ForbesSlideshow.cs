@@ -31,7 +31,7 @@ namespace MakePdf.Galleries
                             return new GalleryItem
                                 {
                                     ThumbnailImageUrl = @imgNode.GetAttribute("src", String.Empty),
-                                    Url = @aNode.GetAttribute("href", String.Empty)
+                                    Url = @aNode.GetHref()
                                 };
                         });
         }
@@ -43,7 +43,7 @@ namespace MakePdf.Galleries
                 .SelectDescendants("a", String.Empty, false)
                 .OfType<HtmlNodeNavigator>()
                 .First(@node => @node.GetAttribute("class", String.Empty) == "fancybox")
-                .GetAttribute("href", String.Empty);
+                .GetHref();
             item.Tags = TagFactory.GetParagraphTags(HttpUtility.HtmlDecode(doc.CreateNavigator()
                 .SelectDescendants("div", String.Empty, false)
                 .OfType<HtmlNodeNavigator>()

@@ -125,5 +125,10 @@ namespace MakePdf.Galleries
             }
             return responseStream;
         }
+
+        public string GetUrlFromRelativePath(string path)
+        {
+            return new Uri(GalleryUri, path).ToString();
+        }
     }
 }

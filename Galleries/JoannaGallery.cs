@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries
 {
@@ -14,7 +15,7 @@ namespace MakePdf.Galleries
                 .DocumentNode
                 .SelectNodes("//div[@class='galleryInnerImageHolder']/a")
                 .Select(e =>
-                    new GalleryItem(new Uri(GalleryUri, e.GetAttributeValue("href", String.Empty)).ToString(),
+                    new GalleryItem(new Uri(GalleryUri, e.GetHref()).ToString(),
                         e.GetAttributeValue("title", String.Empty)));
         }
     }

@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using HtmlAgilityPack;
 using MakePdf.Markup;
+using MakePdf.Stuff;
 using Newtonsoft.Json.Linq;
 
 namespace MakePdf.Galleries
@@ -25,7 +26,7 @@ namespace MakePdf.Galleries
             var items = Document
                 .DocumentNode
                 .SelectNodes("descendant::table[@class='thumbs']/descendant::td/descendant::img[1]")
-                .Select(@imgNode => new GalleryItem(imgNode.GetAttributeValue("src", String.Empty)));
+                .Select(@imgNode => new GalleryItem(imgNode.GetSrc()));
             var bigImageRegex = new Regex(@"\-\-\d+");
             return Regex.Matches(LoadString(GalleryUri.ToString(), GALLERY_HTML_FILE, Document.Encoding)
                 , @"img.+src\=(.+?)\s+alt\=""(.+)""\s+title.+width.+height")

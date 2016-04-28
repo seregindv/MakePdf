@@ -20,7 +20,7 @@ namespace MakePdf.Galleries
         {
             var imgNode = document.DocumentNode.SelectSingleNode("descendant::li[@class='gallery-slide']/a/img");
             var textNode = document.DocumentNode.SelectSingleNode("descendant::div[contains(@class,'photoarticle')]");
-            return new GalleryItem(imgNode.GetAttributeValue("src", String.Empty),
+            return new GalleryItem(imgNode.GetSrc(),
                 HttpUtility.HtmlDecode(textNode.InnerText),
                 imgNode.GetAttributeValue("width", Int32.MinValue),
                 imgNode.GetAttributeValue("height", Int32.MinValue));
@@ -30,7 +30,7 @@ namespace MakePdf.Galleries
         {
             return Document.DocumentNode
                 .SelectNodes("descendant::div[@class='wrapper']/ul/li[not(contains(@class,'current'))]/a")
-                .Select((node, index) => GetHtmlDocument(node.GetAttributeValue("href", String.Empty), Utils.GetFileName(index)));
+                .Select((node, index) => GetHtmlDocument(node.GetHref(), Utils.GetFileName(index)));
         }
     }
 }

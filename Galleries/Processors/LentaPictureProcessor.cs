@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries.Processors
 {
@@ -16,7 +17,7 @@ namespace MakePdf.Galleries.Processors
 
         private GalleryItem PictureFromNode(HtmlNode node)
         {
-            return new GalleryItem(node.GetAttributeValue("src", String.Empty),
+            return new GalleryItem(node.GetSrc(),
                 node.GetAttributeValue("alt", String.Empty),
                 Int32.Parse(node.GetAttributeValue("width", String.Empty)),
                 Int32.Parse(node.GetAttributeValue("height", String.Empty)));

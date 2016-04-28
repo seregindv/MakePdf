@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using MakePdf.Markup;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries
 {
@@ -21,7 +22,7 @@ namespace MakePdf.Galleries
             return new GalleryItem(document
                 .DocumentNode
                 .SelectSingleNode(@"(//div[@class='cover-image']/img)[1]")
-                .GetAttributeValue("src", String.Empty));
+                .GetSrc());
         }
 
         protected override HtmlNodeNavigator GetNavigator(HtmlDocument document)
@@ -62,7 +63,7 @@ namespace MakePdf.Galleries
                 return new NodeProcessResult(true, false);
             if (node.Name == "em")
                 return new NodeProcessResult(true);
-            if (node.Name == "img" && node.GetAttributeValue("src", String.Empty).StartsWith("data:"))
+            if (node.Name == "img" && node.GetSrc().StartsWith("data:"))
                 return new NodeProcessResult(true, false);
 
             return base.ProcessTextNode(node, tags);

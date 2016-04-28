@@ -154,6 +154,7 @@
     <Compile Include="Attributes\GalleryAttribute.cs" />
     <Compile Include="Galleries\Gallery.cs" />
     <Compile Include="Galleries\GazetaGallery.cs" />
+    <Compile Include="Galleries\InterfaxGallery.cs" />
     <Compile Include="Galleries\JoannaGallery.cs" />
     <Compile Include="Galleries\MeduzaGallery.cs" />
     <Compile Include="Galleries\MotorGallery.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Serialization\XmlSerializerWrapper.cs" />
     <Compile Include="Sizing\ImageSize.cs" />
     <Compile Include="Stuff\AddressType.cs" />
+    <Compile Include="Stuff\HtmlExtensions.cs" />
     <Compile Include="Stuff\HtmlUtils.cs" />
     <Compile Include="Stuff\InputPanelConfiguration.cs" />
     <Compile Include="Stuff\LineReader.cs" />
@@ -280,7 +282,6 @@
     <None Include="Deploy\Publish-Package.ps1" />
     <None Include="MakePdf_TemporaryKey.pfx" />
     <None Include="packages.config" />
-    <None Include="PostExtract.ps1" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -292,7 +293,6 @@
     <None Include="Main.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish-Package.ps1" />
     <None Include="Templates\_GalleryTemplate2.xsl" />
     <None Include="Templates\_GalleryTemplate3.xsl" />
     <None Include="Templates\_GalleryTemplate4.xsl" />

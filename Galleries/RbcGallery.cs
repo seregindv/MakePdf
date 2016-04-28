@@ -41,9 +41,9 @@ namespace MakePdf.Galleries
 
         private GalleryItem GetGalleryItem(HtmlNode node, int index)
         {
-            var result = new GalleryItem(node.GetAttributeValue("href", String.Empty))
+            var result = new GalleryItem(node.GetHref())
             {
-                ThumbnailImageUrl = node.SelectSingleNode("img").GetAttributeValue("src", String.Empty)
+                ThumbnailImageUrl = node.SelectSingleNode("img").GetSrc()
             };
             var descText = HttpUtility.HtmlDecode(node.GetAttributeValue("data-rbc-description", String.Empty));
             var descDoc = HtmlUtils.CreateHtmlDocument(descText);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using MakePdf.Markup;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries
 {
@@ -16,9 +17,9 @@ namespace MakePdf.Galleries
             if (imageNodes != null && imageNodes.Count > 0)
                 return imageNodes.Select(img =>
                 {
-                    var imgSrc = new Uri(GalleryUri, img.GetAttributeValue("src", String.Empty)).ToString();
+                    var imgSrc = new Uri(GalleryUri, img.GetSrc()).ToString();
                     var url = img.ParentNode.Name == "a"
-                        ? new Uri(GalleryUri, img.ParentNode.GetAttributeValue("href", String.Empty)).ToString()
+                        ? new Uri(GalleryUri, img.ParentNode.GetHref()).ToString()
                         : null;
 
                     return new GalleryItem
@@ -32,7 +33,7 @@ namespace MakePdf.Galleries
             var textDiv = Document.DocumentNode.SelectSingleNode("//div[@itemprop='text']");
             if (textDiv != null)
                 return textDiv.SelectNodes(".//img[@border]").Select(node =>
-                    new GalleryItem(new Uri(GalleryUri, node.GetAttributeValue("src", String.Empty)).ToString(), null, node.GetAttributeValue("width", 0), node.GetAttributeValue("height", 0)));
+                    new GalleryItem(new Uri(GalleryUri, node.GetSrc()).ToString(), null, node.GetAttributeValue("width", 0), node.GetAttributeValue("height", 0)));
             return Enumerable.Empty<GalleryItem>();
         }
 

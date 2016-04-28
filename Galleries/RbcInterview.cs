@@ -20,7 +20,7 @@ namespace MakePdf.Galleries
         {
             var imageNode = document.DocumentNode.SelectSingleNode("//div[@class='article__main-image']/img");
             var textNode = document.DocumentNode.SelectSingleNode("//div[@class='article__overview__text']");
-            return new GalleryItem(imageNode.GetAttributeValue("src", String.Empty), textNode.InnerText);
+            return new GalleryItem(imageNode.GetSrc(), textNode.InnerText);
         }
 
         protected override HtmlNodeNavigator GetNavigator(HtmlDocument document)
@@ -35,7 +35,7 @@ namespace MakePdf.Galleries
                 var imageNode = node.SelectSingleNode("div[@class='article__infographic']//img");
                 if (imageNode != null)
                 {
-                    tags.Add(new GalleryItem(imageNode.GetAttributeValue("src", String.Empty)));
+                    tags.Add(new GalleryItem(imageNode.GetSrc()));
                     return true;
                 }
             }

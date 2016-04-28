@@ -37,7 +37,7 @@ namespace MakePdf.Galleries
                 .OfType<HtmlNodeNavigator>()
                 .First(@nav =>
                 {
-                    var @href = @nav.GetAttribute("href", String.Empty);
+                    var @href = @nav.GetHref();
                     return @nav.GetAttribute("class", String.Empty) == "item"
                            && @href != null
                            && GalleryDocument.SourceAddress.Contains(@href);
@@ -99,7 +99,7 @@ namespace MakePdf.Galleries
                     var imageNode = node.SelectSingleNode("img");
                     if (imageNode != null)
                     {
-                        tags.Add(new GalleryItem(imageNode.GetAttributeValue("src", String.Empty),
+                        tags.Add(new GalleryItem(imageNode.GetSrc(),
                             imageNode.GetAttributeValue("alt", String.Empty),
                             imageNode.GetAttributeValue("width", 0),
                             imageNode.GetAttributeValue("height", 0)));
@@ -119,7 +119,7 @@ namespace MakePdf.Galleries
                 var childNode = node.ChildNodes[0];
                 if (childNode.Name == "img" && node.ChildNodes.Count == 1)
                 {
-                    tags.Add(new GalleryItem(childNode.GetAttributeValue("src", String.Empty),
+                    tags.Add(new GalleryItem(childNode.GetSrc(),
                         childNode.GetAttributeValue("alt", String.Empty),
                         childNode.GetAttributeValue("width", 0),
                         childNode.GetAttributeValue("height", 0)));
@@ -131,7 +131,7 @@ namespace MakePdf.Galleries
                 {
                     tags.Add(new GalleryItem
                     {
-                        Url = childNode.SelectSingleNode(".//a").GetAttributeValue("href", String.Empty),
+                        Url = childNode.SelectSingleNode(".//a").GetHref(),
                         Tags = TagFactory.GetParagraphTag(childNode.InnerText).ToTags()
                     });
                     return true;
@@ -165,7 +165,7 @@ namespace MakePdf.Galleries
                 //    item.ImageUrl = document
                 //        .DocumentNode
                 //        .SelectSingleNode("//img[@id='fbPhotoImage']")
-                //        .GetAttributeValue("src", String.Empty);
+                //        .GetSrc();
             }
             base.LoadItem(item);
         }

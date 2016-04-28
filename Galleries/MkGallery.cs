@@ -50,7 +50,7 @@ namespace MakePdf.Galleries
                 .Select("div[@class='MainPager']/a[not(@style)]")
                 .OfType<HtmlNodeNavigator>()
                 .Select(@node =>
-                    new Uri(GalleryUri, @node.GetAttribute("href", String.Empty)).ToString());
+                    new Uri(GalleryUri, @node.GetHref()).ToString());
         }
     }
 }

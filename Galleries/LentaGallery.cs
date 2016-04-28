@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
+using MakePdf.Stuff;
 using Newtonsoft.Json.Linq;
 using System.Web;
 
@@ -27,7 +28,7 @@ namespace MakePdf.Galleries
                         tags,
                         json.GetValue("width").Value<int>(),
                         json.GetValue("height").Value<int>(),
-                        imgNode.GetAttributeValue("src", String.Empty));
+                        imgNode.GetSrc());
                 });
         }
 

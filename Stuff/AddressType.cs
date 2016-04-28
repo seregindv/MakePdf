@@ -70,7 +70,9 @@ namespace MakePdf.Stuff
         NoTitleGallery,
         [Gallery(Type = typeof(VillageGallery), Regex = @".*the-village\.ru\/village\/.*")]
         VillageGallery,
-        [Gallery(Type = typeof(JoannaGallery),Regex = @"\.joannastingray\.com")]
-        JoannaGallery
+        [Gallery(Type = typeof(JoannaGallery), Regex = @"\.joannastingray\.com")]
+        JoannaGallery,
+        [Gallery(Type = typeof(InterfaxGallery), Regex = @"interfax\.ru\/photo\/.+")]
+        InterfaxGallery
     }
 }

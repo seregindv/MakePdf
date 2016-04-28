@@ -51,7 +51,7 @@ namespace MakePdf.Galleries
                     tags.Add(new BoldTag());
                     break;
                 case "a":
-                    tags.Add(new HrefTag(node.GetAttributeValue("href", String.Empty)));
+                    tags.Add(new HrefTag(node.GetHref()));
                     break;
                 case "h1":
                 case "h2":

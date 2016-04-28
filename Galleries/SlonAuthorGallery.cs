@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using HtmlAgilityPack;
 using MakePdf.Markup;
+using MakePdf.Stuff;
 
 namespace MakePdf.Galleries
 {
@@ -21,7 +22,7 @@ namespace MakePdf.Galleries
                 .Select(@node =>
                     new GalleryItem
                     {
-                        Url = @node.GetAttribute("href", String.Empty)
+                        Url = @node.GetHref()
                     })
                 .Reverse();
         }
