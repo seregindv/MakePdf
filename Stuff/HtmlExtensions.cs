@@ -22,7 +22,7 @@ namespace MakePdf.Stuff
 
         public static string GetSrc(this HtmlNode node)
         {
-            return node.GetSrc();
+            return node.GetAttributeValue("src", String.Empty);
         }
     }
 }
