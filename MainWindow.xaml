@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:MakePdf.Controls"
         Cursor="{Binding IsBusy, Converter={StaticResource busyToCursor}}"
         xmlns:watermark="clr-namespace:MakePdf.Watermark"
-        xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:vm="clr-namespace:MakePdf.ViewModels"
         xmlns:buttons="clr-namespace:MakePdf.Controls.Buttons"
         xmlns:converters="clr-namespace:MakePdf.Converters"

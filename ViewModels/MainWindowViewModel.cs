@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Collections.Specialized;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -342,21 +341,21 @@ namespace MakePdf.ViewModels
                     : DisplayedDocumentToGallery(AddressType.TextGallery);
             else
                 if (!GalleryAttribute.IsGallery(addressType.Value))
-                    if (displayedIsGallery)
-                    {
-                        newDocument = new TextDocumentViewModel();
-                        DisplayedDocument.CloneTo(newDocument);
-                    }
-                    else
-                        newDocument = DisplayedDocument.Clone();
+                if (displayedIsGallery)
+                {
+                    newDocument = new TextDocumentViewModel();
+                    DisplayedDocument.CloneTo(newDocument);
+                }
                 else
+                    newDocument = DisplayedDocument.Clone();
+            else
                     if (displayedIsGallery)
-                    {
-                        newDocument = DisplayedDocument.Clone();
-                        newDocument.AddressType = addressType.Value;
-                    }
-                    else
-                        newDocument = DisplayedDocumentToGallery(addressType.Value);
+            {
+                newDocument = DisplayedDocument.Clone();
+                newDocument.AddressType = addressType.Value;
+            }
+            else
+                newDocument = DisplayedDocumentToGallery(addressType.Value);
             newDocument.Exception = null;
             newDocument.Status = ProcessingStatus.New;
             Documents.Add(newDocument);
@@ -380,17 +379,12 @@ namespace MakePdf.ViewModels
                 return;
             }
             IsBusy = true;
-            //Debug.WriteLine("Main thread " + Thread.CurrentThread.ManagedThreadId);
-            Observable
-                .Start((Func<object>)Render)
-                .ObserveOnDispatcher()
-                .Subscribe(_ =>
-                {
-                    //Debug.WriteLine("Subscribed on " + Thread.CurrentThread.ManagedThreadId);
-                    if (OpenExplorer)
-                        ExecuteExplorer();
-                    IsBusy = false;
-                });
+            Task.Run(Render).ContinueWith(_ =>
+            {
+                if (OpenExplorer)
+                    ExecuteExplorer();
+                IsBusy = false;
+            });
         }
 
         private void OnSave(object data)

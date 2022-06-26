@@ -15,8 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using MakePdf.Configuration;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 
 namespace MakePdf.ViewModels
 {
@@ -28,13 +26,12 @@ namespace MakePdf.ViewModels
         public MainWindow()
         {
             InitializeComponent();
-            IUnityContainer container = new UnityContainer();
-            container.RegisterInstance(container);
-            //container.RegisterType<IConfig, Config>(new ContainerControlledLifetimeManager());
-            container.RegisterInstance(Config.Instance);
-            container.RegisterType<MainWindowViewModel, MainWindowViewModel>(new ContainerControlledLifetimeManager());
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            DataContext = container.Resolve<MainWindowViewModel>();
+            //IUnityContainer container = new UnityContainer();
+            ////container.RegisterType<IConfig, Config>(new ContainerControlledLifetimeManager());
+            //container.RegisterInstance(Config.Instance);
+            //container.RegisterType<MainWindowViewModel, MainWindowViewModel>(new ContainerControlledLifetimeManager());
+            //ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+            DataContext = new MainWindowViewModel(Config.Instance);
 
             //Content.AddHandler(DragEnterEvent, new DragEventHandler(Content_DragEnter), true);
         }

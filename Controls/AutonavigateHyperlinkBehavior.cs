@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Interactivity;
 using System.Windows.Documents;
 using System.Diagnostics;
+using Microsoft.Xaml.Behaviors;
 
 namespace MakePdf.Controls
 {
