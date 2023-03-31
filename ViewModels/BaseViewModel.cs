@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.ViewModels
 {

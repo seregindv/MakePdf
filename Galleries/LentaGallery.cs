@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using Newtonsoft.Json.Linq;
 using System.Web;
 

@@ -6,7 +6,7 @@ using System.Text;
 using HtmlAgilityPack;
 using MakePdf.Attributes;
 using MakePdf.Sizing;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using System.IO;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
@@ -41,7 +41,7 @@ namespace MakePdf.Galleries
             if (!File.Exists(file))
             {
                 using (var fileStream = new FileStream(file, FileMode.Create))
-                    Utils.CopyStream(GetResponseStream(url), fileStream);
+                    StreamHelper.CopyStream(GetResponseStream(url), fileStream);
             }
             return file;
         }
@@ -55,7 +55,7 @@ namespace MakePdf.Galleries
         protected HtmlDocument LoadHtmlFile(string url, string fileName)
         {
             var file = LoadFile(url, fileName);
-            var result = HtmlUtils.CreateHtmlDocument();
+            var result = HtmlHelper.CreateHtmlDocument();
             if (HtmlEncoding == null)
                 result.DetectEncodingAndLoad(file);
             else

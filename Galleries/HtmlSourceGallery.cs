@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MakePdf.Configuration;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -17,7 +17,7 @@ namespace MakePdf.Galleries
             var matches = Regex.Matches(GalleryDocument.HtmlContents);
             return from Match match in matches
                    select match.Groups[1].Value into href
-                   where Utils.IsImage(href)
+                   where PathHelper.IsImage(href)
                    select new GalleryItem(href);
         }
 

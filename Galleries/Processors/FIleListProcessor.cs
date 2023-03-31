@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries.Processors
 {
@@ -60,7 +60,7 @@ namespace MakePdf.Galleries.Processors
                                             var upperNumber = locality.Index == localities.Length - 1
                                                 ? Int32.MaxValue
                                                 : localities[locality.Index + 1].Locality.Number;
-                                            return file.Number > lowerNumber && file.Number < upperNumber && Utils.IsImage(file.Name) && File.Exists(file.Name);
+                                            return file.Number > lowerNumber && file.Number < upperNumber && PathHelper.IsImage(file.Name) && File.Exists(file.Name);
                                         }).Select(fileNum => fileNum.Name),
                                     Title = locality.Locality.Name
                                 });
@@ -71,7 +71,7 @@ namespace MakePdf.Galleries.Processors
                 new FileSet
                 {
                     Title = String.Empty,
-                    Files = files.Where(file => File.Exists(file) && Utils.IsImage(file))
+                    Files = files.Where(file => File.Exists(file) && PathHelper.IsImage(file))
                 }};
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     public class NonEmptyStringReader : StringReader
     {

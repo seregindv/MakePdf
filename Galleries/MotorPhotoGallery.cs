@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -17,7 +17,7 @@ namespace MakePdf.Galleries
                 .DocumentNode
                 .SelectSingleNode("(descendant::div[@class='b-h1']/h1/span)[1]")
                 .InnerText;
-            GalleryDocument.Annotation = Utils.TruncateAfterEOL(Document
+            GalleryDocument.Annotation = StringHelper.TruncateAfterEOL(Document
                 .DocumentNode
                 .SelectSingleNode("descendant::p[@class='two-words']")
                 .InnerText);
@@ -46,8 +46,8 @@ namespace MakePdf.Galleries
                     var @imgNode = @node.SelectSingleNode("img");
                     var result = new GalleryItem
                     {
-                        ImageUrl = Utils.FixUrlProtocol(@node.GetHref()),
-                        ThumbnailImageUrl = Utils.FixUrlProtocol(@imgNode.GetAttribute("src", String.Empty))
+                        ImageUrl = UriHelper.FixUrlProtocol(@node.GetHref()),
+                        ThumbnailImageUrl = UriHelper.FixUrlProtocol(@imgNode.GetAttribute("src", String.Empty))
                     };
                     var text = @imgNode.GetAttribute("alt", String.Empty);
                     if (text.Length > 0)
@@ -56,7 +56,7 @@ namespace MakePdf.Galleries
                 }).Zip(bigPics, (@galleryItem, @bigPic) =>
                 {
                     if (@bigPic != null)
-                        @galleryItem.ImageUrl = Utils.FixUrlProtocol(@bigPic);
+                        @galleryItem.ImageUrl = UriHelper.FixUrlProtocol(@bigPic);
                     return @galleryItem;
                 });
         }

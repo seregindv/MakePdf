@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -30,7 +30,7 @@ namespace MakePdf.Galleries
         {
             return Document.DocumentNode
                 .SelectNodes("descendant::div[@class='wrapper']/ul/li[not(contains(@class,'current'))]/a")
-                .Select((node, index) => GetHtmlDocument(node.GetHref(), Utils.GetFileName(index)));
+                .Select((node, index) => GetHtmlDocument(node.GetHref(), PathHelper.GetFileName(index)));
         }
     }
 }

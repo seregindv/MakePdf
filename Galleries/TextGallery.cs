@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using MakePdf.Configuration;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -20,7 +20,7 @@ namespace MakePdf.Galleries
             GalleryDocument.Contents = String.Empty;
             GalleryDocument.Tags = TagFactory.GetParagraphTags(splitted[0], parseHyperlinks: true);
             for (var i = 1; i < splitted.Length; i = i + 2)
-                yield return new GalleryItem(Utils.Trim(splitted[i]), TagFactory.GetParagraphTags(splitted[i + 1], parseHyperlinks: true));
+                yield return new GalleryItem(StringHelper.Trim(splitted[i]), TagFactory.GetParagraphTags(splitted[i + 1], parseHyperlinks: true));
         }
     }
 }

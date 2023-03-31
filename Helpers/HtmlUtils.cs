@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
-    public static class HtmlUtils
+    public static class HtmlHelper
     {
         public static string GetAddress(string htmlData)
         {

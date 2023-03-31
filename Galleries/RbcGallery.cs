@@ -9,7 +9,7 @@ using System.Web;
 using System.Windows.Documents;
 using HtmlAgilityPack;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -46,7 +46,7 @@ namespace MakePdf.Galleries
                 ThumbnailImageUrl = node.SelectSingleNode("img").GetSrc()
             };
             var descText = HttpUtility.HtmlDecode(node.GetAttributeValue("data-rbc-description", String.Empty));
-            var descDoc = HtmlUtils.CreateHtmlDocument(descText);
+            var descDoc = HtmlHelper.CreateHtmlDocument(descText);
             var baseDescNode = descDoc.DocumentNode.SelectSingleNode("/p");
 
             var titleNode = baseDescNode.SelectSingleNode("b");

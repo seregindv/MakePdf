@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using System.Xml.XPath;
 using HtmlAgilityPack;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.ViewModels;
 
 namespace MakePdf.Galleries
@@ -114,14 +114,14 @@ namespace MakePdf.Galleries
             var summary = h1.SelectSingleNode("span[@class='summary']");
             if (summary == null)
             {
-                var name = Utils.TruncateAfterEOL(
-                        Utils.Trim(
+                var name = StringHelper.TruncateAfterEOL(
+StringHelper.Trim(
                             h1.SelectChildren(XPathNodeType.All)
                               .OfType<HtmlNodeNavigator>()
                               .Where(@node => @node.Name == "#text" || @node.Name == "br")
                               .Aggregate(new StringBuilder(), (@sb, @node) =>
                               {
-                                  var val = Utils.Trim(@node.Value);
+                                  var val = StringHelper.Trim(@node.Value);
                                   if (val.Length > 0)
                                   {
                                       @sb.Append(val);
@@ -132,11 +132,11 @@ namespace MakePdf.Galleries
                 if (name.Length > 0)
                     GalleryDocument.Name = name;
                 else
-                    GalleryDocument.Name = Utils.Trim(Utils.SubstringAfter(Document.DocumentNode.SelectSingleNode("html/head/title").InnerText, "-"));
+                    GalleryDocument.Name = StringHelper.Trim(StringHelper.SubstringAfter(Document.DocumentNode.SelectSingleNode("html/head/title").InnerText, "-"));
             }
             else
                 GalleryDocument.Name = summary.Value;
-            GalleryDocument.Annotation = Utils.Trim(titleNode.SelectDescendants("p", String.Empty, false).OfType<HtmlNodeNavigator>().First().Value);
+            GalleryDocument.Annotation = StringHelper.Trim(titleNode.SelectDescendants("p", String.Empty, false).OfType<HtmlNodeNavigator>().First().Value);
 
             var headerImage = Document.DocumentNode.SelectSingleNode(@"//div[contains(@class,'image_first')]/img");
             if (headerImage != null)
@@ -208,7 +208,7 @@ namespace MakePdf.Galleries
                 GalleryDocument.Tags = _tags;
             else
             {
-                if (Utils.IsNullOrEmpty(currentItem.Tags))
+                if (CollectionHelper.IsNullOrEmpty(currentItem.Tags))
                     currentItem.Tags = _tags;
                 else
                     currentItem.Tags.AddRange(_tags);
@@ -228,7 +228,7 @@ namespace MakePdf.Galleries
                         var textNode = @node.SelectSingleNode("div/div");
                         return
                             new GalleryItem(
-                                Utils.FixUrlProtocol(@node.SelectSingleNode("img").GetSrc()),
+UriHelper.FixUrlProtocol(@node.SelectSingleNode("img").GetSrc()),
                                 textNode == null ? null : @node.SelectSingleNode("div/div").InnerText
                                 );
                     }
@@ -244,7 +244,7 @@ namespace MakePdf.Galleries
             Flush();
             var imageSource =
                 imageNode.GetSrc();
-            var item = new GalleryItem(Utils.FixUrlProtocol(imageSource));
+            var item = new GalleryItem(UriHelper.FixUrlProtocol(imageSource));
             var captionNode = contentNavigator.CurrentNode.SelectSingleNode("div[@class='caption']");
             if (captionNode != null)
                 item.Tags = TagFactory.GetParagraphTags(captionNode.InnerText);
@@ -273,7 +273,7 @@ namespace MakePdf.Galleries
                 .SelectNodes("div/div/p")
                 .Select(@node => @node.InnerText)
                 .Where(@text => !String.IsNullOrEmpty(@text));
-            var item = new GalleryItem(Utils.FixUrlProtocol(imageSource), TagFactory.GetParagraphTags(lines));
+            var item = new GalleryItem(UriHelper.FixUrlProtocol(imageSource), TagFactory.GetParagraphTags(lines));
             _items.Add(item);
         }
 

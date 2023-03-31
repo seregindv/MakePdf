@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using HtmlAgilityPack;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace MakePdf.Galleries

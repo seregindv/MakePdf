@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 using MakePdf.Controls;
 using MakePdf.Galleries.Processors;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace MakePdf.Galleries

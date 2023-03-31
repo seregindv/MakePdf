@@ -9,7 +9,7 @@ using System.Threading;
 using System.Xml.Serialization;
 using MakePdf.Configuration;
 using MakePdf.Pooling.Pools;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.XmlMakers;
 
 namespace MakePdf.ViewModels

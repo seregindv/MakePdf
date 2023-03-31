@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries.Loaders
 {

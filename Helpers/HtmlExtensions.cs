@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.XPath;
 using HtmlAgilityPack;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     public static class HtmlExtensions
     {

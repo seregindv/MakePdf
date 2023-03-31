@@ -13,7 +13,7 @@ using MakePdf.Attributes;
 using MakePdf.Configuration;
 using MakePdf.Controls;
 using MakePdf.Galleries.Processors;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using System.Linq;
 using System.Windows;
 
@@ -27,8 +27,7 @@ namespace MakePdf.ViewModels
         public MainWindowViewModel(IConfig config)
         {
             _config = config;
-
-            Utils.FixUriTrailingDotBug();
+            UriHelper.FixUriTrailingDotBug();
             Clear();
             Documents = new ObservableCollection<DocumentViewModel>();
             Documents.CollectionChanged += Documents_CollectionChanged;
@@ -48,7 +47,7 @@ namespace MakePdf.ViewModels
             RenderFilesCommand = new DelegateCommand(OnRenderFiles);
             DropCommand = new DelegateCommand(OnDrop);
             OpenExplorer = Boolean.Parse(_config.AppSettings["OpenExplorer"]);
-            IsTablet = Utils.IsTablet;
+            IsTablet = WpfHelper.IsTablet;
 
             AddMenuItems = new List<MenuItemViewModel> {
                 new MenuItemViewModel(AddCommand)
@@ -86,8 +85,8 @@ namespace MakePdf.ViewModels
             {
                 try
                 {
-                    Utils.DisableWPFTabletSupport();
-                    Utils.EnableFocusTracking();
+                    WpfHelper.DisableWPFTabletSupport();
+                    WpfHelper.EnableFocusTracking();
                 }
                 catch { }
             }
@@ -106,7 +105,7 @@ namespace MakePdf.ViewModels
         private void PictureUnpicture(bool unpicture)
         {
             if (DisplayedDocument != null && DisplayedDocument.Contents != null)
-                DisplayedDocument.Contents = Utils.InsertOrDeleteAtLineStart(DisplayedDocument.Contents, "pic:", SelectionStart, SelectionLength, unpicture);
+                DisplayedDocument.Contents = StringHelper.InsertOrDeleteAtLineStart(DisplayedDocument.Contents, "pic:", SelectionStart, SelectionLength, unpicture);
             //Debug.WriteLine(Utils.InsertOrDeleteAtLineStart(DisplayedDocument.Contents, "pic:", SelectionStart, SelectionLength, unpicture));
         }
 
@@ -391,7 +390,7 @@ namespace MakePdf.ViewModels
         {
             try
             {
-                using (var stream = new FileStream(Utils.GetFullPath(Directory, "articles.xml"), FileMode.Create))
+                using (var stream = new FileStream(PathHelper.GetFullPath(Directory, "articles.xml"), FileMode.Create))
                     CreateSerializer().Serialize(stream, Documents);
             }
             catch (Exception ex)
@@ -402,7 +401,7 @@ namespace MakePdf.ViewModels
 
         private void OnLoad(object data)
         {
-            using (var stream = new FileStream(Utils.GetFullPath(Directory, "articles.xml"), FileMode.Open))
+            using (var stream = new FileStream(PathHelper.GetFullPath(Directory, "articles.xml"), FileMode.Open))
             {
                 Documents = (ObservableCollection<DocumentViewModel>)CreateSerializer().Deserialize(stream);
                 Documents.CollectionChanged += Documents_CollectionChanged;
@@ -434,7 +433,7 @@ namespace MakePdf.ViewModels
                 return;
             DragDropActionStatus = ProcessingStatus.InProcess;
             Task.Factory.StartNew(() => files.AsParallel().ForAll(file =>
-                Utils.GetFonetDriver().Render(file, file + ".pdf")), TaskCreationOptions.PreferFairness)
+WpfHelper.GetFonetDriver().Render(file, file + ".pdf")), TaskCreationOptions.PreferFairness)
                 .ContinueWith(t =>
                 {
                     try
@@ -479,8 +478,8 @@ namespace MakePdf.ViewModels
 
         private void OnDropHtml(string htmlData)
         {
-            DisplayedDocument.Contents = HtmlUtils
-                .CreateHtmlDocument(HtmlUtils.GetHtml(htmlData))
+            DisplayedDocument.Contents = HtmlHelper
+                .CreateHtmlDocument(HtmlHelper.GetHtml(htmlData))
                 .DocumentNode
                 .SelectNodes("//img")
                 .Select(node => "pic:" + node.GetSrc())

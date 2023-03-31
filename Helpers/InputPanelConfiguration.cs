@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     [Guid("41C81592-514C-48BD-A22E-E6AF638521A6")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

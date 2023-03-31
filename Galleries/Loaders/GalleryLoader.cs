@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.Sizing;
 using System.Threading;
 

@@ -8,7 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Xml.Serialization;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.Sizing;
 
 namespace MakePdf.Galleries
@@ -74,7 +74,7 @@ namespace MakePdf.Galleries
 
         public string GetFormattedIndex(string format = "00000000")
         {
-            return Utils.GetFileName(Index, format);
+            return PathHelper.GetFileName(Index, format);
         }
 
         public override Tag Wrap(Tag with)

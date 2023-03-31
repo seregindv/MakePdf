@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 using MakePdf.Attributes;
 using MakePdf.Galleries;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     public enum AddressType
     {

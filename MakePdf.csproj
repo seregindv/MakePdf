@@ -73,7 +73,7 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -179,9 +179,23 @@
     <Compile Include="Galleries\SlonAuthorGallery.cs" />
     <Compile Include="Galleries\TextGallery.cs" />
     <Compile Include="Galleries\VillageGallery.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
+    <Compile Include="Helpers\StreamHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\UriHelper.cs" />
+    <Compile Include="Helpers\WpfHelper.cs" />
+    <Compile Include="Markup\BoldTag.cs" />
+    <Compile Include="Markup\ColorTag.cs" />
+    <Compile Include="Markup\HrefTag.cs" />
+    <Compile Include="Markup\IHasTags.cs" />
+    <Compile Include="Markup\ImageTag.cs" />
+    <Compile Include="Markup\ItalicTag.cs" />
+    <Compile Include="Markup\ParagraphTag.cs" />
     <Compile Include="Markup\Tag.cs" />
     <Compile Include="Markup\TagFactory.cs" />
     <Compile Include="Markup\TagList.cs" />
+    <Compile Include="Markup\TextTag.cs" />
     <Compile Include="Pooling\Containers\SingleContainer.cs" />
     <Compile Include="Pooling\Containers\IObjectContainer.cs" />
     <Compile Include="Pooling\Containers\ListContainer.cs" />
@@ -198,15 +212,15 @@
     <Compile Include="Serialization\SerializeHelper.cs" />
     <Compile Include="Serialization\XmlSerializerWrapper.cs" />
     <Compile Include="Sizing\ImageSize.cs" />
-    <Compile Include="Stuff\AddressType.cs" />
-    <Compile Include="Stuff\HtmlExtensions.cs" />
-    <Compile Include="Stuff\HtmlUtils.cs" />
-    <Compile Include="Stuff\InputPanelConfiguration.cs" />
-    <Compile Include="Stuff\LineReader.cs" />
+    <Compile Include="Helpers\AddressType.cs" />
+    <Compile Include="Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\HtmlUtils.cs" />
+    <Compile Include="Helpers\InputPanelConfiguration.cs" />
+    <Compile Include="Helpers\LineReader.cs" />
     <Compile Include="Controls\ManualPasteTextBox.cs" />
     <Compile Include="Converters\StringLengthToVisibilityConverter.cs" />
-    <Compile Include="Stuff\ParagraphReverser.cs" />
-    <Compile Include="Stuff\PasteProcessor.cs" />
+    <Compile Include="Helpers\ParagraphReverser.cs" />
+    <Compile Include="Helpers\PasteProcessor.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\GenericTemplateSelector.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
@@ -236,7 +250,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\BoolToCursorConverter.cs" />
-    <Compile Include="Stuff\DelegateCommand.cs" />
+    <Compile Include="Helpers\DelegateCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -244,7 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pooling\ThreadedPool.cs" />
-    <Compile Include="Stuff\Utils.cs" />
+    <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\TextDocumentViewModel.cs" />
     <Compile Include="XmlMakers\GalleryDocumentXmlMaker.cs" />
@@ -271,7 +285,6 @@
     <None Include="Deploy\package.ini" />
     <None Include="Deploy\PostExtract.ps1" />
     <None Include="Deploy\Publish-Package.ps1" />
-    <None Include="MakePdf_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

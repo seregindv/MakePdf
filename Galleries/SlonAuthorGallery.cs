@@ -7,7 +7,7 @@ using System.Text;
 using System.Web;
 using HtmlAgilityPack;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {

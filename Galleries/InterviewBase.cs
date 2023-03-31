@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
 using MakePdf.Markup;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace MakePdf.Galleries
@@ -124,7 +124,7 @@ namespace MakePdf.Galleries
                 }
                 if (!processed)
                 {
-                    var text = Utils.Trim(navigator.CurrentNode.InnerText);
+                    var text = StringHelper.Trim(navigator.CurrentNode.InnerText);
                     if (text.Length > 0)
                     {
                         // keep spaces etc
@@ -133,7 +133,7 @@ namespace MakePdf.Galleries
                             processChildren = false;
                         if (!processChildren)
                         {
-                            text = navigator.CurrentNode.Name + ">" + Utils.Trim(text);
+                            text = navigator.CurrentNode.Name + ">" + StringHelper.Trim(text);
                             tags.Add(TagFactory.GetTextTag(text).Wrap(new ColorTag("red")).Wrap<ParagraphTag>());
                         }
                         else
@@ -156,7 +156,7 @@ namespace MakePdf.Galleries
 
         protected List<Tag> GetTags(params string[] htmlStrings)
         {
-            var htmlDocument = HtmlUtils.CreateHtmlDocument();
+            var htmlDocument = HtmlHelper.CreateHtmlDocument();
             var anyNode = false;
             foreach (var htmlString in htmlStrings)
             {

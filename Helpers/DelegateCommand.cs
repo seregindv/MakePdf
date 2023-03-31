@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     public class DelegateCommand : ICommand
     {

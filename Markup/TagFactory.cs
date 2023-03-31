@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web.SessionState;
 using System.Windows;
 using System.Windows.Media.Converters;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Markup
 {
@@ -24,7 +24,7 @@ namespace MakePdf.Markup
 
             var result = new List<Tag>();
             var startPosition = 0;
-            var matches = Utils.GetHyperlinkMatches(text);
+            var matches = StringHelper.GetHyperlinkMatches(text);
             foreach (Match match in matches)
             {
                 // from startPosition to Index
@@ -49,7 +49,7 @@ namespace MakePdf.Markup
         {
             var lines = StringToLines(s);
             if (trim)
-                lines = lines.Select(Utils.Trim).Where(@line => @line.Length > 0);
+                lines = lines.Select(StringHelper.Trim).Where(@line => @line.Length > 0);
             return GetParagraphTags(lines, parseHyperlinks);
         }
 

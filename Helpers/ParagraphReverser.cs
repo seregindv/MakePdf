@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     public class ParagraphReverser
     {

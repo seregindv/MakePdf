@@ -9,7 +9,7 @@ using System.Web;
 using HtmlAgilityPack;
 using MakePdf.Markup;
 using MakePdf.Sizing;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -27,7 +27,7 @@ namespace MakePdf.Galleries
             GalleryDocument.Tags = new List<Tag>();
             var tags = GalleryDocument.Tags;
             tags.Add(TagFactory.GetParagraphTag(
-                HttpUtility.HtmlDecode(Utils.Trim(Document
+                HttpUtility.HtmlDecode(StringHelper.Trim(Document
                 .DocumentNode
                 .SelectSingleNode("descendant::div[@class='description'][1]")
                 .InnerText))));

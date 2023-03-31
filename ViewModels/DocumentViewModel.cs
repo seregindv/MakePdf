@@ -13,7 +13,7 @@ using MakePdf.Attributes;
 using MakePdf.Configuration;
 using MakePdf.Markup;
 using MakePdf.Serialization;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.Pooling;
 using MakePdf.Pooling.Pools;
 using MakePdf.XmlMakers;
@@ -28,7 +28,7 @@ namespace MakePdf.ViewModels
         //static readonly DelegateThreadedPool<FonetDriver> _fonetDriverPool = new DelegateThreadedPool<FonetDriver>(Utils.GetFonetDriver);
         //static readonly DelegateThreadedPool<Pdfer> _pdferPool = new DelegateThreadedPool<Pdfer>(() => new Pdfer(Config.Instance.AppSettings["Template"]));
 
-        protected static readonly ObjectPool<FonetDriver> _fonetDriverPool = ObjectPool<FonetDriver>.Get(Utils.GetFonetDriver);
+        protected static readonly ObjectPool<FonetDriver> _fonetDriverPool = ObjectPool<FonetDriver>.Get(WpfHelper.GetFonetDriver);
 
         protected DocumentViewModel()
         {
@@ -166,7 +166,7 @@ namespace MakePdf.ViewModels
             Date = DateTime.Now.ToString("G");
             if (String.IsNullOrEmpty(SourceName) && !String.IsNullOrEmpty(SourceAddress))
             {
-                var matches = Utils.GetHyperlinkMatches(SourceAddress);
+                var matches = StringHelper.GetHyperlinkMatches(SourceAddress);
                 if (matches.Count > 0 && matches[0].Groups[1].Value.Length > 0)
                     SourceName = matches[0].Groups[1].Value;
                 else
@@ -221,7 +221,7 @@ namespace MakePdf.ViewModels
             var name = Config.Instance.AddDeviceToPdfName
                 ? String.Concat(Name, "[", Config.Instance.SelectedDevice.FileSuffix, "]")
                 : Name;
-            return Utils.GetPdfPath(directory, name);
+            return PathHelper.GetPdfPath(directory, name);
         }
     }
 

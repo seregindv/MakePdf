@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -14,7 +14,7 @@ namespace MakePdf.Galleries
             get
             {
                 if (_document == null)
-                    _document = HtmlUtils.CreateHtmlDocument(GalleryDocument.HtmlContents);
+                    _document = HtmlHelper.CreateHtmlDocument(GalleryDocument.HtmlContents);
                 return _document;
             }
         }

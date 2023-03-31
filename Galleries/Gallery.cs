@@ -7,7 +7,7 @@ using System.Net;
 using HtmlAgilityPack;
 using MakePdf.Attributes;
 using MakePdf.Sizing;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.ViewModels;
 
 namespace MakePdf.Galleries
@@ -78,7 +78,7 @@ namespace MakePdf.Galleries
             {
                 if (String.IsNullOrEmpty(item.LocalPath))
                     item.LocalPath = Path.Combine(GalleryFolder,
-                        item.GetFormattedIndex() + Utils.TrimIllegalChars(Path.GetExtension(item.ImageUrl)));
+                        item.GetFormattedIndex() + PathHelper.TrimIllegalChars(Path.GetExtension(item.ImageUrl)));
                 if (File.Exists(item.LocalPath))
                 {
                     SetSize(item);
@@ -88,7 +88,7 @@ namespace MakePdf.Galleries
                     var responseStream = GetResponseStream(item.ImageUrl);
                     using (var fileStream = new FileStream(item.LocalPath, FileMode.Create))
                     {
-                        Utils.CopyStream(responseStream, fileStream);
+                        StreamHelper.CopyStream(responseStream, fileStream);
                         SetSize(item, fileStream);
                     }
                 }

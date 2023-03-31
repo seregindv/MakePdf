@@ -17,7 +17,7 @@ using MakePdf.Galleries;
 using MakePdf.Markup;
 using MakePdf.Pooling.Pools;
 using MakePdf.Serialization;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 using MakePdf.XmlMakers;
 using MakePdf.Galleries.Loaders;
 using System.Xml;
@@ -51,7 +51,7 @@ namespace MakePdf.ViewModels
                 Status = ProcessingStatus.Loading;
                 if (Gallery == null)
                     Gallery = Gallery.Create(AddressType);
-                Gallery.Load(this, Utils.GetFullPath(directory, GetFonetSafeFolderName(Name)));
+                Gallery.Load(this, PathHelper.GetFullPath(directory, GetFonetSafeFolderName(Name)));
 #if DEBUG
                 var galleryLoader = new SingleThreadedGalleryLoader(ct);
 #else
@@ -78,9 +78,9 @@ namespace MakePdf.ViewModels
                             serializedThis.Position = 0L;
                             using (
                                 var fileStream =
-                                    File.Create(Utils.GetPdfPath(Config.Instance.AppSettings["Directory"], Name, ".xml"))
+                                    File.Create(PathHelper.GetPdfPath(Config.Instance.AppSettings["Directory"], Name, ".xml"))
                                 )
-                                Utils.CopyStream(serializedThis, fileStream);
+                                StreamHelper.CopyStream(serializedThis, fileStream);
                         }
                         var transform = new XslCompiledTransform(false);
                         transform.Load(Config.Instance.GetTemplate(TemplateType.Gallery));
@@ -93,9 +93,9 @@ namespace MakePdf.ViewModels
                             foStream.Position = 0L;
                             using (
                                 var fileStream =
-                                    File.Create(Utils.GetPdfPath(Config.Instance.AppSettings["Directory"], Name, ".fo"))
+                                    File.Create(PathHelper.GetPdfPath(Config.Instance.AppSettings["Directory"], Name, ".fo"))
                                 )
-                                Utils.CopyStream(foStream, fileStream);
+                                StreamHelper.CopyStream(foStream, fileStream);
                         }
                     }
 

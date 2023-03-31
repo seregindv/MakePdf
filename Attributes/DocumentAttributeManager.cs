@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Attributes
 {
     public class DocumentAttributeManager
     {
-        Dictionary<Type, Tuple<AddressType, DocumentAttribute>[]> _decoratedMembers;
+        Dictionary<Type, Tuple<AddressType, DocumentAttribute>[]> _decoratedMembers = new Dictionary<Type, Tuple<AddressType, DocumentAttribute>[]>();
 
         public Tuple<AddressType, DocumentAttribute>[] GetDecorated<TAttr>() where TAttr : DocumentAttribute
         {
             if (!_decoratedMembers.ContainsKey(typeof(TAttr)))
             {
-                var decorated = Utils.GetDecoratedEnumMembers<AddressType, TAttr>()
+                var decorated = EnumHelper.GetDecoratedEnumMembers<AddressType, TAttr>()
                     .Select(@t => new Tuple<AddressType, DocumentAttribute>(@t.Item1, @t.Item2))
                     .ToArray();
                 _decoratedMembers[typeof(TAttr)] = decorated;
@@ -31,7 +31,7 @@ namespace MakePdf.Attributes
 
         public AddressType GetAddressType(string url)
         {
-            var result = Utils.FindFirstField(_decoratedMembers.Values.SelectMany(@t => @t).ToArray(),
+            var result = EnumHelper.FindFirstField(_decoratedMembers.Values.SelectMany(@t => @t).ToArray(),
                                               @docAttr =>
                                               System.Text.RegularExpressions.Regex.Match(url, @docAttr.Regex,
                                                 System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success);

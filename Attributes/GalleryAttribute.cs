@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MakePdf.Galleries;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Attributes
 {
@@ -23,7 +23,7 @@ namespace MakePdf.Attributes
         private static Tuple<AddressType, GalleryAttribute>[] GetDecoratedInternal()
         {
             if (_decoratedMembers == null)
-                _decoratedMembers = Utils.GetDecoratedEnumMembers<AddressType, GalleryAttribute>();
+                _decoratedMembers = EnumHelper.GetDecoratedEnumMembers<AddressType, GalleryAttribute>();
             return _decoratedMembers;
         }
 
@@ -36,7 +36,7 @@ namespace MakePdf.Attributes
         public static Tuple<AddressType, GalleryAttribute>[] GetNonDecorated()
         {
             if (_nonDecoratedMembers == null)
-                _nonDecoratedMembers = Utils.GetNonDecoratedEnumMembers<AddressType, GalleryAttribute>();
+                _nonDecoratedMembers = EnumHelper.GetNonDecoratedEnumMembers<AddressType, GalleryAttribute>();
             return _nonDecoratedMembers;
         }
 
@@ -49,7 +49,7 @@ namespace MakePdf.Attributes
 
         public static AddressType GetAddressType(string url, string groupName = null)
         {
-            var result = Utils.FindFirstField(GetDecoratedInternal(),
+            var result = EnumHelper.FindFirstField(GetDecoratedInternal(),
                 attr => attr.Regex != null
                     && attr.Group == groupName
                     && System.Text.RegularExpressions.Regex.Match(url, attr.Regex,

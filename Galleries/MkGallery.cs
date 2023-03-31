@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
-using MakePdf.Stuff;
+using MakePdf.Helpers;
 
 namespace MakePdf.Galleries
 {
@@ -14,7 +14,7 @@ namespace MakePdf.Galleries
             var pages = GetPages(videoContainer);
             return GetItems(videoContainer)
                 .Concat(pages.SelectMany((@page, @num) =>
-                    GetItems(GetVideoContainer(GetHtmlDocument(@page, Utils.GetFileName(@num))))));
+                    GetItems(GetVideoContainer(GetHtmlDocument(@page, PathHelper.GetFileName(@num))))));
         }
 
         private IEnumerable<GalleryItem> GetItems(HtmlNodeNavigator videoContainerNode)

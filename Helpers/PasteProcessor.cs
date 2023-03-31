@@ -8,7 +8,7 @@ using MakePdf.Attributes;
 using MakePdf.ViewModels;
 using MakePdf.Controls;
 
-namespace MakePdf.Stuff
+namespace MakePdf.Helpers
 {
     public class PasteProcessor
     {
@@ -19,9 +19,9 @@ namespace MakePdf.Stuff
             if (parameter.ClipboardData.GetDataPresent(HTML_FORMAT))
             {
                 var htmlData = parameter.ClipboardData.GetData(HTML_FORMAT).ToString();
-                var address = HtmlUtils.GetAddress(htmlData);
+                var address = HtmlHelper.GetAddress(htmlData);
                 var addressType = GetAddressType(address);
-                Document = DocumentViewModel.Create(addressType, HtmlUtils.GetHtml(htmlData));
+                Document = DocumentViewModel.Create(addressType, HtmlHelper.GetHtml(htmlData));
                 Document.SourceAddress = address;
 
                 string clipboardText = null;
